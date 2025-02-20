@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+html.wf-loading {
+  >* {
+    display: none;
+  }
+}
+
+body {
+  --rgb: 255 255 255;
+  --opacity: 0.06;
+  --size: 10px 10px;
+  --degrees: 45deg;
+
+  background-color: rgb(194, 194, 194);
+  background-image:
+    linear-gradient(var(--degrees), rgb(var(--rgb) / var(--opacity)) 25%, transparent 25%, transparent 50%, rgb(var(--rgb) / var(--opacity)) 50%, rgb(var(--rgb) / var(--opacity)) 75%, transparent 75%, transparent 100%);
+  background-size: var(--size);
+
+}
