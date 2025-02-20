@@ -7,6 +7,7 @@ import {
 	useState,
 } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useElementSize } from "../lib/utils";
 
 interface TypeWriterProps {
 	sentences: string[];
@@ -26,6 +27,8 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 	const [sentenceIndex, setSentenceIndex] = useState(0);
 	const sentenceRef = useRef<HTMLDivElement>(null);
 
+	const containerRef = useRef<HTMLDivElement>(null);
+
 	useEffect(() => {
 		// On spacebar, increment sentenceIndex
 		const controller = new AbortController();
@@ -34,6 +37,14 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 			(e: KeyboardEvent) => {
 				if (e.key === " ") {
 					setSentenceIndex((prevIndex) => (prevIndex + 1) % sentences.length);
+					setTimeout(
+						() =>
+							containerRef.current?.scrollTo({
+								top: containerRef.current?.scrollHeight,
+								behavior: "smooth",
+							}),
+						50,
+					);
 				}
 			},
 			{ signal: controller.signal },
@@ -42,7 +53,10 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 	}, [sentences]);
 
 	return (
-		<div className="text-xl font-[300] uppercase h-30 overflow-auto leading-none scrollbar-hidden">
+		<div
+			ref={containerRef}
+			className="text-xl font-[300] uppercase h-30 overflow-auto leading-none scrollbar-hidden"
+		>
 			<AnimatePresence>
 				{sentences.slice(0, sentenceIndex + 1).map((sentence, si) => (
 					<motion.div
@@ -68,6 +82,8 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 	);
 }
 
+
+
 interface LetterProps {
 	letter: ReactNode;
 	letterIndex: number;
@@ -84,7 +100,7 @@ const Letter = (props: LetterProps) => {
 
 const _Letter = forwardRef<HTMLDivElement, Omit<LetterProps, "sentenceRef">>(
 	({ letter, letterIndex, letterDelay, boxFadeDuration }, ref) => {
-		const delay = .2 + letterIndex * letterDelay;
+		const delay = 0.2 + letterIndex * letterDelay;
 		return (
 			<motion.span
 				className="relative"
@@ -132,14 +148,18 @@ function SpaceLetter({
 	const letterRef = useRef<HTMLDivElement>(null);
 	// Determine if letter is within right edge of sentence
 	const [shouldAddBreak, setShouldAddBreak] = useState(false);
-	useLayoutEffect(() => {
+
+	const handleResize = () => {
 		if (letterRef.current && sentenceRef.current) {
 			const sentenceRect = sentenceRef.current.getBoundingClientRect();
 			const letterRect = letterRef.current.getBoundingClientRect();
-			const isWithinRightEdge = letterRect.right > sentenceRect.right - 20;
+			const isWithinRightEdge = letterRect.right > sentenceRect.right - 90;
 			setShouldAddBreak(shouldAddBreak || isWithinRightEdge);
 		}
-	});
+	};
+
+	// useElementSize(sentenceRef, handleResize);
+	useLayoutEffect(handleResize, [sentenceRef]);
 
 	return (
 		<_Letter
