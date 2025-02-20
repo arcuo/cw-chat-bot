@@ -1,32 +1,22 @@
-import {
-	forwardRef,
-	type ReactNode,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { useElementSize } from "../lib/utils";
 
 interface TypeWriterProps {
 	sentences: string[];
 	opts?: {
 		boxFadeDuration?: number;
-		letterDelay?: number;
+		letterDelayMs?: number;
 	};
 }
 
-const LETTER_DELAY = 0.025; // seconds
-const BOX_FADE_DURATION = 0.125; // seconds
+const LETTER_DELAY = 40; // milliseconds
 
 export function TypeWriter({ sentences, opts }: TypeWriterProps) {
-	const { boxFadeDuration = BOX_FADE_DURATION, letterDelay = LETTER_DELAY } =
-		opts ?? {};
+	const { letterDelayMs = LETTER_DELAY } = opts ?? {};
 
 	const [sentenceIndex, setSentenceIndex] = useState(0);
-	const sentenceRef = useRef<HTMLDivElement>(null);
 
+	const sentenceRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -50,12 +40,12 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 			{ signal: controller.signal },
 		);
 		return () => controller.abort();
-	}, [sentences]);
+	}, []);
 
 	return (
 		<div
 			ref={containerRef}
-			className="text-xl font-[300] uppercase h-30 overflow-auto leading-none scrollbar-hidden"
+			className="text-xl font-[300] uppercase h-30 overflow-auto leading-none scrollbar-hidden flex flex-col gap-2"
 		>
 			<AnimatePresence>
 				{sentences.slice(0, sentenceIndex + 1).map((sentence, si) => (
@@ -65,16 +55,12 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 						animate={{ opacity: si === sentenceIndex ? 1 : 0.4 }}
 						transition={{ duration: 0.3 }}
 					>
-						{sentence.split("").map((l, i) => (
-							<Letter
-								key={`${si}-${i}`}
-								letter={l}
-								letterIndex={i}
-								letterDelay={letterDelay}
-								boxFadeDuration={boxFadeDuration}
-								sentenceRef={sentenceRef}
-							/>
-						))}
+						<Sentence
+							sentence={sentence}
+							letterDelayMs={letterDelayMs}
+							active={si === sentenceIndex}
+							containerRef={containerRef}
+						/>
 					</motion.div>
 				))}
 			</AnimatePresence>
@@ -82,92 +68,76 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 	);
 }
 
-
-
-interface LetterProps {
-	letter: ReactNode;
-	letterIndex: number;
-	letterDelay: number;
-	boxFadeDuration: number;
-	sentenceRef: React.RefObject<HTMLDivElement | null>;
+interface SentenceProps {
+	sentence: string;
+	active?: boolean;
+	letterDelayMs?: number;
+	containerRef: React.RefObject<HTMLDivElement | null>;
 }
 
-const Letter = (props: LetterProps) => {
-	const { letter } = props;
+const Sentence = (props: SentenceProps) => {
+	const { sentence, letterDelayMs = 50, active, containerRef } = props;
 
-	return letter === " " ? <SpaceLetter {...props} /> : <_Letter {...props} />;
-};
+	const [letterIndex, setLetterIndex] = useState(0);
 
-const _Letter = forwardRef<HTMLDivElement, Omit<LetterProps, "sentenceRef">>(
-	({ letter, letterIndex, letterDelay, boxFadeDuration }, ref) => {
-		const delay = 0.2 + letterIndex * letterDelay;
-		return (
-			<motion.span
-				className="relative"
-				ref={ref}
-				layout
-				style={{ height: "fit-content" }}
-			>
-				<motion.span
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{
-						delay: delay,
-						duration: boxFadeDuration,
-						ease: "easeInOut",
-					}}
-				>
-					{letter}
-				</motion.span>
-				{/* Writing Box */}
-				<motion.span
-					initial={{ opacity: 0 }}
-					animate={{ opacity: [0, 1, 0] }}
-					transition={{
-						delay: delay,
-						times: [0, 0.1, 1],
-						duration: boxFadeDuration,
-						ease: "easeInOut",
-					}}
-					className="inline-block bg-neutral-950 absolute bottom-[5px] left-[1px] right-0 top-[3px]"
-				/>
-			</motion.span>
-		);
-	},
-);
-
-function SpaceLetter({
-	letter,
-	letterIndex,
-	letterDelay,
-	boxFadeDuration,
-	sentenceRef,
-}: LetterProps & {
-	sentenceRef: React.RefObject<HTMLDivElement | null>;
-}) {
-	const letterRef = useRef<HTMLDivElement>(null);
-	// Determine if letter is within right edge of sentence
-	const [shouldAddBreak, setShouldAddBreak] = useState(false);
-
-	const handleResize = () => {
-		if (letterRef.current && sentenceRef.current) {
-			const sentenceRect = sentenceRef.current.getBoundingClientRect();
-			const letterRect = letterRef.current.getBoundingClientRect();
-			const isWithinRightEdge = letterRect.right > sentenceRect.right - 90;
-			setShouldAddBreak(shouldAddBreak || isWithinRightEdge);
-		}
+	const handleDone = (interval: NodeJS.Timeout) => {
+		clearInterval(interval);
+		setLetterIndex(sentence.length);
+		scrollToBottom();
 	};
 
-	// useElementSize(sentenceRef, handleResize);
-	useLayoutEffect(handleResize, [sentenceRef]);
+	const scrollToBottom = () => {
+		containerRef.current?.scrollTo({
+			top: containerRef.current?.scrollHeight,
+			behavior: "smooth",
+		});
+	};
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setLetterIndex((prevState) => {
+				if (prevState >= sentence.length) {
+					handleDone(interval);
+					return prevState;
+				}
+
+				scrollToBottom();
+				return prevState + 1;
+			});
+		}, letterDelayMs);
+
+		const controller = new AbortController();
+
+		window.addEventListener(
+			"keydown",
+			(e: KeyboardEvent) => {
+				if (e.key === " ") {
+					handleDone(interval);
+				}
+			},
+			{ signal: controller.signal },
+		);
+
+		return () => {
+			clearInterval(interval);
+			controller.abort();
+		};
+	}, []);
 
 	return (
-		<_Letter
-			ref={letterRef}
-			letter={shouldAddBreak ? <br /> : letter}
-			letterIndex={letterIndex}
-			letterDelay={letterDelay}
-			boxFadeDuration={boxFadeDuration}
-		/>
+		<div className="relative h-full">
+			<span>{sentence.slice(0, letterIndex)}</span>
+			{active && (
+				<motion.span
+					className="inline-block h-[18px] w-[10px] bg-neutral-500 ml-1 -mb-[1px]"
+					animate={{ opacity: [0, 1, 0] }}
+					transition={{
+						duration: 0.8,
+						times: [0, 0.2, 1],
+						repeat: Number.POSITIVE_INFINITY,
+					}}
+				/>
+			)}
+		</div>
 	);
-}
+};
