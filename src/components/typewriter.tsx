@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useSetAtom } from "jotai";
+import { showPrompt } from "../App";
 
 interface TypeWriterProps {
 	sentences: string[];
@@ -9,10 +11,11 @@ interface TypeWriterProps {
 	};
 }
 
-const LETTER_DELAY = 40; // milliseconds
+const LETTER_DELAY = 20; // milliseconds
 
 export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 	const { letterDelayMs = LETTER_DELAY } = opts ?? {};
+	const setShowPrompt = useSetAtom(showPrompt);
 
 	const [sentenceIndex, setSentenceIndex] = useState(0);
 
@@ -26,7 +29,13 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 			"keydown",
 			(e: KeyboardEvent) => {
 				if (e.key === " ") {
-					setSentenceIndex((prevIndex) => (prevIndex + 1) % sentences.length);
+					setSentenceIndex((prevIndex) => {
+						if (prevIndex === sentences.length - 1) {
+							setShowPrompt(true);
+							return prevIndex;
+						}
+						return prevIndex + 1;
+					});
 					setTimeout(
 						() =>
 							containerRef.current?.scrollTo({
@@ -113,6 +122,7 @@ const Sentence = (props: SentenceProps) => {
 			(e: KeyboardEvent) => {
 				if (e.key === " ") {
 					handleDone(interval);
+					controller.abort();
 				}
 			},
 			{ signal: controller.signal },
