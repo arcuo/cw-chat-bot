@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Button } from "./button";
 import { Textarea } from "./textarea";
 
 const examplePrompts = [
@@ -9,11 +11,35 @@ const examplePrompts = [
 ];
 
 export function Prompt() {
+	const [mainTextareaValue, setMainTextareaValue] = useState("");
+
 	return (
 		<div className="flex flex-col gap-2">
-			<Textarea className="w-[100%]" placeholder="Type your question here..." />
+			<label htmlFor="visitor-textarea" className="text-neutral-600 text-sm">
+				<strong>Visitor description</strong>. Tailor the the response to who you
+				are and what you want to know!
+			</label>
+			<Textarea
+				id="visitor-textarea"
+				className="w-[100%]"
+				placeholder="Describe who you are"
+			/>
+			<label
+				htmlFor="main-prompt-textarea"
+				className="mt-5 text-neutral-600 text-sm"
+			>
+				<strong>Main prompt</strong>. Ask me any questions about me, my work, or
+				anything else you'd like to know!
+			</label>
+			<Textarea
+				id="main-prompt-textarea"
+				className="w-[100%]"
+				placeholder="Type your question here..."
+				value={mainTextareaValue}
+				onChange={(e) => setMainTextareaValue(e.target.value)}
+			/>
 			<div className="flex justify-end">
-				<button className="btn btn-outline btn-sm" type="button">
+				<Button>
 					{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 					<svg
 						width="15"
@@ -29,19 +55,22 @@ export function Prompt() {
 							clip-rule="evenodd"
 						/>
 					</svg>
-				</button>
+				</Button>
 			</div>
-			<div className="text-xs text-neutral-500 mt-5">Example queries</div>
-			<div className="flex gap-2 flex-wrap">
+			<div className="mt-5 text-neutral-500 text-xs">Example queries</div>
+			<div className="flex flex-wrap gap-2">
 				{examplePrompts.map((prompt) => {
 					return (
-						<button
+						<Button
 							key={prompt}
-							className="btn btn-outline btn-sm"
-							type="button"
+							onClick={() =>
+								setMainTextareaValue(
+									(prev) => `${prev}${prev ? "\n" : ""}${prompt}`,
+								)
+							}
 						>
 							{prompt}
-						</button>
+						</Button>
 					);
 				})}
 			</div>

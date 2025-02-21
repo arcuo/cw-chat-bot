@@ -54,7 +54,7 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 	return (
 		<div
 			ref={containerRef}
-			className="text-xl font-[300] uppercase h-30 overflow-auto leading-none scrollbar-hidden flex flex-col gap-2"
+			className="scrollbar-hidden flex h-30 flex-col gap-2 overflow-auto font-[300] text-xl uppercase leading-none"
 		>
 			<AnimatePresence>
 				{sentences.slice(0, sentenceIndex + 1).map((sentence, si) => (
@@ -139,7 +139,7 @@ const Sentence = (props: SentenceProps) => {
 			<span>{sentence.slice(0, letterIndex)}</span>
 			{active && (
 				<motion.span
-					className="inline-block h-[18px] w-[10px] bg-neutral-500 ml-1 -mb-[1px]"
+					className="-mb-[1px] ml-1 inline-block h-[18px] w-[10px] bg-neutral-500"
 					animate={{ opacity: [0, 1, 0] }}
 					transition={{
 						duration: 0.8,

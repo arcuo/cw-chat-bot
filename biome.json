@@ -23,6 +23,13 @@
 			"suspicious": {
 				"noArrayIndexKey": "off"
 			},
+			"nursery": {
+				"useSortedClasses": {
+					"fix": "safe",
+					"level": "error",
+					"options": {}
+				}
+			},
 			"correctness": {
 				"useExhaustiveDependencies": "off"
 			}
