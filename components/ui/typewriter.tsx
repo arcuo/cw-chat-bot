@@ -1,7 +1,8 @@
+"use client";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useSetAtom } from "jotai";
-import { showPrompt } from "../App";
+import { showPrompt } from "@/app/page";
 
 interface TypeWriterProps {
 	sentences: string[];

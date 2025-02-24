@@ -1,36 +1,15 @@
-import "./App.css";
-import { TypeWriter } from "./components/typewriter";
-import WebFont from "webfontloader";
-import * as m from "motion/react-client";
-import { Textarea } from "./components/textarea";
+"use client";
+import { Prompt } from "@/components/ui/prompt";
+import { TypeWriter } from "@/components/ui/typewriter";
 import { atom, useAtomValue } from "jotai";
 import { AnimatePresence, motion } from "motion/react";
-import { Prompt } from "./components/prompt";
-
-WebFont.load({
-	google: {
-		families: ["Roboto Condensed:100,200,300,400,500,600,700,800,900"], // TODO: remove unneeded weights
-	},
-});
 
 export const showPrompt = atom(false);
 
-function App() {
+export default function Main() {
 	const showPromptValue = useAtomValue(showPrompt);
-
 	return (
-		<div className="flex h-full flex-col gap-2 px-[20%] py-[20%] text-2xl">
-			<m.div
-				className="text-[1.2rem]"
-				initial={{ opacity: 0, x: -100 }}
-				animate={{ opacity: 1, x: 0 }}
-				transition={{ duration: 0.5 }}
-			>
-				<span className="font-bold">Hugh Benjamin Zachariae</span> / Software
-				Engineer
-			</m.div>
-			<hr className="mb-5 w-40 border-neutral-700 opacity-20" />
-
+		<main>
 			<AnimatePresence mode="wait">
 				{showPromptValue ? (
 					<motion.div
@@ -60,8 +39,6 @@ function App() {
 					</motion.div>
 				)}
 			</AnimatePresence>
-		</div>
+		</main>
 	);
 }
-
-export default App;

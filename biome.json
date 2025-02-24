@@ -33,7 +33,11 @@
 			"correctness": {
 				"useExhaustiveDependencies": "off"
 			}
-		}
+		},
+		"ignore": [
+			".next",
+			"node_modules"
+		]
 	},
 	"javascript": {
 		"formatter": {

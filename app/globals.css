@@ -28,5 +28,4 @@ body {
   background-image:
     linear-gradient(var(--degrees), rgb(var(--rgb) / var(--opacity)) 25%, transparent 25%, transparent 50%, rgb(var(--rgb) / var(--opacity)) 50%, rgb(var(--rgb) / var(--opacity)) 75%, transparent 75%, transparent 100%);
   background-size: var(--size);
-
 }

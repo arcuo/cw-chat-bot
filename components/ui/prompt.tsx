@@ -1,6 +1,9 @@
+"use client";
+
 import { useState } from "react";
 import { Button } from "./button";
 import { Textarea } from "./textarea";
+import { useChat } from "@ai-sdk/react";
 
 const examplePrompts = [
 	"Who are you and where are you from?",
@@ -12,6 +15,7 @@ const examplePrompts = [
 
 export function Prompt() {
 	const [mainTextareaValue, setMainTextareaValue] = useState("");
+	const { messages, input, handleInputChange, handleSubmit } = useChat();
 
 	return (
 		<div className="flex flex-col gap-2">

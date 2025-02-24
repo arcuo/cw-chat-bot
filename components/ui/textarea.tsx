@@ -1,10 +1,6 @@
+"use client";
+import { cn } from "@/lib/utils";
 import * as React from "react";
-import { cn } from "../lib/utils";
-
-function textAreaAdjust(element: HTMLTextAreaElement) {
-	element.style.height = "1px";
-	element.style.height = `${25 + element.scrollHeight}px`;
-}
 
 const Textarea = React.forwardRef<
 	HTMLTextAreaElement,
