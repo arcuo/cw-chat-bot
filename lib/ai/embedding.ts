@@ -25,9 +25,9 @@ export const generateEmbedding = async (value: string): Promise<number[]> => {
 	return embedding;
 };
 
-export const findRelevantContent = async (queries: string[], limit = 4) => {
+export const findRelevantContent = async (queries: string[], limit = 4, threshold = 0.5) => {
 	return Promise.all(
-		queries.map((query) => findRelevantContentForQuery(query, limit)),
+		queries.map((query) => findRelevantContentForQuery(query, limit, threshold)),
 	);
 };
 
@@ -36,6 +36,7 @@ export const findRelevantContentForQuery = async (
 	userQuery: string,
 	/** The number of guides to return */
 	limit = 4,
+	threshold = 0.5,
 ) => {
 	// Embed the user query
 	const userQueryEmbedded = await generateEmbedding(userQuery);
@@ -50,7 +51,7 @@ export const findRelevantContentForQuery = async (
 	const similarGuides = await db
 		.select({ name: embeddings.content, similarity })
 		.from(embeddings)
-		.where(gt(similarity, 0.5))
+		.where(gt(similarity, threshold))
 		.orderBy((t) => desc(t.similarity))
 		.limit(limit);
 

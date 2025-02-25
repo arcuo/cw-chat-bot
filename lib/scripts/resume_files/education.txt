@@ -1,10 +1,5 @@
 I studied a cognitive science bachelor's degree at Aarhus University in 2015 to 2018.
-I developed a bayesian meta analysis package for R in my bachelor's degree for Cognitive Science which you can check out here https://github.com/arcuo/BHLM_package for a top grade of 12/12.
 I studied a computer science bachelor's degree at Aarhus University in 2018 to 2020.
-I developed a cryptographically secure digital election system using Shamir's Secret Sharing Scheme for my bachelors project in Golang for a top grade of 12/12.
 I studied a computer science master's degree at Aarhus University in 2023 to 2025.
 I focused on Cryptography in my CS master's degree.
-I collaborated on a project implementing Threshold ECDSA signatures during my master's degree in the Rust programming language which you can check out here https://github.com/mzacho/threshold-ecdsa
-I implemented post-quantum cryptography in my master's degree in the Rust programming language for a top grade of 12/12.
-I implemented the "Syndrome decoding in the Head" post-quantum signature protocol for my master's thesis in the Rust programming language which you can check out here https://github.com/Mactherobot/sdith-rust/blob/main/sdith/README.md
 I took subjects in Cryptography for "Randomised Algorithms", "Quantum information processing", "Cryptography 1 and 2", "Cryptographic Computing

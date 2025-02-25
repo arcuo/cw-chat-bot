@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useSetAtom } from "jotai";
 import { showPrompt } from "@/app/page";
+import { Kbd } from "./kbd";
 
 interface TypeWriterProps {
 	sentences: string[];
@@ -25,7 +26,6 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		console.log(sentences.length);
 		if (automated) setSentenceIndex(sentences.length);
 	}, [automated, sentences]);
 
@@ -64,7 +64,7 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 		<div className="flex flex-col gap-2">
 			<div
 				ref={containerRef}
-				className="scrollbar-hidden flex h-30 flex-col gap-2 overflow-auto font-[300] text-xl leading-none"
+				className="scrollbar-hidden flex h-40 flex-col gap-2 overflow-auto font-[300] text-xl leading-none"
 			>
 				{sentences.slice(0, sentenceIndex + 1).map((sentence, si) => (
 					<motion.div
@@ -83,9 +83,7 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 				))}
 			</div>
 
-			{!automated ? (
-				<div className="mt-5 text-[.9rem] opacity-40">Press spacebar</div>
-			) : null}
+			{!automated ? <Kbd className="m-0 w-fit opacity-40">Space</Kbd> : null}
 		</div>
 	);
 }
