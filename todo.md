@@ -3,9 +3,9 @@
 ## Backend
 
 - [x] generate embeddings and store in database
-- [ ] test returned embeddings
-- [ ] update chat to use embeddings to answer questions about me
-- [ ] add more information and run embeddings on it
+- [x] test returned embeddings
+- [x] update chat to use embeddings to answer questions about me
+- [-] add more information and run embeddings on it
 - [ ] prevent too many requests
 - [ ] prompt engineering
 - [ ] error handling
@@ -23,7 +23,7 @@
 - [ ] final design
 - [ ] error handling
 - [ ] print generated resume.
-- [ ] schematic like examples for prompts (e.g. We are an [something] company, what kind of experience would you bring to us specifically?)
+- [x] schematic like examples for prompts (e.g. We are an [something] company, what kind of experience would you bring to us specifically?)
 
 ## Other
 
