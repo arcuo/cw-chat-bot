@@ -8,18 +8,20 @@
 - [ ] add more information and run embeddings on it
 - [ ] prevent too many requests
 - [ ] prompt engineering
+- [ ] error handling
 
 
 ## Frontend
 
-- [x] Introduction first draft
-- [x] Prompt first draft
+- [x] introduction first draft
+- [x] prompt first draft
 - [ ] contact page
 - [ ] cartoon avatar
 - [ ] navigation
 - [ ] static resume
 - [ ] final animations
 - [ ] final design
+- [ ] error handling
 
 ## Other
 

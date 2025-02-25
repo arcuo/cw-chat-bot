@@ -1,11 +1,13 @@
 // Purpose: Generate embeddings from the "./resume_files" directory text files
 // TODO: Clear embeddings table before running this script
 import fs from "node:fs";
-import { generateEmbeddings } from "./embedding";
-import { db } from "../db";
-import { embeddings } from "../db/schema/embeddings";
+import { db } from "../../db";
+import { embeddings } from "../../db/schema/embeddings";
+import { generateEmbeddings } from "../../ai/embedding";
 
-const getFilesFromDirectory = (directory = "lib/ai/resume_files"): string[] => {
+const getFilesFromDirectory = (
+	directory = "lib/scripts/resume_files",
+): string[] => {
 	const files = fs.readdirSync(directory);
 	return files
 		.filter((file) => file.endsWith(".txt"))
@@ -23,7 +25,7 @@ async function main(clear = true) {
 	const files = getFilesFromDirectory();
 	const chunks: string[] = [];
 
-    if (clear) {
+	if (clear) {
 		console.log("Clearing embeddings table");
 		await db.delete(embeddings);
 	}

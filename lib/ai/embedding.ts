@@ -3,17 +3,8 @@ import { google } from "@ai-sdk/google";
 import { cosineDistance, desc, gt, sql } from "drizzle-orm";
 import { embeddings } from "../db/schema/embeddings";
 import { db } from "../db";
-import path from "node:path";
-import fs from "node:fs";
 
 const embeddingModel = google.textEmbeddingModel("text-embedding-004");
-
-const generateChunks = (input: string): string[] => {
-	return input
-		.trim()
-		.split(".")
-		.filter((i) => i !== "");
-};
 
 export const generateEmbeddings = async (
 	chunks: string[],
@@ -34,7 +25,13 @@ export const generateEmbedding = async (value: string): Promise<number[]> => {
 	return embedding;
 };
 
-export const findRelevantContent = async (
+export const findRelevantContent = async (queries: string[], limit = 4) => {
+	return Promise.all(
+		queries.map((query) => findRelevantContentForQuery(query, limit)),
+	);
+};
+
+export const findRelevantContentForQuery = async (
 	/** The user query */
 	userQuery: string,
 	/** The number of guides to return */
@@ -56,5 +53,10 @@ export const findRelevantContent = async (
 		.where(gt(similarity, 0.5))
 		.orderBy((t) => desc(t.similarity))
 		.limit(limit);
-	return similarGuides;
+
+	return similarGuides.map((guide) => ({
+		query: userQuery,
+		content: guide.name,
+		similarity: guide.similarity,
+	}));
 };

@@ -1,5 +1,6 @@
 "use client";
 import { Prompt } from "@/components/ui/prompt";
+import { Toaster } from "@/components/ui/toaster";
 import { TypeWriter } from "@/components/ui/typewriter";
 import { atom, useAtomValue } from "jotai";
 import { AnimatePresence, motion } from "motion/react";
@@ -10,6 +11,7 @@ export default function Main() {
 	const showPromptValue = useAtomValue(showPrompt);
 	return (
 		<main>
+			<Toaster />
 			<AnimatePresence mode="wait">
 				{showPromptValue ? (
 					<motion.div
@@ -35,7 +37,6 @@ export default function Main() {
 								"Feel free to ask me anything about me, my work, or anything else you'd like to know!",
 							]}
 						/>
-						<div className="mt-5 text-[.9rem] opacity-40">Press spacebar</div>
 					</motion.div>
 				)}
 			</AnimatePresence>

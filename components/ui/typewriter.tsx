@@ -9,13 +9,14 @@ interface TypeWriterProps {
 	opts?: {
 		boxFadeDuration?: number;
 		letterDelayMs?: number;
+		automated?: boolean;
 	};
 }
 
 const LETTER_DELAY = 20; // milliseconds
 
 export function TypeWriter({ sentences, opts }: TypeWriterProps) {
-	const { letterDelayMs = LETTER_DELAY } = opts ?? {};
+	const { letterDelayMs = LETTER_DELAY, automated = false } = opts ?? {};
 	const setShowPrompt = useSetAtom(showPrompt);
 
 	const [sentenceIndex, setSentenceIndex] = useState(0);
@@ -24,7 +25,14 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
+		console.log(sentences.length);
+		if (automated) setSentenceIndex(sentences.length);
+	}, [automated, sentences]);
+
+	useEffect(() => {
 		// On spacebar, increment sentenceIndex
+		if (automated) return;
+
 		const controller = new AbortController();
 		window.addEventListener(
 			"keydown",
@@ -53,11 +61,11 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 	}, []);
 
 	return (
-		<div
-			ref={containerRef}
-			className="scrollbar-hidden flex h-30 flex-col gap-2 overflow-auto font-[300] text-xl uppercase leading-none"
-		>
-			<AnimatePresence>
+		<div className="flex flex-col gap-2">
+			<div
+				ref={containerRef}
+				className="scrollbar-hidden flex h-30 flex-col gap-2 overflow-auto font-[300] text-xl leading-none"
+			>
 				{sentences.slice(0, sentenceIndex + 1).map((sentence, si) => (
 					<motion.div
 						ref={sentenceRef}
@@ -73,7 +81,11 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 						/>
 					</motion.div>
 				))}
-			</AnimatePresence>
+			</div>
+
+			{!automated ? (
+				<div className="mt-5 text-[.9rem] opacity-40">Press spacebar</div>
+			) : null}
 		</div>
 	);
 }
