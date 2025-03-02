@@ -3,7 +3,7 @@
 import fs from "node:fs";
 import { db } from "../../db";
 import { embeddings } from "../../db/schema/embeddings";
-import { generateEmbeddings } from "../../ai/embedding";
+import { generateEmbeddings } from "../../db/utils/embedding";
 
 const getFilesFromDirectory = (
 	directory = "lib/scripts/resume_files",

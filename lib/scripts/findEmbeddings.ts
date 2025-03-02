@@ -1,5 +1,5 @@
 // Test script to find embeddings
-import { findRelevantContent } from "../ai/embedding";
+import { findRelevantContent } from "../db/utils/embedding";
 
 (async () => {
 	const userInput = "Have you worked with rust?";

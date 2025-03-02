@@ -1,0 +1,6 @@
+Curious programmer who is not afraid to dive into a codebase.
+Good at debugging and troubleshooting with a wide range of knowledge and experience in web development and debugging
+Rust programming language for cryptographic and blockchain applications
+TypeScript and React development for frontend
+TypeScript and Node development for developer experience scripts and workflows
+Git and Github for version control, CI workflow development and collaboration

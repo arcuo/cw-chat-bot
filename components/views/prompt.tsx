@@ -1,14 +1,16 @@
 "use client";
 
 import { Fragment, useEffect, useRef } from "react";
-import { Button } from "./button";
-import { Textarea } from "./textarea";
+import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
 import { useChat } from "@ai-sdk/react";
 import { toast } from "sonner";
-import { LayoutGroup, motion } from "motion/react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import { Kbd } from "./kbd";
-import { Loader } from "./loader";
+import { Kbd } from "../ui/kbd";
+import { Loader } from "../ui/loader";
+import * as Avatar from "../ui/avatar";
+import Image from "next/image";
 
 const examplePrompts = [
 	"Who are you and where are you from?",
@@ -51,13 +53,11 @@ export function Prompt() {
 			{messages.length ? (
 				<>
 					<motion.div
-						layout
 						className={"flex flex-col gap-3 font-[300] text-sm leading-none"}
 					>
 						{messages.map((m, i) => {
 							return (
 								<motion.div
-									layout
 									className={cn(
 										"relative h-fit w-fit max-w-[80%] rounded-lg rounded-tl-none border border-neutral-400 p-3 font-extralight text-[1rem] shadow-sm",
 										{

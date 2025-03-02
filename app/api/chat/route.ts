@@ -1,13 +1,14 @@
-import { AISDKError, streamText, tool } from "ai";
+import { streamText, tool } from "ai";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
-import { findRelevantContent } from "@/lib/ai/embedding";
+import { findRelevantContent } from "@/lib/db/utils/embedding";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
 	const { messages } = await req.json();
+	console.log(messages)
 
 	const result = streamText({
 		model: google("gemini-2.0-flash-exp"),
