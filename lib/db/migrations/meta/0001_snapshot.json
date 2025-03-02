@@ -1,6 +1,6 @@
 {
-  "id": "8f18b82e-a510-4b64-a990-d4dcc51d20d3",
-  "prevId": "760a6dc2-d7df-4fae-a032-7ce075d69d77",
+  "id": "cdd4cf6c-25d2-44cd-8733-30e21fcb750a",
+  "prevId": "8e66a32f-d13f-4593-8437-6a6c57898d2c",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -42,6 +42,57 @@
           "isUnique": false,
           "concurrently": false,
           "method": "hnsw",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.resumes": {
+      "name": "resumes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "hash": {
+          "name": "hash",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "content": {
+          "name": "content",
+          "type": "varchar(10000)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "hashIndex": {
+          "name": "hashIndex",
+          "columns": [
+            {
+              "expression": "hash",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
           "with": {}
         }
       },
