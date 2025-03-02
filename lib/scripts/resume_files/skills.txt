@@ -1,6 +1,11 @@
-Curious programmer who is not afraid to dive into a codebase.
-Good at debugging and troubleshooting with a wide range of knowledge and experience in web development and debugging
+curious programmer who is not afraid to dive into a codebase.
+good at problem solving and finding solutions to complex problems.
+good at writing clean and maintainable code.
+good at debugging and troubleshooting with a wide range of knowledge and experience in web development and debugging
 Rust programming language for cryptographic and blockchain applications
 TypeScript and React development for frontend
 TypeScript and Node development for developer experience scripts and workflows
 Git and Github for version control, CI workflow development and collaboration
+Python for CLI scripts and automation
+Golang for backend development
+JavaScript for frontend development

@@ -34,22 +34,15 @@ export const ResumeSchema = z
 				}),
 			)
 			.describe("The projects section of the resume"),
-		workexperience: z
-			.array(
-				z.object({
-					title: z.string().describe("The title of the work experience"),
-					subtitle: z.string().describe("The subtitle of the work experience"),
-					content: z.string().describe("The content of the work experience"),
-				}),
-			)
-			.describe("The work experience section of the resume"),
-		education: z.array(
-			z.object({
-				title: z.string().describe("The title of the education"),
-				subtitle: z.string().describe("The subtitle of the education"),
-				content: z.string().describe("The content of the education"),
-			}),
-		),
+		personality: z
+			.object({
+				title: z.string().describe("The title of the personality section"),
+				subtitle: z
+					.string()
+					.describe("The subtitle of the personality section"),
+				content: z.string().describe("The content of the personality section"),
+			})
+			.describe("The personality section of the resume"),
 	})
 	.describe("Resume output");
 

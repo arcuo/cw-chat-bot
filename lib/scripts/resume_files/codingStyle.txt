@@ -1,0 +1,8 @@
+not afraid to learn new things and use any language or framework.
+a curious developer and I like to learn new things.
+a big fan of type safety in the form of TypeScript or Rust
+a big proponent of clean code and writing code that is readable and maintainable
+like to write code that provide great developer experience
+have experimented a lot with generics and type inference in order to ensure more advanced type safety.
+have a strong interest in the field of computer science and I am always looking for new challenges and opportunities.
+have developed in frontend frameworks like Vite, Next.js, Astro

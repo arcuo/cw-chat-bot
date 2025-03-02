@@ -1,5 +1,5 @@
-I studied a cognitive science bachelor's degree at Aarhus University in 2015 to 2018.
-I studied a computer science bachelor's degree at Aarhus University in 2018 to 2020.
-I studied a computer science master's degree at Aarhus University in 2023 to 2025.
-I focused on Cryptography in my CS master's degree.
-I took subjects in Cryptography for "Randomised Algorithms", "Quantum information processing", "Cryptography 1 and 2", "Cryptographic Computing
+studied a cognitive science bachelor's degree at Aarhus University in 2015 to 2018.
+studied a computer science bachelor's degree at Aarhus University in 2018 to 2020.
+studied a computer science master's degree at Aarhus University in 2023 to 2025.
+focused on Cryptography in my CS master's degree.
+took subjects in Cryptography for "Randomised Algorithms", "Quantum information processing", "Cryptography 1 and 2", "Cryptographic Computing

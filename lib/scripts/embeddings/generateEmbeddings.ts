@@ -1,8 +1,8 @@
 // Purpose: Generate embeddings from the "./resume_files" directory text files
-// TODO: Clear embeddings table before running this script
+
 import fs from "node:fs";
 import { db } from "../../db";
-import { embeddings } from "../../db/schema/embeddings";
+import { embeddings, type EmbeddingTitle } from "../../db/schema/embeddings";
 import { generateEmbeddings } from "../../db/utils/embedding";
 
 const getFilesFromDirectory = (
@@ -23,25 +23,31 @@ const generateChunksFromFile = (path: string): string[] => {
 
 async function main(clear = true) {
 	const files = getFilesFromDirectory();
-	const chunks: string[] = [];
+	const allFileEmbeddings = [];
 
 	if (clear) {
-		console.log("Clearing embeddings table");
+		console.log("Clearing embeddings tables");
 		await db.delete(embeddings);
 	}
 
 	console.log("Processing files");
 	for (const file of files) {
+		const tableName = file
+			.split("/")
+			.pop()
+			?.replace(".txt", "") as EmbeddingTitle;
+
+		console.log(`Processing file: ${tableName}`);
 		const chunksFromFile = generateChunksFromFile(file);
-		chunks.push(...chunksFromFile);
+		const fileEmbeddings = await generateEmbeddings(chunksFromFile);
+		allFileEmbeddings.push(
+			...fileEmbeddings.map((e) => ({ ...e, title: tableName })),
+		);
 	}
 
-	console.log("Embedding chunks");
-	const fileEmbeddings = await generateEmbeddings(chunks);
-	console.log("Adding embeddings to database");
-
+	console.log("Inserting embeddings");
 	try {
-		await db.insert(embeddings).values(fileEmbeddings);
+		await db.insert(embeddings).values(allFileEmbeddings);
 	} catch (e) {
 		if (e instanceof Error)
 			console.error(

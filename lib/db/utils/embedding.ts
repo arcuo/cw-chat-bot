@@ -1,7 +1,7 @@
 import { embed, embedMany } from "ai";
 import { google } from "@ai-sdk/google";
-import { cosineDistance, desc, gt, sql } from "drizzle-orm";
-import { embeddings } from "../schema/embeddings";
+import { and, cosineDistance, desc, eq, gt, sql } from "drizzle-orm";
+import { embeddings, type EmbeddingTitle } from "../schema/embeddings";
 import { db } from "..";
 
 const embeddingModel = google.textEmbeddingModel("text-embedding-004");
@@ -29,10 +29,11 @@ export const findRelevantContent = async (
 	queries: string[],
 	limit = 4,
 	threshold = 0.5,
+	title: EmbeddingTitle | "all" = "all",
 ) => {
 	return Promise.all(
 		queries.map((query) =>
-			findRelevantContentForQuery(query, limit, threshold),
+			findRelevantContentForQuery(query, limit, threshold, title),
 		),
 	);
 };
@@ -43,6 +44,7 @@ export const findRelevantContentForQuery = async (
 	/** The number of guides to return */
 	limit = 4,
 	threshold = 0.5,
+	title: EmbeddingTitle | "all" = "all",
 ) => {
 	// Embed the user query
 	const userQueryEmbedded = await generateEmbedding(userQuery);
@@ -57,7 +59,11 @@ export const findRelevantContentForQuery = async (
 	const similarGuides = await db
 		.select({ name: embeddings.content, similarity })
 		.from(embeddings)
-		.where(gt(similarity, threshold))
+		.where(
+			title === "all"
+				? gt(similarity, threshold)
+				: and(gt(similarity, threshold), eq(embeddings.title, title)),
+		)
 		.orderBy((t) => desc(t.similarity))
 		.limit(limit);
 

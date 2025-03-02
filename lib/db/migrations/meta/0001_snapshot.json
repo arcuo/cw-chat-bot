@@ -1,5 +1,5 @@
 {
-  "id": "cdd4cf6c-25d2-44cd-8733-30e21fcb750a",
+  "id": "3c5d7d22-20af-48c8-be5e-6aa4677c2174",
   "prevId": "8e66a32f-d13f-4593-8437-6a6c57898d2c",
   "version": "7",
   "dialect": "postgresql",
@@ -25,11 +25,18 @@
           "type": "vector(768)",
           "primaryKey": false,
           "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "title",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {
-        "embeddingIndex": {
-          "name": "embeddingIndex",
+        "embedding.index": {
+          "name": "embedding.index",
           "columns": [
             {
               "expression": "embedding",
@@ -42,6 +49,21 @@
           "isUnique": false,
           "concurrently": false,
           "method": "hnsw",
+          "with": {}
+        },
+        "embedding.title.index": {
+          "name": "embedding.title.index",
+          "columns": [
+            {
+              "expression": "title",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
           "with": {}
         }
       },
@@ -101,7 +123,20 @@
       "uniqueConstraints": {}
     }
   },
-  "enums": {},
+  "enums": {
+    "public.title": {
+      "name": "title",
+      "schema": "public",
+      "values": [
+        "codingStyle",
+        "education",
+        "personality",
+        "projects",
+        "skills",
+        "workExperience"
+      ]
+    }
+  },
   "schemas": {},
   "_meta": {
     "columns": {},
