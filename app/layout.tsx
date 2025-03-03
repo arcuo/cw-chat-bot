@@ -18,8 +18,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={cn(roboto_condensed.className, "h-full w-full")}>
-				<div className="flex h-full flex-col gap-2 overflow-auto px-[20%] py-[15rem] text-2xl">
+			<body
+				className={cn(
+					roboto_condensed.className,
+					"scrollbar-thumb-sky-700 scrollbar-track-sky-300 scrollbar-thin h-full w-full",
+				)}
+			>
+				<div className="flex h-full flex-col gap-2 overflow-auto px-[20%] py-[15rem]">
 					<Title />
 					<hr className="mb-5 w-40 border-neutral-700 opacity-20" />
 					{children}

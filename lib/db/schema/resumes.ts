@@ -7,7 +7,7 @@ export const resumes = t.pgTable(
 		id: t.serial("id").primaryKey(),
 		hash: t.varchar("hash", { length: 64 }).notNull(),
 		createdAt: t.timestamp("createdAt").defaultNow().notNull(),
-		content: t.varchar("content", { length: 10000 }).notNull(),
+		content: t.jsonb("content").notNull(),
 	},
 	(table) => ({
 		hashIndex: t.index("hashIndex").on(table.hash),

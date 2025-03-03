@@ -2,14 +2,14 @@ import { db } from "..";
 import { resumes } from "../schema/resumes";
 import { eq } from "drizzle-orm";
 import { SHA256 } from "crypto-js";
-import type { Resume } from "@/lib/schemas/resume";
+import type { Resume } from "@/lib/types/resume";
 
-export const insertResume = async (resume: string) => {
+export const insertResume = async (resume: Resume) => {
 	const result = await db
 		.insert(resumes)
 		.values([
 			{
-				hash: SHA256(resume).toString(),
+				hash: SHA256(JSON.stringify(resume)).toString(),
 				content: resume,
 			},
 		])

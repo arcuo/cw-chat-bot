@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS "resumes" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"hash" varchar(64) NOT NULL,
 	"createdAt" timestamp DEFAULT now() NOT NULL,
-	"content" varchar(10000) NOT NULL
+	"content" jsonb NOT NULL
 );
 --> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "embedding.index" ON "embeddings" USING hnsw ("embedding" vector_cosine_ops);--> statement-breakpoint

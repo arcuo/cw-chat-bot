@@ -3,29 +3,14 @@
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Textarea } from "../ui/textarea";
-import { ResumeRequestSchema } from "@/lib/schemas/resume";
+import { type Resume, ResumeRequestSchema } from "@/lib/types/resume";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { toast } from "sonner";
 
 export const ResumeForm = () => {
 	const qc = useQueryClient();
-	const [mkdown, setMkdown] = useState(`# header
-
-		## Subheader
-A paragraph with *emphasis* and **strong importance**.
-
-> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-
-* Lists
-* [ ] todo
-* [x] done
-
-A table:
-
-| a | b |
-| - | - |`);
+	const [resume, setResume] = useState<Resume | null>(null);
 
 	const { mutate, status, error } = useMutation({
 		mutationFn: async (req: Zod.infer<typeof ResumeRequestSchema>) => {
@@ -35,15 +20,17 @@ A table:
 				headers: {
 					"Content-Type": "application/json",
 				},
-			}).then((res) => res.json() as unknown as { hash: string; text: string });
+			}).then(
+				(res) => res.json() as unknown as { hash: string; resume: Resume },
+			);
 		},
 		onError: (error) => {
-			console.error(error);
+			toast.error(error.message);
 		},
-		onSuccess: ({ hash, text }) => {
+		onSuccess: ({ hash, resume }) => {
 			// Preload
-			qc.setQueryData(["resume", hash], text);
-			setMkdown(text);
+			qc.setQueryData(["resume", hash], resume);
+			setResume(resume);
 		},
 	});
 
@@ -62,10 +49,8 @@ A table:
 
 	return (
 		<>
-			{mkdown && (
-				<div className="text-sm">
-					<Markdown remarkPlugins={[remarkGfm]}>{mkdown}</Markdown>
-				</div>
+			{resume && (
+				<div className="text-sm">{JSON.stringify(resume, null, 2)}</div>
 			)}
 			<form
 				onSubmit={(e) => {

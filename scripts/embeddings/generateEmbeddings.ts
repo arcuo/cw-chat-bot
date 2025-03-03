@@ -1,12 +1,12 @@
 // Purpose: Generate embeddings from the "./resume_files" directory text files
 
+import { db } from "@/lib/db";
+import { embeddings, type EmbeddingTitle } from "@/lib/db/schema/embeddings";
+import { generateEmbeddings } from "@/lib/db/utils/embedding";
 import fs from "node:fs";
-import { db } from "../../db";
-import { embeddings, type EmbeddingTitle } from "../../db/schema/embeddings";
-import { generateEmbeddings } from "../../db/utils/embedding";
 
 const getFilesFromDirectory = (
-	directory = "lib/scripts/resume_files",
+	directory = "lib/data/descriptions",
 ): string[] => {
 	const files = fs.readdirSync(directory);
 	return files

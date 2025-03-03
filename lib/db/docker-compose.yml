@@ -13,5 +13,6 @@ services:
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: cwdb
 
+# Makes the DB persist between "docker compose down"
 volumes:
   db-data: {}

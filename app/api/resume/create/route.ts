@@ -5,11 +5,16 @@ import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { findRelevantContent } from "@/lib/db/utils/embedding";
 import * as resumeDb from "@/lib/db/utils/resumes";
-import { ResumeRequestSchema, ResumeSchema } from "@/lib/schemas/resume";
+import { ResumeRequestSchema, ResumeSchema } from "@/lib/types/resume";
 import { type NextRequest, NextResponse } from "next/server";
 import { DrizzleError } from "drizzle-orm";
+import type { EmbeddingTitle } from "@/lib/db/schema/embeddings";
 
-const sections = ["Introduction", "Skills", "Personality"];
+const sections: (EmbeddingTitle | "introduction")[] = [
+	"introduction",
+	"skills",
+	"personality",
+];
 
 const system = ({ userInfo, userQuery }: z.infer<typeof ResumeRequestSchema>) =>
 	`
@@ -60,7 +65,12 @@ Generate a title, subtitle, and body for the section.
 										),
 								}),
 								execute: async ({ queries }) =>
-									findRelevantContent(queries, 15, 0.4),
+									findRelevantContent(
+										queries,
+										15,
+										0.4,
+										section === "introduction" ? "all" : section,
+									),
 							}),
 						},
 						maxTokens: 10000,
@@ -69,12 +79,6 @@ Generate a title, subtitle, and body for the section.
 			)
 		).flatMap(({ steps }) => steps);
 
-		console.log(
-			messages.map(({ text }) => ({
-				text,
-			})),
-		);
-
 		const { object } = await generateObject({
 			model: google("gemini-2.0-flash-exp"),
 			system: system(request.data),
@@ -82,20 +86,13 @@ Generate a title, subtitle, and body for the section.
 			schema: ResumeSchema,
 		});
 
-		const text = JSON.stringify(object, null, 2);
-		console.log(text);
-
 		// Add resume to database
 
-		if (text.length === 0) {
-			return new NextResponse("Could not generate resume", { status: 500 });
-		}
-
-		const hash = await resumeDb.insertResume(text);
+		const hash = await resumeDb.insertResume(object);
 
 		return NextResponse.json({
 			hash,
-			text,
+			resume: object,
 		});
 	} catch (e) {
 		if (e instanceof DrizzleError)
