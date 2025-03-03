@@ -1,6 +1,6 @@
 "use client";
 import { Prompt } from "@/components/views/prompt";
-import { SlideShow } from "@/components/ui/SlideShow";
+import { SlideShow } from "@/components/ui/slideShow";
 import { Toaster } from "@/components/ui/toaster";
 import { TypeWriter } from "@/components/ui/typewriter";
 import { atom, useAtomValue } from "jotai";

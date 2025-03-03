@@ -30,16 +30,26 @@ const Root = forwardRef<
 	);
 });
 
-const Title = (props: React.ComponentProps<typeof motion.h3>) => {
-	return <motion.h3 className="font-bold text-lg" {...props} />;
+const Title = ({
+	className,
+	...props
+}: React.ComponentProps<typeof motion.h3>) => {
+	return (
+		<motion.h3 className={cn("font-bold text-lg", className)} {...props} />
+	);
 };
 
-const Subtitle = (props: React.HTMLAttributes<HTMLParagraphElement>) => {
-	return <p className="text-gray-500 text-sm italic" {...props} />;
+const Subtitle = ({
+	className,
+	...props
+}: React.HTMLAttributes<HTMLParagraphElement>) => {
+	return (
+		<p className={cn("text-gray-500 text-sm italic", className)} {...props} />
+	);
 };
 
-const EllipsisContent = (props: React.ComponentProps<typeof motion.div>) => {
-	return <motion.div className="my-2 line-clamp-2 text-pretty" {...props} />;
+const EllipsisContent = ({className, ...props}: React.ComponentProps<typeof motion.div>) => {
+	return <motion.div className={cn("my-2 line-clamp-2 text-pretty", className)} {...props} />;
 };
 
 const Content = forwardRef<
