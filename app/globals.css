@@ -5,8 +5,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
 }
 
 /* Track */
@@ -17,20 +16,19 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 html,
 body {
   height: 100%;
   width: 100%;
-  font-family: "Roboto Condensed", sans-serif;
 }
 
 html.wf-loading {
@@ -40,6 +38,20 @@ html.wf-loading {
 }
 
 body {
+  background: #fff8f6;
+}
+
+.gradient-background {
+  --degrees: 90deg;
+  --outer: hsla(0, 0%, 100%, 1);
+  --inner: rgb(252, 241, 224);
+  background: var(--outer);
+  background: linear-gradient(var(--degrees), var(--outer) 0%, var(--inner) 50%, var(--outer) 98%);
+  background: -moz-linear-gradient(var(--degrees), var(--outer) 0%, var(--inner) 50%, var(--outer) 98%);
+  background: -webkit-linear-gradient(var(--degrees), var(--outer) 0%, var(--inner) 50%, var(--outer) 98%);
+}
+
+.lined-background {
   --rgb: 255 255 255;
   --opacity: 0.06;
   --size: 10px 10px;

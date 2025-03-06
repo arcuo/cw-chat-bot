@@ -1,39 +1,84 @@
 "use client";
-import { Prompt } from "@/components/views/prompt";
-import { SlideShow } from "@/components/ui/slideShow";
-import { Toaster } from "@/components/ui/toaster";
-import { TypeWriter } from "@/components/ui/typewriter";
-import { atom, useAtomValue } from "jotai";
-import { AnimatePresence } from "motion/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ResumeForm } from "@/components/views/resumeForm";
 
-const queryClient = new QueryClient();
-export const showPrompt = atom(false);
+import { AnimatePresence, motion, type Variants } from "motion/react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Nova_Mono } from "next/font/google";
+import { cn } from "@/lib/utils";
 
-export default function Main() {
-	const showPromptValue = useAtomValue(showPrompt);
+const font_mono = Nova_Mono({ subsets: ["latin"], weight: ["400"] });
+
+export default function Home() {
 	return (
-		<QueryClientProvider client={queryClient}>
-			<main>
-				<Toaster />
-				<AnimatePresence mode="wait">
-					<SlideShow index={showPromptValue ? 1 : 0} direction="left">
-						{/* Introduction */}
-						<TypeWriter
-							sentences={[
-								"Hey there!",
-								"Welcome to my resume!",
-								"I'm a developer, which means that I've gone a little overboard and made a chat bot...",
-								"Hopefully, you'll find it entertaining and informative as to who I am and what I do.",
-								"Feel free to ask me anything about me, my work, or anything else you'd like to know!",
-							]}
-						/>
-						{/* Prompt */}
-						<ResumeForm />
-					</SlideShow>
-				</AnimatePresence>
-			</main>
-		</QueryClientProvider>
+		<div>
+			<motion.h1
+				className="w-[90%] text-balance font-bold text-6xl leading-18"
+				layout
+			>
+				<p>
+					<ScrollingWord
+						words={["Adaptable", "Versatile", "Effective", "Agreeable"]}
+					/>{" "}
+					Software Developer
+				</p>
+				<p>
+					Developing{" "}
+					<ScrollingWord
+						words={["accessible", "responsive", "performant"]}
+					/>{" "}
+					web applications
+				</p>
+			</motion.h1>
+		</div>
 	);
 }
+
+const variants: Variants = {
+	initial: { y: 100 },
+	animate: { y: 0 },
+	exit: { y: -100 },
+};
+
+export const ScrollingWord = ({ words }: { words: string[] }) => {
+	const [index, setIndex] = useState(0);
+	const ref = useRef<HTMLSpanElement>(null);
+
+	const sortedWords = useMemo(
+		() => words.sort((a, b) => b.length - a.length),
+		[words],
+	);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setIndex((i) => (i + 1) % words.length);
+		}, 5000);
+		return () => clearInterval(interval);
+	}, []);
+
+	return (
+		<motion.span className="relative inline-block overflow-hidden text-justify align-bottom">
+			<AnimatePresence mode="popLayout" initial={false}>
+				{sortedWords.map((w, i) => {
+					if (index === i) {
+						return (
+							<motion.span
+								ref={ref}
+								className={cn(
+									font_mono.className,
+									"inline-block font-bold text-amber-700",
+								)}
+								key={`${w}-${i}`}
+								initial="initial"
+								animate="animate"
+								exit="exit"
+								transition={{ duration: 0.5, ease: [0.55, 0, 1, 0.45] }}
+								variants={variants}
+							>
+								{w}
+							</motion.span>
+						);
+					}
+				})}
+			</AnimatePresence>
+		</motion.span>
+	);
+};

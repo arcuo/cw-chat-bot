@@ -1,19 +1,16 @@
 "use client";
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import type * as React from "react";
 
-import { cn } from "@/lib/utils";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
-import { Button } from "./button";
+import { type ReactNode, useState } from "react";
 
 type DialogProps = {
-	trigger: React.ReactNode;
-	title: string;
-	subtitle: string;
-	content: React.ReactNode;
+	trigger: ReactNode;
+	title: ReactNode;
+	subtitle: ReactNode;
+	content: ReactNode;
 };
 
 export const Dialog = ({
@@ -38,6 +35,7 @@ export const Dialog = ({
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								exit={{ opacity: 0 }}
+								transition={{ duration: 0.1 }}
 							/>
 						</DialogPrimitive.Overlay>
 						<DialogPrimitive.Content asChild>
@@ -45,16 +43,16 @@ export const Dialog = ({
 								initial={{ y: 10, opacity: 0 }}
 								animate={{ y: 0, opacity: 1 }}
 								exit={{ y: 10, opacity: 0 }}
-								className="-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 flex transform flex-col gap-2 overflow-hidden rounded-lg bg-neutral-50 shadow-md *:p-4"
+								className="-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 flex w-[40%] transform flex-col gap-2 overflow-hidden rounded-lg bg-neutral-50 shadow-md *:p-4"
 							>
 								<div className="grid grid-cols-2 gap-2 border-neutral-200 border-b">
 									<DialogPrimitive.Title className="text-xl">
 										{title}
 									</DialogPrimitive.Title>
-									<DialogPrimitive.Description className="row-start-2 text-neutral-700 text-sm italic">
+									<DialogPrimitive.Description className="col-span-2 row-start-2 text-neutral-700 text-sm italic">
 										{subtitle}
 									</DialogPrimitive.Description>
-									<div className="row-span-2 text-right">
+									<div className="col-start-2 text-right">
 										<DialogPrimitive.Close className="cursor-pointer p-1 text-neutral-500 hover:text-neutral-900">
 											<Cross2Icon />
 										</DialogPrimitive.Close>

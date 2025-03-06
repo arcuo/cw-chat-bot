@@ -1,5 +1,7 @@
 import { cn } from "@/lib/utils";
-import type { HtmlHTMLAttributes } from "react";
+import { motion } from "motion/react";
+import { useLayoutEffect, useState, type HtmlHTMLAttributes } from "react";
+import useMeasure from "react-use-measure";
 
 export const Tag = ({
 	className,
@@ -13,3 +15,46 @@ export const Tag = ({
 		{...props}
 	/>
 );
+
+export const TagsCarousel = ({
+	tags,
+	parentWidth,
+}: {
+	tags: string[];
+	parentWidth: number;
+}) => {
+	const [ref, { width }] = useMeasure();
+	const [shouldScroll, setShouldScroll] = useState(false);
+
+	useLayoutEffect(() => {
+		if (parentWidth < width) {
+			setShouldScroll(true);
+		}
+	}, [parentWidth, width]);
+
+	return (
+		<motion.div
+			ref={ref}
+			className="flex gap-2"
+			variants={{
+				hover: shouldScroll
+					? {
+							x: [0, -width / 2 - 8],
+							transition: {
+								ease: "linear",
+								duration: 25,
+								repeat: Number.POSITIVE_INFINITY,
+								repeatType: "loop",
+								repeatDelay: 0,
+							},
+						}
+					: {},
+			}}
+			initial={{ x: 0, transition: { duration: 0.2 } }}
+		>
+			{[...tags, ...(shouldScroll ? tags : [])].map((t, i) => (
+				<Tag key={i}>{t}</Tag>
+			))}
+		</motion.div>
+	);
+};

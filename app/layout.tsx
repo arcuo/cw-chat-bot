@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Roboto_Condensed } from "next/font/google";
+import { Roboto_Flex } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { Title } from "@/components/ui/title";
+import { Header } from "@/components/ui/header";
+import { Toaster } from "@/components/ui/toaster";
 
-const roboto_condensed = Roboto_Condensed({ subsets: ["latin"] });
+const font = Roboto_Flex({ subsets: ["latin"], weight: ["100", "300"] });
 
 export const metadata: Metadata = {
 	title: "Hugh Benjamin Zachariae",
@@ -20,15 +21,13 @@ export default function RootLayout({
 		<html lang="en">
 			<body
 				className={cn(
-					roboto_condensed.className,
-					"scrollbar-thumb-sky-700 scrollbar-track-sky-300 scrollbar-thin h-full w-full",
+					font.className,
+					"gradient-background flex h-full w-full flex-col gap-2 overflow-auto",
 				)}
 			>
-				<div className="flex h-full flex-col gap-2 overflow-auto px-[5rem] py-[15rem]">
-					<Title />
-					<hr className="mb-5 w-40 border-neutral-700 opacity-20" />
-					{children}
-				</div>
+				<Header />
+				<main className="overflow-auto p-5">{children}</main>
+				<Toaster />
 			</body>
 		</html>
 	);

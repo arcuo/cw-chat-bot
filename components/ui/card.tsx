@@ -5,7 +5,7 @@ import { motion, type Variants } from "motion/react";
 import { forwardRef } from "react";
 
 const RootVariants: Variants = {
-	hover: { y: -5, scale: 1.02, marginLeft: 4, marginRight: 4 },
+	hover: { y: -6 },
 };
 
 const Root = forwardRef<
@@ -18,10 +18,11 @@ const Root = forwardRef<
 		<motion.button
 			ref={ref}
 			className={cn(
-				"flex cursor-pointer flex-col gap-2 rounded-lg bg-neutral-50/10 p-4 text-left shadow-md",
+				"flex cursor-pointer flex-col gap-2 rounded-lg border border-neutral-200 bg-neutral-50/10 p-4 text-left shadow-md",
 				className,
 			)}
 			whileHover="hover"
+			whileTap={{scale: 0.99}}
 			variants={RootVariants}
 			{...rest}
 		>
@@ -34,9 +35,7 @@ const Title = ({
 	className,
 	...props
 }: React.ComponentProps<typeof motion.h3>) => {
-	return (
-		<motion.h3 className={cn("font-bold text-lg", className)} {...props} />
-	);
+	return <motion.h3 className={cn(" text-lg", className)} {...props} />;
 };
 
 const Subtitle = ({
@@ -48,8 +47,16 @@ const Subtitle = ({
 	);
 };
 
-const EllipsisContent = ({className, ...props}: React.ComponentProps<typeof motion.div>) => {
-	return <motion.div className={cn("my-2 line-clamp-2 text-pretty", className)} {...props} />;
+const EllipsisContent = ({
+	className,
+	...props
+}: React.ComponentProps<typeof motion.div>) => {
+	return (
+		<motion.div
+			className={cn("my-2 line-clamp-2 text-pretty", className)}
+			{...props}
+		/>
+	);
 };
 
 const Content = forwardRef<
