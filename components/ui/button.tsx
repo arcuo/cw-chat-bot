@@ -8,6 +8,9 @@ import {
 	type PropsWithChildren,
 } from "react";
 import * as Slot from "@radix-ui/react-slot";
+import Link from "next/link";
+
+export const MotionLink = motion(Link);
 
 export function LinkButton({
 	children,
@@ -15,10 +18,11 @@ export function LinkButton({
 	disabled,
 	icon,
 	...rest
-}: React.ComponentProps<typeof motion.a> & ComponentProps<typeof ButtonStyle>) {
+}: React.ComponentProps<typeof MotionLink> &
+	ComponentProps<typeof ButtonStyle>) {
 	return (
-		<ButtonStyle icon={icon} disabled={disabled}>
-			<motion.a {...rest}>{children}</motion.a>
+		<ButtonStyle icon={icon} disabled={disabled} className={className}>
+			<MotionLink {...rest}>{children}</MotionLink>
 		</ButtonStyle>
 	);
 }
@@ -27,7 +31,12 @@ const ButtonStyle = ({
 	children,
 	disabled,
 	icon,
-}: PropsWithChildren & { disabled?: boolean; icon?: boolean }) => {
+	className,
+}: PropsWithChildren & {
+	disabled?: boolean;
+	icon?: boolean;
+	className?: string;
+}) => {
 	return (
 		<Slot.Root
 			className={cn(
@@ -36,6 +45,7 @@ const ButtonStyle = ({
 					"pointer-events-none opacity-50": disabled,
 					"flex size-8 items-center justify-center p-[5px] *:size-full": icon,
 				},
+				className,
 			)}
 			// @ts-ignore
 			whileHover={{ scale: 1.05 }}
@@ -81,10 +91,9 @@ export function Button({
 	useEffect(() => stopInterval, []);
 
 	return (
-		<ButtonStyle icon={icon} disabled={disabled}>
+		<ButtonStyle icon={icon} disabled={disabled} className={className}>
 			<motion.button
 				type="button"
-				className={className}
 				onMouseDown={
 					onHoldDown
 						? () => {

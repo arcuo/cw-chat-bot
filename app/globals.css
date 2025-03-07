@@ -41,7 +41,7 @@ body {
   background: #fff8f6;
 }
 
-.gradient-background {
+.gradient1-background {
   --degrees: 90deg;
   --outer: hsla(0, 0%, 100%, 1);
   --inner: rgb(252, 241, 224);
@@ -50,6 +50,17 @@ body {
   background: -moz-linear-gradient(var(--degrees), var(--outer) 0%, var(--inner) 50%, var(--outer) 98%);
   background: -webkit-linear-gradient(var(--degrees), var(--outer) 0%, var(--inner) 50%, var(--outer) 98%);
 }
+
+.gradient2-background {
+  --degrees: 125deg;
+  --outer: hsla(0, 0%, 100%, 1);
+  --inner: rgb(253, 242, 216);
+  background: var(--outer);
+  background: linear-gradient(var(--degrees), var(--inner) 24%, var(--outer) 79%);
+  background: -moz-linear-gradient(var(--degrees), var(--inner) 24%, var(--outer) 79%);
+  background: -webkit-linear-gradient(var(--degrees), var(--inner) 24%, var(--outer) 79%);
+}
+
 
 .lined-background {
   --rgb: 255 255 255;

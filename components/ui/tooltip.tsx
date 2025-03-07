@@ -5,12 +5,13 @@ import { AnimatePresence, motion } from "motion/react";
 export const Tooltip = ({
 	children,
 	content,
-}: PropsWithChildren & { content: ReactNode }) => {
+	...rest
+}: PropsWithChildren & { content: ReactNode } & RadixTooltip.TooltipProps) => {
 	const [open, setOpen] = useState(false);
 	const id = useId();
 
 	return (
-		<RadixTooltip.Provider delayDuration={400}>
+		<RadixTooltip.Provider delayDuration={400} {...rest}>
 			<RadixTooltip.Root open={open} onOpenChange={setOpen}>
 				<RadixTooltip.Trigger asChild onClick={() => setOpen(true)}>
 					{children}
@@ -18,9 +19,14 @@ export const Tooltip = ({
 				<AnimatePresence>
 					{open && (
 						<RadixTooltip.Portal forceMount key={id}>
-							<RadixTooltip.Content asChild>
+							<RadixTooltip.Content
+								asChild
+								side="left"
+								align="center"
+								sideOffset={15}
+							>
 								<motion.div
-									className="rounded-md border border-neutral-300 px-2 py-[1px] shadow-md"
+									className="rounded-md border border-neutral-300 bg-amber-50 px-2 py-[1px] shadow-md"
 									exit={{
 										opacity: 0,
 										y: 5,
@@ -42,7 +48,7 @@ export const Tooltip = ({
 										},
 									}}
 								>
-									<RadixTooltip.Arrow className="-translate-y-[1px] fill-white" />
+									{/* <RadixTooltip.Arrow className="-translate-y-[1px] fill-white" /> */}
 									{content}
 								</motion.div>
 							</RadixTooltip.Content>

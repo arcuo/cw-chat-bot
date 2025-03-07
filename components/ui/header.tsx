@@ -8,18 +8,29 @@ import {
 	LinkedInLogoIcon,
 } from "@radix-ui/react-icons";
 import { motion, type Variants } from "motion/react";
-import { Tooltip } from "./tooltip";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
-const NavLink = ({ children, ...rest }: ComponentProps<typeof Link>) => {
+const NavLink = ({ children, href, ...rest }: ComponentProps<typeof Link>) => {
+	const pathname = usePathname();
+	const selected = pathname === href;
 	return (
 		<motion.div
 			whileHover="hover"
 			initial="initial"
 			whileTap={{ opacity: 0.7, transition: { duration: 0.1 } }}
 		>
-			<Link {...rest}>{children}</Link>
+			<Link
+				href={href}
+				{...rest}
+				className={cn("transition-colors", {
+					"pointer-events-none text-amber-700": selected,
+				})}
+			>
+				{children}
+			</Link>
 			<motion.hr
-				className="text-amber-500"
+				className="text-amber-700"
 				key="underline"
 				variants={{
 					hover: {
@@ -62,7 +73,7 @@ export function Header() {
 	return (
 		<>
 			<motion.div
-				className="@container grid grid-cols-4 grid-cols-fr px-8 py-5"
+				className="@container grid grid-cols-4 grid-cols-fr gap-2 px-8 py-5"
 				variants={container}
 				initial="hidden"
 				animate="show"
@@ -123,49 +134,35 @@ export function Header() {
 				<motion.div
 					key="links"
 					variants={item}
-					className="flex @max-[1350px]:flex-col @max-[1350px]:items-end items-center justify-end gap-2"
+					className="flex items-center justify-end gap-2"
 				>
-					<address className="@max-[1350px]:mr-0 mr-5 text-sm not-italic">
-						<Tooltip content={copied ? "Copied!" : "Click to copy"}>
-							<button
-								type="button"
-								className="cursor-copy"
-								onClick={() => {
-									navigator.clipboard.writeText("benjamin.zachariae@gmail.com");
-									setCopied(true);
-									setTimeout(() => setCopied(false), 5000);
-								}}
-							>
-								benjamin.zachariae@gmail.com
-							</button>
-						</Tooltip>
-					</address>
-					<div className="@max-[1350px]:flex contents @max-[1350px]:justify-end">
-						<LinkButton
-							aria-label="Email"
-							href="mailto:benjamin.zachariae@gmail.com"
-							target="_blank"
-							icon
-						>
-							<EnvelopeClosedIcon />
-						</LinkButton>
-						<LinkButton
-							aria-label="LinkedIn"
-							href="https://www.linkedin.com/in/benjamin-zachariae-17591a117/"
-							target="_blank"
-							icon
-						>
-							<LinkedInLogoIcon />
-						</LinkButton>
-						<LinkButton
-							aria-label="Github"
-							href="https://github.com/arcuo/"
-							target="_blank"
-							icon
-						>
-							<GitHubLogoIcon />
-						</LinkButton>
-					</div>
+					<LinkButton
+						className="size-11 rounded-full p-2.5"
+						aria-label="Email"
+						href="mailto:benjamin.zachariae@gmail.com"
+						target="_blank"
+						icon
+					>
+						<EnvelopeClosedIcon />
+					</LinkButton>
+					<LinkButton
+						className="size-11 rounded-full p-2.5"
+						aria-label="LinkedIn"
+						href="https://www.linkedin.com/in/benjamin-zachariae-17591a117/"
+						target="_blank"
+						icon
+					>
+						<LinkedInLogoIcon />
+					</LinkButton>
+					<LinkButton
+						className="size-11 rounded-full p-2.5"
+						aria-label="Github"
+						href="https://github.com/arcuo/"
+						target="_blank"
+						icon
+					>
+						<GitHubLogoIcon />
+					</LinkButton>
 				</motion.div>
 			</motion.div>
 			<motion.hr

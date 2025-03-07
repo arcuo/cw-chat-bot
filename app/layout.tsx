@@ -22,7 +22,7 @@ export default function RootLayout({
 			<body
 				className={cn(
 					font.className,
-					"gradient-background flex h-full w-full flex-col gap-2 overflow-auto",
+					"gradient2-background flex h-full w-full flex-col gap-2 overflow-auto",
 				)}
 			>
 				<Header />
