@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Nova_Mono } from "next/font/google";
+import { Sono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { EmailCopy } from "@/components/ui/emailCopy";
 import { LinkButton } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import {
 	type PageTransitionVariants,
 } from "@/components/ui/pageTransitionWrapper";
 
-const font_mono = Nova_Mono({ subsets: ["latin"], weight: ["400"] });
+const font_mono = Sono({ subsets: ["latin"], weight: ["500"] });
 
 export default function Home() {
 	return (
@@ -22,7 +22,7 @@ export default function Home() {
 			>
 				<p>
 					<ScrollingWord
-						words={["Adaptable", "Versatile", "Effective", "Agreeable"]}
+						words={["Adaptable", "Versatile", "Effective"]}
 					/>{" "}
 					Software Developer
 				</p>

@@ -31,7 +31,7 @@ export const Dialog = ({
 					<DialogPrimitive.Portal key="modal" forceMount>
 						<DialogPrimitive.Overlay asChild>
 							<motion.div
-								className="fixed inset-0 bg-neutral-950/10 backdrop-blur-xs"
+								className="fixed inset-0 bg-neutral-950/50"
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								exit={{ opacity: 0 }}
