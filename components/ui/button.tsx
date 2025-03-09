@@ -10,7 +10,7 @@ import {
 import * as Slot from "@radix-ui/react-slot";
 import Link from "next/link";
 
-export const MotionLink = motion(Link);
+export const MotionLink = motion.create(Link);
 
 export function LinkButton({
 	children,

@@ -1,17 +1,13 @@
 "use client";
 
-import { AnimatePresence, motion, type Variants } from "motion/react";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Sono } from "next/font/google";
-import { cn } from "@/lib/utils";
+import { LayoutGroup, motion } from "motion/react";
 import { EmailCopy } from "@/components/ui/emailCopy";
 import { LinkButton } from "@/components/ui/button";
 import {
 	PageTranstionWrapper,
 	type PageTransitionVariants,
 } from "@/components/ui/pageTransitionWrapper";
-
-const font_mono = Sono({ subsets: ["latin"], weight: ["500"] });
+import { ScrollingWord } from "@/components/ui/scrollingWord";
 
 export default function Home() {
 	return (
@@ -21,9 +17,7 @@ export default function Home() {
 				layout
 			>
 				<p>
-					<ScrollingWord
-						words={["Adaptable", "Versatile", "Effective"]}
-					/>{" "}
+					<ScrollingWord words={["Adaptable", "Versatile", "Effective"]} />{" "}
 					Software Developer
 				</p>
 				<p>
@@ -65,23 +59,26 @@ export default function Home() {
 					</LinkButton>
 				</p>
 			</div>
-			{/* <LinkButton
-				href="mailto:benjamin.zachariae@gmail.com"
-				className="row-start-3 ml-7 h-fit w-fit px-6 py-3 max-xl:ml-0"
-			>
-				Contact me!
-			</LinkButton> */}
 
-			<motion.div
+			{/* <motion.div
 				variants={rightSideVariants}
-				transition={{ delay: 1 }}
-				className="fixed right-[15%] bottom-[15%] flex size-[400px] items-center justify-center rounded-lg border border-neutral-400 max-xl:relative max-xl:right-0 max-xl:bottom-0"
+				transition={{ delay: 1.5 }}
+				className="fixed right-[10%] bottom-[10%] flex size-[600px] items-center justify-center max-xl:relative max-xl:right-0 max-xl:bottom-0"
 			>
-				3D thing?
-			</motion.div>
+				<View
+					className="flex h-96 w-full flex-col items-center justify-center"
+					orbit
+				>
+					<Suspense fallback={<Loader />}>
+						<Bear scale={1.5} position={[0, -1, 0]} />
+					</Suspense>
+					<Common />
+				</View>
+			</motion.div> */}
+
 			<motion.address
 				variants={rightSideVariants}
-				transition={{ delay: 1.4 }}
+				transition={{ delay: 1 }}
 				className="fixed right-[2.5%] bottom-[5%] tracking-[4px]"
 			>
 				<EmailCopy className="[writing-mode:vertical-rl]" />
@@ -93,56 +90,4 @@ export default function Home() {
 const rightSideVariants: PageTransitionVariants = {
 	hidden: { x: 20, opacity: 0 },
 	shown: { x: 0, opacity: 1 },
-};
-
-const variants: Variants = {
-	initial: { y: 100 },
-	animate: { y: 0 },
-	exit: { y: -100 },
-};
-
-export const ScrollingWord = ({ words }: { words: string[] }) => {
-	const [index, setIndex] = useState(0);
-	const ref = useRef<HTMLSpanElement>(null);
-
-	const sortedWords = useMemo(
-		() => words.sort((a, b) => b.length - a.length),
-		[words],
-	);
-
-	useEffect(() => {
-		const interval = setInterval(async () => {
-			await new Promise((resolve) => setTimeout(resolve, Math.random() * 1000));
-			setIndex((i) => (i + 1) % words.length);
-		}, 4000);
-		return () => clearInterval(interval);
-	}, []);
-
-	return (
-		<motion.span className="relative inline-block overflow-hidden text-justify align-bottom">
-			<AnimatePresence mode="popLayout" initial={false}>
-				{sortedWords.map((w, i) => {
-					if (index === i) {
-						return (
-							<motion.span
-								ref={ref}
-								className={cn(
-									font_mono.className,
-									"inline-block font-bold text-amber-700",
-								)}
-								key={`${w}-${i}`}
-								initial="initial"
-								animate="animate"
-								exit="exit"
-								transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-								variants={variants}
-							>
-								{w}
-							</motion.span>
-						);
-					}
-				})}
-			</AnimatePresence>
-		</motion.span>
-	);
 };

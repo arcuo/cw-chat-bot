@@ -4,7 +4,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { AnimatePresence, motion } from "motion/react";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 type DialogProps = {
 	trigger: ReactNode;
@@ -19,12 +19,26 @@ export const Dialog = ({
 	trigger,
 	content,
 	open,
+	disabled,
 	...rest
-}: DialogProps & React.ComponentProps<typeof DialogPrimitive.Root>) => {
+}: DialogProps &
+	React.ComponentProps<typeof DialogPrimitive.Root> & {
+		disabled?: boolean;
+	}) => {
 	const [_open, setOpen] = useState(open ?? false);
 
+	useEffect(() => {
+		if (open !== undefined) {
+			setOpen(open);
+		}
+	}, [open]);
+
 	return (
-		<DialogPrimitive.Root open={open ?? _open} onOpenChange={setOpen} {...rest}>
+		<DialogPrimitive.Root
+			open={open}
+			onOpenChange={disabled ? undefined : setOpen}
+			{...rest}
+		>
 			<DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
 			<AnimatePresence>
 				{_open && (

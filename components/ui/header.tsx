@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState, type ComponentProps, type PropsWithChildren } from "react";
+import type { ComponentProps, HTMLAttributes, PropsWithChildren } from "react";
 import { LinkButton } from "./button";
 import {
 	EnvelopeClosedIcon,
@@ -10,6 +10,7 @@ import {
 import { motion, type Variants } from "motion/react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { EmailCopy } from "./emailCopy";
 
 const NavLink = ({ children, href, ...rest }: ComponentProps<typeof Link>) => {
 	const pathname = usePathname();
@@ -69,7 +70,6 @@ const item: Variants = {
 };
 
 export function Header() {
-	const [copied, setCopied] = useState(false);
 	return (
 		<>
 			<motion.div
@@ -78,37 +78,13 @@ export function Header() {
 				initial="hidden"
 				animate="show"
 			>
-				<motion.div
-					key="name"
-					whileHover="hover"
-					initial="initial"
-					variants={item}
-					className="relative w-fit"
-				>
-					<Link
-						type="button"
-						className="block w-fit cursor-pointer text-left"
-						href="/"
-					>
-						<Item title="Name">
-							<span>Hugh Benjamin Zachariae</span>
-							<span className="text-neutral-700 text-sm">
-								Aarhus, Denmark GMT+1
-							</span>
-						</Item>
-					</Link>
-					<motion.hr
-						className="absolute bottom-0 mt-2 text-amber-500"
-						key="underline"
-						variants={{
-							hover: {
-								width: "8em",
-							},
-							initial: {
-								width: 0,
-							},
-						}}
-					/>
+				<motion.div key="name" className="relative w-fit">
+					<Item title="Name">
+						<span>Hugh Benjamin Zachariae</span>
+						<span className="text-neutral-700 text-sm">
+							Aarhus, Denmark GMT+1
+						</span>
+					</Item>
 				</motion.div>
 
 				<motion.div variants={item} key="situation">
@@ -119,7 +95,7 @@ export function Header() {
 				</motion.div>
 
 				{/* Navigation */}
-				<motion.nav
+				{/* <motion.nav
 					key="nav"
 					variants={item}
 					className="flex @max-[1650px]:flex-col @max-[1650px]:items-end items-center justify-center @max-[1650px]:gap-2 gap-10 @max-[1650px]:text-sm"
@@ -127,17 +103,24 @@ export function Header() {
 					<NavLink href={"/"}>Home</NavLink>
 					<NavLink href={"/resume"}>Resume</NavLink>
 					<NavLink href={"/experience"}>Experience</NavLink>
-				</motion.nav>
+				</motion.nav> */}
+
+				<Item title="Contact" className="@max-[900px]:hidden">
+					<address className="flex flex-col text-left italic">
+						<a href="tel:+4521181058">+45 21 18 10 58</a>
+						<EmailCopy />
+					</address>
+				</Item>
 
 				{/* Links */}
 
 				<motion.div
 					key="links"
 					variants={item}
-					className="flex items-center justify-end gap-2"
+					className="col-start-4 flex @max-[850px]:flex-wrap items-center justify-end gap-2"
 				>
 					<LinkButton
-						className="size-11 rounded-full p-2.5"
+						className="size-9 rounded-full p-2"
 						aria-label="Email"
 						href="mailto:benjamin.zachariae@gmail.com"
 						target="_blank"
@@ -146,16 +129,16 @@ export function Header() {
 						<EnvelopeClosedIcon />
 					</LinkButton>
 					<LinkButton
-						className="size-11 rounded-full p-2.5"
+						className="size-9 rounded-full p-2"
 						aria-label="LinkedIn"
-						href="https://www.linkedin.com/in/benjamin-zachariae-17591a117/"
+						href="https://www.linkedin.com/in/benjamin-zachariae-17591a107/"
 						target="_blank"
 						icon
 					>
 						<LinkedInLogoIcon />
 					</LinkButton>
 					<LinkButton
-						className="size-11 rounded-full p-2.5"
+						className="size-9 rounded-full p-2"
 						aria-label="Github"
 						href="https://github.com/arcuo/"
 						target="_blank"
@@ -166,7 +149,7 @@ export function Header() {
 				</motion.div>
 			</motion.div>
 			<motion.hr
-				className="text-neutral-700/20"
+				className="text-amber-700/20"
 				key="underline"
 				animate={{
 					width: "100%",
@@ -183,9 +166,9 @@ export function Header() {
 	);
 }
 
-const Item = ({ title, children }: PropsWithChildren & { title: string }) => {
+const Item = ({ title, children, className, ...rest }: HTMLAttributes<HTMLDivElement> & { title: string }) => {
 	return (
-		<div className="flex flex-col">
+		<div className={cn("flex flex-col", className)} {...rest}>
 			{/* Title */}
 			<div className="mb-1 text-neutral-600 text-sm">{title}</div>
 			<div className="contents uppercase">{children}</div>

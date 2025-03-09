@@ -11,11 +11,15 @@ export const EmailCopy = ({
 	const [copied, setCopied] = useState(false);
 
 	return (
-		<Tooltip content={copied ? "Copied!" : "Click to copy"}>
+		<Tooltip
+			open={copied ?? undefined}
+			content={copied ? "Copied!" : "Click to copy"}
+			contentProps={{ side: "top" }}
+		>
 			<button
 				type="button"
 				className={cn(
-					"cursor-copy not-italic transition-colors hover:text-amber-700 ",
+					"cursor-copy text-left not-italic transition-colors hover:text-amber-700",
 					className,
 				)}
 				onClick={() => {

@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { useSetAtom } from "jotai";
-import { showPrompt } from "@/app/page";
 import { Kbd } from "./kbd";
 
 interface TypeWriterProps {
@@ -18,7 +17,6 @@ const LETTER_DELAY = 20; // milliseconds
 
 export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 	const { letterDelayMs = LETTER_DELAY, automated = false } = opts ?? {};
-	const setShowPrompt = useSetAtom(showPrompt);
 
 	const [sentenceIndex, setSentenceIndex] = useState(0);
 
@@ -40,7 +38,6 @@ export function TypeWriter({ sentences, opts }: TypeWriterProps) {
 				if (e.key === " ") {
 					setSentenceIndex((prevIndex) => {
 						if (prevIndex === sentences.length - 1) {
-							setShowPrompt(true);
 							return prevIndex;
 						}
 						return prevIndex + 1;

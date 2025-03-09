@@ -5,8 +5,12 @@ import { AnimatePresence, motion } from "motion/react";
 export const Tooltip = ({
 	children,
 	content,
+	contentProps,
 	...rest
-}: PropsWithChildren & { content: ReactNode } & RadixTooltip.TooltipProps) => {
+}: PropsWithChildren & {
+	content: ReactNode;
+	contentProps?: RadixTooltip.TooltipContentProps;
+} & RadixTooltip.TooltipProps) => {
 	const [open, setOpen] = useState(false);
 	const id = useId();
 
@@ -19,12 +23,7 @@ export const Tooltip = ({
 				<AnimatePresence>
 					{open && (
 						<RadixTooltip.Portal forceMount key={id}>
-							<RadixTooltip.Content
-								asChild
-								side="left"
-								align="center"
-								sideOffset={15}
-							>
+							<RadixTooltip.Content asChild {...contentProps}>
 								<motion.div
 									className="rounded-md border border-neutral-300 bg-amber-50 px-2 py-[1px] shadow-md"
 									exit={{

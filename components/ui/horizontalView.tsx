@@ -1,97 +1,92 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, hover, motion, useSpring } from "motion/react";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Button } from "./button";
-import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
-import useMeasure from "react-use-measure";
+import { motion, useMotionValue } from "motion/react";
+import {
+	createContext,
+	useContext,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+	useState,
+	type PropsWithChildren,
+} from "react";
+
+const DraggingContext = createContext<boolean>(false);
+export const useDragging = () => useContext(DraggingContext);
 
 /** Component that scrolls the x-axis when hovered */
-export const HorizontalView = (
-	props: React.ComponentProps<typeof motion.div>,
-) => {
-	const { children, className, ...rest } = props;
+export const HorizontalView = ({
+	children,
+	className,
+	// TODO: add active scroll
+	active,
+	...rest
+}: PropsWithChildren<React.ComponentProps<typeof motion.div>> & {
+	active?: boolean;
+}) => {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const innerRef = useRef<HTMLDivElement>(null);
-	const [overflowing, setOverflowing] = useState(false);
+	const [left, setLeft] = useState(0);
+	const x = useMotionValue(0);
 
-	const x = useSpring(0, { stiffness: 100, bounce: 0.01, visualDuration: 0.2 });
-	const scrollSpeed = 75;
-
-	const handleScrollLeft = () => {
-		x.set(Math.min(x.get() + scrollSpeed, 0));
+	const handleResize = () => {
+		if (!containerRef.current) return;
+		setLeft(containerRef.current.scrollWidth - document.body.clientWidth);
+		x.set(0);
 	};
-
-	const handleScrollRight = () => {
-		const containerRect = containerRef.current?.getBoundingClientRect();
-
-		if (!innerRef.current || !containerRect) {
-			return;
-		}
-		x.set(
-			Math.max(
-				x.get() - scrollSpeed,
-				-(innerRef.current?.scrollWidth - containerRect.width),
-			),
-		);
-	};
-
-	function checkOverflow() {
-		const innerRect = innerRef.current?.getBoundingClientRect();
-		setOverflowing(
-			(innerRect?.left ?? 0) + (innerRef.current?.scrollWidth ?? 0) >
-				window.innerWidth,
-		);
-	}
 
 	useLayoutEffect(() => {
-		checkOverflow();
+		handleResize();
 		const controller = new AbortController();
-		window.addEventListener(
-			"resize",
-			() => {
-				x.set(0);
-				checkOverflow();
-			},
-			{ signal: controller.signal },
-		);
+		window.addEventListener("resize", handleResize, {
+			signal: controller.signal,
+		});
 		return () => controller.abort();
-	}, []);
+	});
 
-	// TODO remove navigation buttons if no scroll needed
+	const thereIsMore = useMemo(() => left > 0, [left]);
+
+	const [dragging, setDragging] = useState(false);
 
 	return (
-		<div
-			className="flex w-full flex-col gap-4 pt-4"
-			ref={containerRef}
-			data-name="scroll-container"
-		>
-			<motion.div
-				data-name="scroll-inner"
-				ref={innerRef}
-				className={cn("flex gap-2", className)}
-				style={{ x }}
-				{...rest}
+		<div className="relative my-5">
+			<div
+				className="-ml-15 flex w-screen flex-col gap-4 overflow-hidden px-15 py-5"
+				data-name="scroll-container"
 			>
-				{children}
-			</motion.div>
-			{/* navigation buttons */}
-			{overflowing && (
-				<div className="flex gap-2 overflow-hidden p-1">
-					<Button
-						onClick={handleScrollLeft}
-						onHoldDown={handleScrollLeft}
-						className="flex w-15 justify-center"
-					>
-						<ArrowLeftIcon />
-					</Button>
-					<Button
-						onClick={handleScrollRight}
-						onHoldDown={handleScrollRight}
-						className="flex w-15 justify-center"
-					>
-						<ArrowRightIcon />
-					</Button>
+				<motion.div
+					ref={containerRef}
+					data-name="scroll-inner"
+					className={cn("flex gap-2", className)}
+					drag={thereIsMore ? "x" : undefined}
+					dragElastic={0.2}
+					dragTransition={{
+						bounceDamping: 18,
+						power: 0.2,
+						timeConstant: 200,
+						modifyTarget: (target) => Math.round(target / 200) * 200,
+					}}
+					dragConstraints={{
+						left: -(left + 150),
+						right: 0,
+					}}
+					onDrag={() => {
+						setTimeout(() => setDragging(true), 100);
+					}}
+					onDragEnd={() => {
+						setTimeout(() => setDragging(false), 100);
+					}}
+					style={{ x }}
+					{...rest}
+				>
+					<DraggingContext.Provider value={dragging}>
+						{children}
+					</DraggingContext.Provider>
+				</motion.div>
+			</div>
+			{thereIsMore && (
+				<div className="-top-5 absolute right-5 font-bold text-neutral-700/70 text-sm">
+					Drag for more ⇨
 				</div>
 			)}
 		</div>

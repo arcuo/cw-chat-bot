@@ -2,33 +2,30 @@ import type { Base } from "../types/base";
 
 export type Project = Base & {
 	id: string;
-	link?: string;
+	link?: { href: string; text: string };
 	productDescription?: string;
 	tags: string[];
 };
 
 export const projects = {
-	markingTool: {
-		id: "markingTool",
-		title: "WISEflow Marking Tool",
-		subtitle:
-			"Major contributor to the development of the WISEflow marking tool",
+	wiseflow: {
+		id: "wiseflow",
+		title: "WISEflow - An end-to-end digital assessment platform",
+		subtitle: "A platform for managing, grading and attending exams",
 		productDescription:
-			"A SPA web application that allows assessors to mark, annotate and grade student exams. The tool supports 50+ educational institutions around the world and processes over 1,000,000 assessments per year.",
+			"WISEflow manages the complete assessment and feedback lifecycle across a wide range of assessment types and formats. Comes with tools to make feedback easier and more consistent, such as multi-level annotations and rubrics, which enhances students' learning and satisfaction.",
 		content:
-			"As a senior developer in the organisation I took a major part in developing and maintaining the WISEflow marking tool from the frontend side. In collaboration with the team we develpoed a micro frontend SPA in React and took use of modern tools like Tanstack/React-Query and PDFtron.",
-		tags: ["React", "TypeScript", "PDFtron", "SPA", "EdTech"],
-		link: "https://wiseflow.zendesk.com/hc/en-gb/articles/4407007191058-Using-the-Marking-Tool",
-	},
-	flowUI: {
-		id: "flowUI",
-		title: "React Flow UI Component library",
-		subtitle: "Contributor and maintainer of the Flow UI component library",
-		productDescription:
-			"A company-wide UI library for React with a focus on accessibility and developer experience. We utilised libraries like Radix UI and Vitest to provide a WCAG compliant and robust UI.",
-		content:
-			"As a developer and Frontend Tech lead I worked both as a contributor and administrator of the UI component library used by the WISEflow React frontend. I was responsible for developing well designed, accessible and reusable components to be used in the development of modern parts of WISEflow. I took a leadership position in driving the direction of the library and handling the release structure",
-		tags: ["React", "Radix UI", "WCAG", "Vitest"],
+			"For 8 years I helped deliver the WISEflow digital assessment platform. I was responsible for developing the frontend together with a team of developers. ...",
+		tags: [
+			"EdTech",
+			"React",
+			"Golang",
+			"Frontend",
+			"AngularJS",
+			"JQuery",
+			"Micro frontends",
+		],
+		link: { href: "https://uniwise.eu/about-wiseflow", text: "Uniwise Website" },
 	},
 	sdith: {
 		id: "sdith",
@@ -46,7 +43,29 @@ export const projects = {
 			"Master's Thesis",
 			"Computer Science",
 		],
-		link: "https://github.com/Mactherobot/sdith-rust/blob/main/sdith/README.md",
+		link: {text: "Github", href: "https://github.com/Mactherobot/sdith-rust/blob/main/sdith/README.md"},
+	},
+	markingTool: {
+		id: "markingTool",
+		title: "WISEflow Marking Tool",
+		subtitle:
+			"Major contributor to the development of the WISEflow marking tool",
+		productDescription:
+			"A SPA web application that allows assessors to mark, annotate and grade student exams. The tool supports 50+ educational institutions around the world and processes over 1,000,000 assessments per year.",
+		content:
+			"As a senior developer in the organisation I took a major part in developing and maintaining the WISEflow marking tool from the frontend side. In collaboration with the team we develpoed a micro frontend SPA in React and took use of modern tools like Tanstack/React-Query and PDFtron.",
+		tags: ["React", "TypeScript", "PDFtron", "SPA", "EdTech"],
+		link: {href: "https://wiseflow.zendesk.com/hc/en-gb/articles/4407007191058-Using-the-Marking-Tool", text: "Documentation"},
+	},
+	flowUI: {
+		id: "flowUI",
+		title: "React Flow UI Component library",
+		subtitle: "Contributor and maintainer of the Flow UI component library",
+		productDescription:
+			"A company-wide UI library for React with a focus on accessibility and developer experience. We utilised libraries like Radix UI and Vitest to provide a WCAG compliant and robust UI.",
+		content:
+			"As a developer and Frontend Tech lead I worked both as a contributor and administrator of the UI component library used by the WISEflow React frontend. I was responsible for developing well designed, accessible and reusable components to be used in the development of modern parts of WISEflow. I took a leadership position in driving the direction of the library and handling the release structure",
+		tags: ["React", "Radix UI", "WCAG", "Vitest"],
 	},
 } satisfies Record<string, Project>;
 
