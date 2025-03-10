@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import type { ComponentProps, HTMLAttributes, PropsWithChildren } from "react";
-import { LinkButton } from "./button";
+import { Button, LinkButton } from "./button";
 import {
 	EnvelopeClosedIcon,
 	GitHubLogoIcon,
@@ -11,6 +11,8 @@ import { motion, type Variants } from "motion/react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { EmailCopy } from "./emailCopy";
+import { Construction, Wrench } from "lucide-react";
+import { Popup } from "./popup";
 
 const NavLink = ({ children, href, ...rest }: ComponentProps<typeof Link>) => {
 	const pathname = usePathname();
@@ -119,6 +121,19 @@ export function Header() {
 					variants={item}
 					className="col-start-4 flex @max-[850px]:flex-wrap items-center justify-end gap-2"
 				>
+					<Popup
+						className="focus:outline-none"
+						content={
+							<div className="flex items-center gap-2 text-sm">
+								The page is currently under construction
+							</div>
+						}
+						defaultOpen
+					>
+						<Button icon className="size-9 rounded-full bg-orange-300 p-2 text-orange-950">
+							<Construction size={20} />
+						</Button>
+					</Popup>
 					<LinkButton
 						className="size-9 rounded-full p-2"
 						aria-label="Email"
@@ -166,7 +181,12 @@ export function Header() {
 	);
 }
 
-const Item = ({ title, children, className, ...rest }: HTMLAttributes<HTMLDivElement> & { title: string }) => {
+const Item = ({
+	title,
+	children,
+	className,
+	...rest
+}: HTMLAttributes<HTMLDivElement> & { title: string }) => {
 	return (
 		<div className={cn("flex flex-col", className)} {...rest}>
 			{/* Title */}

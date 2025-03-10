@@ -17,9 +17,10 @@ const variants: Variants = {
 export const Popup = ({
 	children,
     content,
+    defaultOpen,
 	...props
-}: Omit<React.HTMLAttributes<HTMLDivElement>, "content"> & { content: ReactNode }) => {
-	const [open, setOpen] = useState(false);
+}: Omit<React.HTMLAttributes<HTMLDivElement>, "content"> & { content: ReactNode, defaultOpen?: boolean }) => {
+	const [open, setOpen] = useState(defaultOpen ?? false);
 	return (
 		<Popover.Root open={open} onOpenChange={setOpen}>
 			<Popover.Trigger asChild>{children}</Popover.Trigger>
@@ -28,7 +29,7 @@ export const Popup = ({
 					<Popover.Portal forceMount>
 						<Popover.Content sideOffset={7} asChild {...props}>
 							<motion.div
-								className="w-[300px] rounded-md border border-neutral-200 bg-white px-3 py-2 shadow-lg"
+								className="w-fit rounded-md border border-neutral-200 bg-white px-3 py-2 shadow-lg"
 								variants={variants}
 								initial="closed"
 								animate="open"
