@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Link1Icon } from "@radix-ui/react-icons";
 import { Button, LinkButton } from "../ui/button";
+import type { Project } from "@/lib/data/projects";
 
 interface SkillCardProps {
 	skill: Skill;
@@ -62,9 +63,8 @@ export const SkillCard = ({
 							</label>
 							<div id="projects" className="flex flex-wrap gap-2">
 								{projects.map((p) => (
-									<DialogClose key={p.id}>
+									<DialogClose key={p.id} asChild>
 										<Button
-											// biome-ignore lint/a11y/useSemanticElements: <explanation>
 											role="link"
 											className="flex items-center gap-2 px-2 py-1 text-sm"
 											onClick={() => {
@@ -72,6 +72,11 @@ export const SkillCard = ({
 												const ele = document.getElementById(
 													`project-${p.id}-card`,
 												);
+
+												ele?.scrollIntoView({
+													behavior: "smooth",
+												});
+
 												ele?.click();
 											}}
 											key={p.id}

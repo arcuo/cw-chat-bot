@@ -19,6 +19,10 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
+			"a11y": {
+				"useSemanticElements": "off",
+				"useFocusableInteractive": "off"
+			},
 			"recommended": true,
 			"suspicious": {
 				"noArrayIndexKey": "off"

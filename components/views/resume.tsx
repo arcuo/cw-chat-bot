@@ -5,9 +5,18 @@ import { LayoutGroup, motion } from "motion/react";
 import { HorizontalView } from "../ui/horizontalView";
 import { ScrollingWord } from "../ui/scrollingWord";
 import { useRef, type ComponentRef } from "react";
-import { EmailCopy } from "../ui/emailCopy";
 import { ProjectCard } from "./project";
 import { projects } from "@/lib/data/projects";
+import { Timeline } from "@/components/ui/timeline";
+import {
+	BookUser,
+	Computer,
+	GraduationCap,
+	Baby,
+	Brush,
+	Users,
+	NotebookPen,
+} from "lucide-react";
 
 // biome-ignore lint/complexity/noBannedTypes: <explanation>
 export type ResumeViewProps = {};
@@ -22,7 +31,6 @@ export const ResumeView = () => {
 					<motion.p
 						layout
 						className="relative w-fit cursor-pointer whitespace-nowrap"
-						// biome-ignore lint/a11y/useSemanticElements: <explanation>
 						role="button"
 						onClick={() => scroll1Ref.current?.scrollWord()}
 					>
@@ -39,7 +47,6 @@ export const ResumeView = () => {
 					<motion.p
 						layout
 						className="w-fit cursor-pointer whitespace-nowrap max-xl:whitespace-pre-wrap"
-						// biome-ignore lint/a11y/useSemanticElements: <explanation>
 						role="button"
 						onClick={() => scroll2Ref.current?.scrollWord()}
 					>
@@ -84,11 +91,90 @@ export const ResumeView = () => {
 				))}
 			</HorizontalView>
 
+			{/* Timeline */}
+			<h2 className="my-2 font-bold">Experiences and Education</h2>
+			<p>
+				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Obcaecati
+				earum, eum sunt fuga consequatur ab quasi unde cumque, labore magni ea
+				velit nobis repellendus nihil libero minus aperiam, quod qui.
+			</p>
+
+			<div className="my-10">
+				<Timeline
+					min={2014}
+					max={2025}
+					rows={[
+						{
+							heading: "Education",
+							entries: {
+								2015: {
+									start: 2015,
+									end: 2018,
+									content: "Cognitive Science (Ba)",
+									color: "rgb(90 110 250)",
+									textColor: "#fff",
+									icon: <BookUser size={15} />,
+								},
+								2017: {
+									start: 2017,
+									end: 2020,
+									content: "Computer Science (Ba)",
+									color: "rgb(225 118 118)",
+									textColor: "#000",
+									icon: <Computer size={15} />,
+								},
+								2023: {
+									start: 2023,
+									end: 2025,
+									content: "Computer Science (Ma)",
+									color: "rgb(225 118 218)",
+									textColor: "#000",
+									icon: <GraduationCap size={15} />,
+								},
+							},
+						},
+						{
+							heading: "Work",
+							entries: {
+								2017: {
+									start: 2017,
+									end: 2020,
+									content: "Student Software Engineer",
+									color: "#94b144",
+									icon: <Baby size={15} />,
+								},
+								2020: {
+									start: 2020,
+									end: 2021,
+									content: "Frontend Developer",
+									color: "#94b144",
+									icon: <Brush size={15} />,
+								},
+								2021: {
+									start: 2021,
+									end: 2023,
+									content: "Frontend Tech Lead",
+									color: "#94b144",
+									icon: <Users size={15} />,
+								},
+								2023: {
+									start: 2023,
+									end: 2025,
+									content: "Senior Software Engineer (Part time)",
+									color: "#94b144",
+									icon: <NotebookPen size={15} />,
+								},
+							},
+						},
+					]}
+				/>
+			</div>
 
 			{/* Projects */}
 			<h2 className="my-2 font-bold">Notable Projects</h2>
 			<p>
-				In my professional and personal life, I've worked on a variety of projects.
+				In my professional and personal life, I've worked on a variety of
+				projects.
 			</p>
 
 			<HorizontalView active>

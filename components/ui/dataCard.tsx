@@ -49,7 +49,7 @@ export const DataCard = forwardRef<
 			<Dialog
 				disabled={isDragging}
 				open={open}
-				onOpenChange={setOpen}
+				onOpenChange={isDragging ? undefined : setOpen}
 				trigger={
 					<Card.Root
 						className={cn("relative min-w-100 max-w-110", className)}

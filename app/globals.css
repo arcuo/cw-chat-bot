@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }
@@ -38,7 +39,7 @@ html.wf-loading {
 }
 
 body {
-  background: #fff8f6;
+  background: #ffffff;
 }
 
 .gradient1-background {
