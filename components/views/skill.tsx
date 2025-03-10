@@ -41,10 +41,11 @@ export const SkillCard = ({
 						{content}
 					</Card.EllipsisContent>
 					<Card.Content ref={ref} className="flex w-full flex-2 overflow-clip">
-						<TagsCarousel tags={tags} parentWidth={width} />
+						<TagsCarousel tags={tags} parentWidth={width} tagProps={{ className: "bg-amber-500/20" }} /> 
 					</Card.Content>
 				</div>
 			}
+			// TODO: Add icon and "Skill" text to indivate that it is a skill modal
 			title={title}
 			subtitle={subtitle}
 			dialogContent={

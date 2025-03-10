@@ -36,7 +36,7 @@ export const ProjectCard = ({
 						ref={ref}
 						className="flex w-full flex-2 items-end overflow-clip"
 					>
-						<TagsCarousel tags={tags} parentWidth={width} />
+						<TagsCarousel tags={tags} parentWidth={width} tagProps={{ className: "bg-cyan-300/20" }} />
 					</Card.Content>
 				</>
 			}

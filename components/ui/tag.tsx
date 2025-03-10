@@ -1,6 +1,11 @@
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
-import { useLayoutEffect, useState, type HtmlHTMLAttributes } from "react";
+import {
+	useLayoutEffect,
+	useState,
+	type ComponentProps,
+	type HtmlHTMLAttributes,
+} from "react";
 import useMeasure from "react-use-measure";
 
 export const Tag = ({
@@ -19,9 +24,11 @@ export const Tag = ({
 export const TagsCarousel = ({
 	tags,
 	parentWidth,
+	tagProps,
 }: {
 	tags: string[];
 	parentWidth: number;
+	tagProps?: ComponentProps<typeof Tag>;
 }) => {
 	const [ref, { width }] = useMeasure();
 	const [shouldScroll, setShouldScroll] = useState(false);
@@ -53,7 +60,9 @@ export const TagsCarousel = ({
 			initial={{ x: 0, transition: { duration: 0.2 } }}
 		>
 			{[...tags, ...(shouldScroll ? tags : [])].map((t, i) => (
-				<Tag key={i}>{t}</Tag>
+				<Tag key={i} {...tagProps}>
+					{t}
+				</Tag>
 			))}
 		</motion.div>
 	);
