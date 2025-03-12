@@ -18,33 +18,37 @@ export type ResumeViewProps = {};
 export const ResumeView = () => {
 	const scroll1Ref = useRef<ComponentRef<typeof ScrollingWord>>(null);
 	const scroll2Ref = useRef<ComponentRef<typeof ScrollingWord>>(null);
+
 	return (
-		<div className="[&_h2]:mt-5 [&_h2]:text-xl [&_p]:max-w-[1000px]">
-			<LayoutGroup>
-				<h1 className="col-span-2 w-[70%] text-balance font-bold text-6xl leading-18 max-sm:w-full max-sm:text-4xl max-sm:leading-10">
+		<>
+			<h1 className="col-span-2 w-[70%] select-none text-balance font-bold text-6xl leading-18 max-sm:w-full max-sm:text-4xl max-sm:leading-10">
+				<LayoutGroup>
 					<motion.p
 						layout
 						className="relative w-fit cursor-pointer whitespace-nowrap max-sm:whitespace-pre-wrap"
 						role="button"
 						onClick={() => scroll1Ref.current?.scrollWord()}
 					>
+						<motion.span>Hi! I'm a</motion.span>{" "}
 						<ScrollingWord
 							ref={scroll1Ref}
 							active
-							words={["Software", "Frontend", "Developer Experience", "Senior"]}
+							words={["Software", "Frontend", "DevEx", "Senior", "Full Stack"]}
 						/>{" "}
-						<motion.span layout>Developer</motion.span>
+						<motion.span>Developer</motion.span>
 						<span className="absolute ml-2 text-neutral-500 text-sm italic">
 							Click me!
 						</span>
 					</motion.p>
+				</LayoutGroup>
+				<LayoutGroup>
 					<motion.p
 						layout
 						className="w-fit cursor-pointer whitespace-nowrap max-xl:whitespace-pre-wrap"
 						role="button"
 						onClick={() => scroll2Ref.current?.scrollWord()}
 					>
-						<motion.span layout>Creating</motion.span>{" "}
+						<motion.span>Building</motion.span>{" "}
 						<ScrollingWord
 							color="text-sky-700"
 							ref={scroll2Ref}
@@ -57,59 +61,60 @@ export const ResumeView = () => {
 								"funky animated",
 							]}
 						/>{" "}
-						<motion.span layout>software for the web</motion.span>
+						<motion.span>software for the web</motion.span>
 					</motion.p>
-				</h1>
-			</LayoutGroup>
+				</LayoutGroup>
+			</h1>
 
-			{/* Introduction or cover letter */}
-			<p className="my-9 text-lg">
-				With over 8 years of experience in EdTech, I specialize in frontend
-				development, including 1.5 years as a Frontend Tech Lead. I am a
-				passionate problem solver and a dedicated learner, driven by a curiosity
-				for modern IT technologies.
-			</p>
-
-			{/* Skills */}
-			<h2 className="my-2 font-bold">Technical skills</h2>
-			<p>
-				Frontend, Backend, Devevloper Experience, Multi-Party Computation,{" "}
-				<strong>Post-Quantum Secure Signature Protocols!</strong>. You name it,
-				I've probably done it! I've developed projects in several aspects of IT,
-				Frontend, Backend, and Data analysis.
-			</p>
-
-			<HorizontalView active>
-				{Object.values(skills).map((skill) => (
-					<SkillCard key={skill.title} skill={skill} />
-				))}
-			</HorizontalView>
-
-			{/* Timeline non-mobile */}
-			<div className="contents max-md:hidden">
-				<h2 className="my-2 font-bold">Experiences and Education</h2>
-				<p>
-					Below is a timeline of my work and education. My education is varied
-					as I have studied in both Cognitive Science (a humanities based field)
-					and Computer Science. This gives me a broad range of skills and
-					knowledge that I can apply to various projects.
+			<div className="contents [&_h2]:mt-5 [&_h2]:text-xl [&_p]:max-w-[1000px]">
+				{/* Introduction or cover letter */}
+				<p className="my-9 text-xl">
+					With over 8 years of experience in EdTech, I specialize in frontend
+					development, including 1.5 years as a Frontend Tech Lead. I am a
+					passionate problem solver and a dedicated learner, driven by a
+					curiosity for modern IT technologies.
 				</p>
 
-				<div className="my-10">
-					<Timeline
-						min={2014}
-						max={2025}
-						rows={[
-							{ heading: "Work", entries: workExperience },
-							{ heading: "Education", entries: education },
-						]}
-					/>
-				</div>
-			</div>
+				{/* Skills */}
+				<h2 className="my-2 font-bold">Technical skills</h2>
+				<p>
+					Frontend, Backend, Devevloper Experience, Multi-Party Computation,{" "}
+					<strong>Post-Quantum Secure Signature Protocols!</strong>. You name
+					it, I've probably done it! I've developed projects in several aspects
+					of IT, Frontend, Backend, and Data analysis.
+				</p>
 
-			{/* Timeline mobile */}
-			{/* TODO: Add timeline mobile */}
-			{/* <div className="contents md:hidden">
+				<HorizontalView active>
+					{Object.values(skills).map((skill) => (
+						<SkillCard key={skill.title} skill={skill} />
+					))}
+				</HorizontalView>
+
+				{/* Timeline non-mobile */}
+				<div className="contents max-md:hidden">
+					<h2 className="my-2 font-bold">Experiences and Education</h2>
+					<p>
+						Below is a timeline of my work and education. My education is varied
+						as I have studied in both Cognitive Science (a humanities based
+						field) and Computer Science. This gives me a broad range of skills
+						and knowledge that I can apply to various projects.
+					</p>
+
+					<div className="my-10">
+						<Timeline
+							min={2014}
+							max={2025}
+							rows={[
+								{ heading: "Work", entries: workExperience },
+								{ heading: "Education", entries: education },
+							]}
+						/>
+					</div>
+				</div>
+
+				{/* Timeline mobile */}
+				{/* TODO: Add timeline mobile */}
+				{/* <div className="contents md:hidden">
 				<h2 className="my-2 font-bold">Work experiences</h2>
 				<HorizontalView active>
 					{Object.values(workExperience).map((we, i) => (
@@ -129,23 +134,24 @@ export const ResumeView = () => {
 				</HorizontalView>
 			</div> */}
 
-			{/* Projects */}
-			<h2 className="my-2 font-bold">Notable Projects</h2>
-			<p>
-				In my professional and personal life, I've worked on a variety of
-				projects. They vary much in their technical scope, Backend, Frontend,
-				DevEx, Scripts, Cryptography, etc.
-			</p>
+				{/* Projects */}
+				<h2 className="my-2 font-bold">Notable Projects</h2>
+				<p>
+					In my professional and personal life, I've worked on a variety of
+					projects. They vary much in their technical scope, Backend, Frontend,
+					DevEx, Scripts, Cryptography, etc.
+				</p>
 
-			<HorizontalView active>
-				{Object.values(projects).map((project) => (
-					<ProjectCard key={project.title} project={project} />
-				))}
-			</HorizontalView>
+				<HorizontalView active>
+					{Object.values(projects).map((project) => (
+						<ProjectCard key={project.title} project={project} />
+					))}
+				</HorizontalView>
+			</div>
 
 			{/* Features */}
 			<div className="my-5 flex w-fit flex-wrap items-center gap-3">
-				<span className="font-bold">Features</span>
+				<span className="font-bold">Features:</span>
 				<FeatureTag
 					title="WCAG AA"
 					description={
@@ -265,6 +271,6 @@ export const ResumeView = () => {
 					todo
 				/>
 			</div>
-		</div>
+		</>
 	);
 };

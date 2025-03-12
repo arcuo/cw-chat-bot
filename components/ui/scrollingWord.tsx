@@ -76,7 +76,7 @@ export const ScrollingWord = forwardRef<
 								initial="initial"
 								animate="animate"
 								exit="exit"
-								transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+								transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
 								variants={variants}
 							>
 								{w}

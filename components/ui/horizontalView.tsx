@@ -12,6 +12,8 @@ import {
 	type PropsWithChildren,
 } from "react";
 
+// TODO: Scroll error when linking from other skills or timelines
+
 const DraggingContext = createContext<boolean>(false);
 export const useDragging = () => useContext(DraggingContext);
 
@@ -39,6 +41,9 @@ export const HorizontalView = ({
 		handleResize();
 		const controller = new AbortController();
 		window.addEventListener("resize", handleResize, {
+			signal: controller.signal,
+		});
+		window.addEventListener("scroll", handleResize, {
 			signal: controller.signal,
 		});
 		return () => controller.abort();
