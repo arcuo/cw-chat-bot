@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import type { ComponentProps, HTMLAttributes, PropsWithChildren } from "react";
+import type { ComponentProps, HTMLAttributes } from "react";
 import { Button, LinkButton } from "./button";
 import {
 	EnvelopeClosedIcon,
@@ -11,7 +11,7 @@ import { motion, type Variants } from "motion/react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { EmailCopy } from "./emailCopy";
-import { Construction, Wrench } from "lucide-react";
+import { Construction } from "lucide-react";
 import { Popup } from "./popup";
 
 const NavLink = ({ children, href, ...rest }: ComponentProps<typeof Link>) => {
@@ -75,7 +75,7 @@ export function Header() {
 	return (
 		<>
 			<motion.div
-				className="@container grid grid-cols-4 grid-cols-fr gap-2 px-8 py-5"
+				className="@container grid grid-cols-4 grid-cols-fr gap-2 px-8 py-5 shadow-xs"
 				variants={container}
 				initial="hidden"
 				animate="show"
@@ -83,7 +83,7 @@ export function Header() {
 				<motion.div key="name" className="relative w-fit">
 					<Item title="Name">
 						<span>Hugh Benjamin Zachariae</span>
-						<span className="text-neutral-700 text-sm">
+						<span className="text-neutral-700 text-xs">
 							Aarhus, Denmark GMT+1
 						</span>
 					</Item>
@@ -91,8 +91,8 @@ export function Header() {
 
 				<motion.div variants={item} key="situation">
 					<Item title="Situation">
+						<span>Exploring AI, RAG and more</span>
 						<span>Looking for new opportunities</span>
-						<span>Learning new things</span>
 					</Item>
 				</motion.div>
 
@@ -108,7 +108,7 @@ export function Header() {
 				</motion.nav> */}
 
 				<Item title="Contact" className="@max-[900px]:hidden">
-					<address className="flex flex-col text-left italic">
+					<address className="flex flex-col text-left not-italic">
 						<a href="tel:+4521181058">+45 21 18 10 58</a>
 						<EmailCopy />
 					</address>
@@ -125,12 +125,15 @@ export function Header() {
 						className="focus:outline-none"
 						content={
 							<div className="flex items-center gap-2 text-sm">
-								The page is currently under construction
+								The page is currently under construction.
 							</div>
 						}
 						defaultOpen
 					>
-						<Button icon className="size-9 rounded-full bg-orange-300 p-2 text-orange-950">
+						<Button
+							icon
+							className="size-9 rounded-full bg-orange-300 p-2 text-orange-950"
+						>
 							<Construction size={20} />
 						</Button>
 					</Popup>
@@ -164,7 +167,7 @@ export function Header() {
 				</motion.div>
 			</motion.div>
 			<motion.hr
-				className="text-amber-700/20"
+				className="-mt-[8px] text-amber-700/15"
 				key="underline"
 				animate={{
 					width: "100%",
@@ -173,7 +176,7 @@ export function Header() {
 					width: 0,
 				}}
 				transition={{
-					duration: 1,
+					duration: 2,
 					ease: "easeOut",
 				}}
 			/>

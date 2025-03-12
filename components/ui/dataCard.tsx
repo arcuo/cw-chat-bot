@@ -38,6 +38,7 @@ export const DataCard = forwardRef<
 		},
 		ref,
 	) => {
+
 		const isDragging = useDragging();
 		const [open, setOpen] = useState(false);
 
@@ -47,6 +48,7 @@ export const DataCard = forwardRef<
 
 		return (
 			<Dialog
+				ref={ref}
 				disabled={isDragging}
 				open={open}
 				onOpenChange={isDragging ? undefined : setOpen}
@@ -68,7 +70,7 @@ export const DataCard = forwardRef<
 						</motion.span>
 
 						{/* Header */}
-						<Card.Title className="flex items-center justify-between gap-2">
+						<Card.Title className="flex items-center justify-between gap-2 font-bold">
 							{title}
 							{/* Relevance score */}
 							{relevance !== undefined && (

@@ -25,7 +25,7 @@ export const Tooltip = ({
 						<RadixTooltip.Portal forceMount key={id}>
 							<RadixTooltip.Content asChild {...contentProps}>
 								<motion.div
-									className="rounded-md border border-neutral-300 bg-amber-50 px-2 py-[1px] shadow-md"
+									className="rounded-md border border-neutral-300 px-2 py-[1px] shadow-md"
 									exit={{
 										opacity: 0,
 										y: 5,

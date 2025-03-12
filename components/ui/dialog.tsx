@@ -4,7 +4,13 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { AnimatePresence, motion } from "motion/react";
-import { type ReactNode, useEffect, useState } from "react";
+import {
+	forwardRef,
+	type ReactNode,
+	useEffect,
+	useImperativeHandle,
+	useState,
+} from "react";
 
 type DialogProps = {
 	trigger: ReactNode;
@@ -13,35 +19,29 @@ type DialogProps = {
 	content: ReactNode;
 };
 
-export const Dialog = ({
-	title,
-	subtitle,
-	trigger,
-	content,
-	open,
-	disabled,
-	...rest
-}: DialogProps &
-	React.ComponentProps<typeof DialogPrimitive.Root> & {
-		disabled?: boolean;
-	}) => {
-	const [_open, setOpen] = useState(open ?? false);
-
-	useEffect(() => {
-		if (open !== undefined) {
-			setOpen(open);
+export const Dialog = forwardRef<
+	{ close: () => void },
+	DialogProps &
+		React.ComponentProps<typeof DialogPrimitive.Root> & {
+			disabled?: boolean;
 		}
-	}, [open]);
+>(({ title, subtitle, trigger, content, open, disabled, ...rest }, ref) => {
+	const [_open, setOpen] = useState(open ?? false);
+	const isOpen = open ?? _open;
+
+	useImperativeHandle(ref, () => ({
+		close: () => setOpen(false),
+	}));
 
 	return (
 		<DialogPrimitive.Root
-			open={open}
+			open={isOpen}
 			onOpenChange={disabled ? undefined : setOpen}
 			{...rest}
 		>
 			<DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
 			<AnimatePresence>
-				{_open && (
+				{isOpen && (
 					<DialogPrimitive.Portal key="modal" forceMount>
 						<DialogPrimitive.Overlay asChild>
 							<motion.div
@@ -57,7 +57,7 @@ export const Dialog = ({
 								initial={{ y: 10, opacity: 0 }}
 								animate={{ y: 0, opacity: 1 }}
 								exit={{ y: 10, opacity: 0 }}
-								className="-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 flex w-[40%] transform flex-col gap-2 overflow-hidden rounded-lg bg-neutral-50 shadow-md *:p-4"
+								className="-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 flex max-h-[80%] max-h-[90%] transform flex-col gap-2 rounded-lg bg-neutral-50 shadow-md *:p-5 max-lg:w-[90%]"
 							>
 								<div className="grid grid-cols-2 gap-2 border-neutral-200 border-b">
 									<DialogPrimitive.Title className="text-xl">
@@ -72,7 +72,7 @@ export const Dialog = ({
 										</DialogPrimitive.Close>
 									</div>
 								</div>
-								<div className="flex-2">{content}</div>
+								<div className="flex-2 overflow-y-scroll">{content}</div>
 							</motion.div>
 						</DialogPrimitive.Content>
 					</DialogPrimitive.Portal>
@@ -80,4 +80,4 @@ export const Dialog = ({
 			</AnimatePresence>
 		</DialogPrimitive.Root>
 	);
-};
+});

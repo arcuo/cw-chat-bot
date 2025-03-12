@@ -49,7 +49,7 @@ export const HorizontalView = ({
 	const [dragging, setDragging] = useState(false);
 
 	return (
-		<div className="relative my-5">
+		<div className="relative my-10">
 			<div
 				className="-ml-15 flex w-[calc(100vw-10px)] flex-col gap-4 overflow-hidden px-15 py-5"
 				data-name="scroll-container"
@@ -71,7 +71,7 @@ export const HorizontalView = ({
 						right: 0,
 					}}
 					onDrag={() => {
-						setTimeout(() => setDragging(true), 150);
+						setTimeout(() => setDragging(true), 50);
 					}}
 					onDragEnd={() => {
 						setTimeout(() => setDragging(false), 150);

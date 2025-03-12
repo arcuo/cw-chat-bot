@@ -27,7 +27,7 @@ export default function RootLayout({
 				)}
 			>
 				<Header />
-				<main className="overflow-auto px-15 py-10">{children}</main>
+				<main className="overflow-auto px-15 py-10 max-lg:px-5">{children}</main>
 				<Toaster />
 			</body>
 		</html>

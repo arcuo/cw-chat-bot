@@ -8,15 +8,7 @@ import { useRef, type ComponentRef } from "react";
 import { ProjectCard } from "./project";
 import { projects } from "@/lib/data/projects";
 import { Timeline } from "@/components/ui/timeline";
-import {
-	BookUser,
-	Computer,
-	GraduationCap,
-	Baby,
-	Brush,
-	Users,
-	NotebookPen,
-} from "lucide-react";
+import { education, workExperience } from "@/lib/data/timeline";
 
 // biome-ignore lint/complexity/noBannedTypes: <explanation>
 export type ResumeViewProps = {};
@@ -37,7 +29,7 @@ export const ResumeView = () => {
 						<ScrollingWord
 							ref={scroll1Ref}
 							active
-							words={["Software", "Frontend", "DevEx", "Senior"]}
+							words={["Software", "Frontend", "Developer Experience", "Senior"]}
 						/>{" "}
 						<motion.span layout>Developer</motion.span>
 						<span className="absolute text-neutral-500 text-sm italic">
@@ -60,7 +52,7 @@ export const ResumeView = () => {
 								"WCAG accessible",
 								"responsive",
 								"performant",
-								"funky",
+								"funky animated",
 							]}
 						/>{" "}
 						<motion.span layout>software for the web</motion.span>
@@ -94,9 +86,9 @@ export const ResumeView = () => {
 			{/* Timeline */}
 			<h2 className="my-2 font-bold">Experiences and Education</h2>
 			<p>
-				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Obcaecati
-				earum, eum sunt fuga consequatur ab quasi unde cumque, labore magni ea
-				velit nobis repellendus nihil libero minus aperiam, quod qui.
+				Below is a timeline of my work and education. My education is varied as I have studied in both
+				Cognitive Science (a humanities based field) and Computer Science. This gives me a broad range of
+				skills and knowledge that I can apply to various projects.
 			</p>
 
 			<div className="my-10">
@@ -104,68 +96,8 @@ export const ResumeView = () => {
 					min={2014}
 					max={2025}
 					rows={[
-						{
-							heading: "Education",
-							entries: {
-								2015: {
-									start: 2015,
-									end: 2018,
-									content: "Cognitive Science (Ba)",
-									color: "rgb(90 110 250)",
-									textColor: "#fff",
-									icon: <BookUser size={15} />,
-								},
-								2017: {
-									start: 2017,
-									end: 2020,
-									content: "Computer Science (Ba)",
-									color: "rgb(225 118 118)",
-									textColor: "#000",
-									icon: <Computer size={15} />,
-								},
-								2023: {
-									start: 2023,
-									end: 2025,
-									content: "Computer Science (Ma)",
-									color: "rgb(225 118 218)",
-									textColor: "#000",
-									icon: <GraduationCap size={15} />,
-								},
-							},
-						},
-						{
-							heading: "Work",
-							entries: {
-								2017: {
-									start: 2017,
-									end: 2020,
-									content: "Student Software Engineer",
-									color: "#94b144",
-									icon: <Baby size={15} />,
-								},
-								2020: {
-									start: 2020,
-									end: 2021,
-									content: "Frontend Developer",
-									color: "#94b144",
-									icon: <Brush size={15} />,
-								},
-								2021: {
-									start: 2021,
-									end: 2023,
-									content: "Frontend Tech Lead",
-									color: "#94b144",
-									icon: <Users size={15} />,
-								},
-								2023: {
-									start: 2023,
-									end: 2025,
-									content: "Senior Software Engineer (Part time)",
-									color: "#94b144",
-									icon: <NotebookPen size={15} />,
-								},
-							},
-						},
+						{ heading: "Work", entries: workExperience },
+						{ heading: "Education", entries: education },
 					]}
 				/>
 			</div>
@@ -174,7 +106,7 @@ export const ResumeView = () => {
 			<h2 className="my-2 font-bold">Notable Projects</h2>
 			<p>
 				In my professional and personal life, I've worked on a variety of
-				projects.
+				projects. They vary much in their technical scope, Backend, Frontend, DevEx, Scripts, Cryptography, etc.
 			</p>
 
 			<HorizontalView active>
