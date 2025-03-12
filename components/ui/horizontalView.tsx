@@ -51,7 +51,7 @@ export const HorizontalView = ({
 	return (
 		<div className="relative my-10">
 			<div
-				className="-ml-15 flex w-[calc(100vw-10px)] flex-col gap-4 overflow-hidden px-15 py-5"
+				className="-ml-15 flex flex-col gap-4 overflow-hidden px-15 py-5 sm:w-[calc(100vw-10px)]"
 				data-name="scroll-container"
 			>
 				<motion.div
@@ -85,7 +85,7 @@ export const HorizontalView = ({
 				</motion.div>
 			</div>
 			{thereIsMore && (
-				<div className="-top-5 absolute right-5 font-bold text-neutral-700/70 text-sm">
+				<div className="-top-5 absolute right-5 font-bold text-neutral-500 text-sm">
 					Drag for more ⇨
 				</div>
 			)}

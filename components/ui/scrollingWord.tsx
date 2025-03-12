@@ -70,7 +70,7 @@ export const ScrollingWord = forwardRef<
 								ref={innerref}
 								className={cn(
 									// font_mono.className,
-									`inline-block whitespace-nowrap font-bold ${color}`,
+									`inline-block whitespace-nowrap font-bold max-sm:whitespace-pre-wrap ${color}`,
 								)}
 								key={`${w}-${i}`}
 								initial="initial"

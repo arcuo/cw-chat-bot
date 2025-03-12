@@ -24,7 +24,7 @@ interface DataCardProps {
 
 export const DataCard = forwardRef<
 	{ close: () => void },
-	DataCardProps & ComponentProps<typeof Card.Root>
+	DataCardProps & Omit<ComponentProps<typeof Card.Root>, "title">
 >(
 	(
 		{
@@ -38,7 +38,6 @@ export const DataCard = forwardRef<
 		},
 		ref,
 	) => {
-
 		const isDragging = useDragging();
 		const [open, setOpen] = useState(false);
 
@@ -54,7 +53,10 @@ export const DataCard = forwardRef<
 				onOpenChange={isDragging ? undefined : setOpen}
 				trigger={
 					<Card.Root
-						className={cn("relative min-w-100 max-w-110", className)}
+						className={cn(
+							"relative max-w-110 max-sm:max-w-50 max-md:max-w-75 md:min-w-100",
+							className,
+						)}
 						{...props}
 						whileHover="hover"
 						whileFocus="hover"
@@ -85,6 +87,9 @@ export const DataCard = forwardRef<
 
 						{/* Content */}
 						{cardContent}
+						<span className="flex items-end justify-center text-neutral-500 text-sm sm:hidden">
+							Click for more details
+						</span>
 					</Card.Root>
 				}
 				content={dialogContent}

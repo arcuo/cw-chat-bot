@@ -75,7 +75,7 @@ export function Header() {
 	return (
 		<>
 			<motion.div
-				className="@container grid grid-cols-4 grid-cols-fr gap-2 px-8 py-5 shadow-xs"
+				className="@container grid @max-[900px]:grid-cols-3 grid-cols-4 grid-cols-fr gap-4 px-8 py-5 shadow-xs max-sm:flex max-sm:justify-between max-sm:whitespace-nowrap max-sm:px-4 max-sm:py-4"
 				variants={container}
 				initial="hidden"
 				animate="show"
@@ -89,7 +89,18 @@ export function Header() {
 					</Item>
 				</motion.div>
 
-				<motion.div variants={item} key="situation">
+				<Item title="Contact" className="max-sm:hidden">
+					<address className="flex flex-col text-left not-italic">
+						<a href="tel:+4521181058">+45 21 18 10 58</a>
+						<EmailCopy />
+					</address>
+				</Item>
+
+				<motion.div
+					variants={item}
+					key="situation"
+					className="@max-[900px]:hidden"
+				>
 					<Item title="Situation">
 						<span>Exploring AI, RAG and more</span>
 						<span>Looking for new opportunities</span>
@@ -107,13 +118,6 @@ export function Header() {
 					<NavLink href={"/experience"}>Experience</NavLink>
 				</motion.nav> */}
 
-				<Item title="Contact" className="@max-[900px]:hidden">
-					<address className="flex flex-col text-left not-italic">
-						<a href="tel:+4521181058">+45 21 18 10 58</a>
-						<EmailCopy />
-					</address>
-				</Item>
-
 				{/* Links */}
 
 				<motion.div
@@ -121,7 +125,7 @@ export function Header() {
 					variants={item}
 					className="col-start-4 flex @max-[850px]:flex-wrap items-center justify-end gap-2"
 				>
-					<Popup
+					{/* <Popup
 						className="focus:outline-none"
 						content={
 							<div className="flex items-center gap-2 text-sm">
@@ -133,10 +137,11 @@ export function Header() {
 						<Button
 							icon
 							className="size-9 rounded-full bg-orange-300 p-2 text-orange-950"
+							aria-label="Under construction"
 						>
 							<Construction size={20} />
 						</Button>
-					</Popup>
+					</Popup> */}
 					<LinkButton
 						className="size-9 rounded-full p-2"
 						aria-label="Email"
@@ -166,6 +171,7 @@ export function Header() {
 					</LinkButton>
 				</motion.div>
 			</motion.div>
+
 			<motion.hr
 				className="-mt-[8px] text-amber-700/15"
 				key="underline"

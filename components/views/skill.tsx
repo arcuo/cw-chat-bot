@@ -62,18 +62,18 @@ export const SkillCard = ({
 			ref={dialog}
 			relevance={relevance}
 			cardContent={
-				<div>
+				<>
 					<Card.EllipsisContent className="text-neutral-700">
 						{content}
 					</Card.EllipsisContent>
-					<Card.Content ref={ref} className="flex w-full flex-2 overflow-clip">
+					<Card.Content ref={ref} className="flex w-full flex-2 items-end overflow-clip">
 						<TagsCarousel
 							tags={tags}
 							parentWidth={width}
 							tagProps={{ className: "bg-amber-500/20" }}
 						/>
 					</Card.Content>
-				</div>
+				</>
 			}
 			// TODO: Add icon and "Skill" text to indivate that it is a skill modal
 			title={title}
@@ -103,7 +103,7 @@ export const SkillCard = ({
 					)}
 
 					{/* Tags */}
-					<div className="flex flex-wrap gap-2">
+					<div className="flex flex-2 flex-wrap items-end gap-2">
 						{tags.map((t) => (
 							<Tag key={t}>{t}</Tag>
 						))}

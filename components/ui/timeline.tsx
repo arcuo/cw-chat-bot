@@ -3,11 +3,13 @@
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import {
+	forwardRef,
 	useRef,
 	type ComponentRef,
 	type CSSProperties,
 	type HTMLAttributes,
 	type ReactNode,
+	type RefObject,
 } from "react";
 import type { Project } from "@/lib/data/projects";
 import { Dialog } from "./dialog";
@@ -91,7 +93,7 @@ export const Timeline = ({
 				{/* Vertical row headings */}
 				{rows?.map(({ heading }, i) => (
 					<div
-						role="rowheader"
+						role="presentation"
 						key={`row-header-${i}`}
 						className={cn("whitespace-nowrap px-5 py-2 font-bold text-sm", {
 							"mt-3": i === 0,
@@ -165,8 +167,9 @@ const Entry = ({
 			className="border border-neutral-200/60 border-r-0 border-b-0 px-[2px] first:border-l-0"
 		>
 			{entry && (
-				<Dialog
+				<TimelineEntryDialog
 					ref={dialog}
+					entry={entry}
 					trigger={
 						<motion.button
 							whileHover={{ x: 4 }}
@@ -188,68 +191,83 @@ const Entry = ({
 							<div className="overflow-hidden text-ellipsis">{entry.title}</div>
 						</motion.button>
 					}
-					title={entry.title}
-					subtitle={entry.subtitle}
-					content={
-						<div className="flex flex-col gap-2 [&>label]:mt-2">
-							{/* Main description */}
-							{entry.description.main.map((m, i) => (
-								<p key={i}>{m}</p>
-							))}
-
-							{/* What I learned */}
-							{entry.description.learned && (
-								<>
-									<label htmlFor="learned" className="font-bold text-sm">
-										What I learned
-									</label>
-									<div id="learned" className="flex flex-col gap-2">
-										{entry.description.learned?.map((l, i) => (
-											<p key={i}>{l}</p>
-										))}
-									</div>
-								</>
-							)}
-
-							<Accordion.Root className="mt-5">
-								{/* Projects */}
-								{entry.description.projects && (
-									<Accordion.Item value="projects">
-										<Accordion.Trigger>
-											<div className="font-bold text-sm">Related projects</div>
-										</Accordion.Trigger>
-										<Accordion.Content key={"projects"}>
-											<div className="flex flex-wrap gap-2 pb-2">
-												{entry.description.projects.map((project) => (
-													<DialogClose asChild key={project.id}>
-														<ProjectLink project={project} dialog={dialog} />
-													</DialogClose>
-												))}
-											</div>
-										</Accordion.Content>
-									</Accordion.Item>
-								)}
-
-								{/* Courses */}
-								{entry.description.courses && (
-									<Accordion.Item value="courses">
-										<Accordion.Trigger>
-											<div className="font-bold text-sm">Included courses</div>
-										</Accordion.Trigger>
-										<Accordion.Content className="flex flex-wrap gap-2">
-											<div className="flex flex-col text-sm">
-												{entry.description.courses.map((course) => (
-													<div key={course}>{course}</div>
-												))}
-											</div>
-										</Accordion.Content>
-									</Accordion.Item>
-								)}
-							</Accordion.Root>
-						</div>
-					}
 				/>
 			)}
 		</div>
 	);
 };
+
+export const TimelineEntryDialog = forwardRef<
+	ComponentRef<typeof Dialog>,
+	{ trigger: ReactNode; entry: TimelineEntry }
+>(({ trigger, entry }, ref) => {
+	return (
+		<Dialog
+			ref={ref}
+			trigger={trigger}
+			title={entry.title}
+			subtitle={entry.subtitle}
+			content={
+				<div className="flex flex-col gap-2 [&>label]:mt-2">
+					{/* Main description */}
+					{entry.description.main.map((m, i) => (
+						<p key={i}>{m}</p>
+					))}
+
+					{/* What I learned */}
+					{entry.description.learned && (
+						<>
+							<label htmlFor="learned" className="font-bold text-sm">
+								What I learned
+							</label>
+							<div id="learned" className="flex flex-col gap-2">
+								{entry.description.learned?.map((l, i) => (
+									<p key={i}>{l}</p>
+								))}
+							</div>
+						</>
+					)}
+
+					<Accordion.Root className="mt-5">
+						{/* Projects */}
+						{entry.description.projects && (
+							<Accordion.Item value="projects">
+								<Accordion.Trigger>
+									<div className="font-bold text-sm">Related projects</div>
+								</Accordion.Trigger>
+								<Accordion.Content key={"projects"}>
+									<div className="flex flex-wrap gap-2 pb-2">
+										{entry.description.projects.map((project) => (
+											<DialogClose asChild key={project.id}>
+												<ProjectLink
+													project={project}
+													dialog={ref as RefObject<ComponentRef<typeof Dialog>>}
+												/>
+											</DialogClose>
+										))}
+									</div>
+								</Accordion.Content>
+							</Accordion.Item>
+						)}
+
+						{/* Courses */}
+						{entry.description.courses && (
+							<Accordion.Item value="courses">
+								<Accordion.Trigger>
+									<div className="font-bold text-sm">Included courses</div>
+								</Accordion.Trigger>
+								<Accordion.Content className="flex flex-wrap gap-2">
+									<div className="flex flex-col text-sm">
+										{entry.description.courses.map((course) => (
+											<div key={course}>{course}</div>
+										))}
+									</div>
+								</Accordion.Content>
+							</Accordion.Item>
+						)}
+					</Accordion.Root>
+				</div>
+			}
+		/>
+	);
+});

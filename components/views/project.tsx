@@ -73,7 +73,7 @@ export const ProjectCard = ({
 					)}
 
 					{/* Tags */}
-					<div className="flex flex-wrap gap-2">
+					<div className="flex flex-wrap items-end gap-2">
 						{tags.map((t) => (
 							<Tag key={t}>{t}</Tag>
 						))}
