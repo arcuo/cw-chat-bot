@@ -16,16 +16,24 @@ export const Tooltip = ({
 
 	return (
 		<RadixTooltip.Provider delayDuration={400} {...rest}>
-			<RadixTooltip.Root open={open} onOpenChange={setOpen}>
-				<RadixTooltip.Trigger asChild onClick={() => setOpen(true)}>
-					{children}
-				</RadixTooltip.Trigger>
+			<RadixTooltip.Root
+				open={open}
+				onOpenChange={(v) => {
+					setOpen(v);
+				}}
+			>
+				<RadixTooltip.Trigger asChild>{children}</RadixTooltip.Trigger>
 				<AnimatePresence>
 					{open && (
 						<RadixTooltip.Portal forceMount key={id}>
-							<RadixTooltip.Content asChild {...contentProps}>
+							<RadixTooltip.Content
+								asChild
+								collisionPadding={15}
+								sideOffset={10}
+								{...contentProps}
+							>
 								<motion.div
-									className="rounded-md border border-neutral-300 px-2 py-[1px] shadow-md"
+									className="w-fit max-w-2xs rounded-md border border-neutral-300 bg-white px-2 py-[1px] text-center shadow-md"
 									exit={{
 										opacity: 0,
 										y: 5,
@@ -49,6 +57,7 @@ export const Tooltip = ({
 								>
 									{/* <RadixTooltip.Arrow className="-translate-y-[1px] fill-white" /> */}
 									{content}
+									<RadixTooltip.Arrow className="fill-neutral-300" />
 								</motion.div>
 							</RadixTooltip.Content>
 						</RadixTooltip.Portal>
