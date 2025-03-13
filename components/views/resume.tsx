@@ -69,19 +69,22 @@ export const ResumeView = () => {
 			<div className="contents [&_h2]:mt-5 [&_h2]:text-xl [&_p]:max-w-[1000px]">
 				{/* Introduction or cover letter */}
 				<p className="my-9 text-xl">
-					With over 8 years of experience in EdTech, I specialize in frontend
-					development, including 1.5 years as a Frontend Tech Lead. I am a
-					passionate problem solver and a dedicated learner, driven by a
-					curiosity for modern IT technologies.
+					Dynamic Software Developer with 8 years of experience in Frontend and
+					Backend development, including 1.5 years leading a Frontend community.
+					Driven by a passion for innovation and a commitment to lifelong
+					learning, I'm constantly seeking opportunities to leverage
+					cutting-edge technologies.
 				</p>
 
 				{/* Skills */}
 				<h2 className="my-2 font-bold">Technical skills</h2>
 				<p>
-					Frontend, Backend, Devevloper Experience, Multi-Party Computation,{" "}
-					<strong>Post-Quantum Secure Signature Protocols!</strong>. You name
-					it, I've probably done it! I've developed projects in several aspects
-					of IT, Frontend, Backend, and Data analysis.
+					I'm a versatile Developer with experience across the full software
+					spectrum, from crafting Single-Page Applications and paginated backend
+					REST solutions to exploring Bayesian data analytics and Post-Quantum
+					Secure Signature Protocols. I thrive on tackling diverse challenges
+					and delivering innovative solutions across Frontend, Backend, and Data
+					Analysis domains.
 				</p>
 
 				<HorizontalView active>
@@ -94,10 +97,11 @@ export const ResumeView = () => {
 				<div className="contents max-md:hidden">
 					<h2 className="my-2 font-bold">Experiences and Education</h2>
 					<p>
-						Below is a timeline of my work and education. My education is varied
-						as I have studied in both Cognitive Science (a humanities based
-						field) and Computer Science. This gives me a broad range of skills
-						and knowledge that I can apply to various projects.
+						My background combines the analytical rigor of Computer Science with
+						the human-centered insights of Cognitive Science, as detailed in the
+						timeline below. This interdisciplinary education provides me with
+						strong skills in problem-solving, user experience design, and
+						effective communication, allowing me to excel in diverse projects.
 					</p>
 
 					<div className="my-10">
@@ -147,129 +151,161 @@ export const ResumeView = () => {
 						<ProjectCard key={project.title} project={project} />
 					))}
 				</HorizontalView>
-			</div>
 
-			{/* Features */}
-			<div className="my-5 flex w-fit flex-wrap items-center gap-3">
-				<span className="font-bold">Features:</span>
-				<FeatureTag
-					title="WCAG AA"
-					description={
-						<>
-							This page is fully WCAG AA compliant in accessibility. If you're
-							interested, checkout the{" "}
-							<a
-								href="https://www.deque.com/axe/devtools/"
-								target="_blank"
-								className="regular-link"
-								rel="noreferrer"
-							>
-								Axe DevTools
-							</a>{" "}
-							for a report of the accessibility of this page. Much of the
-							accessibility is ensured through the use of{" "}
-							<a
-								href="https://radix-ui.com"
-								target="_blank"
-								className="regular-link"
-								rel="noreferrer"
-							>
-								Radix UI
-							</a>
-							.
-						</>
-					}
-				/>
-				<FeatureTag
-					title="Responsive"
-					description="Developed to be responsive for both desktop and mobile."
-				/>
-				<FeatureTag
-					title="Framer Motion"
-					description={
-						<>
-							Animations are built with{" "}
-							<a
-								href="https://www.framer.com/motion/"
-								target="_blank"
-								className="regular-link"
-								rel="noreferrer"
-							>
-								Framer Motion
-							</a>
-						</>
-					}
-				/>
-				<FeatureTag
-					title="Tailwind CSS"
-					description={
-						<>
-							Built with{" "}
-							<a
-								className="regular-link"
-								href="https://tailwindcss.com/"
-								target="_blank"
-								rel="noreferrer"
-							>
-								Tailwind CSS
-							</a>
-						</>
-					}
-				/>
-				<FeatureTag
-					title="Typescript"
-					description="Written with typesafe code in TypeScript."
-				/>
-				<FeatureTag
-					title="AI/RAG tailored resume"
-					description={
-						<>
-							You can tailor the resume to the job you're listing or what you're
-							interested in! I've developed a system using{" "}
-							<a
-								href="https://gemini.google.com/app"
-								target="_blank"
-								className="regular-link"
-								rel="noreferrer"
-							>
-								Gemini
-							</a>{" "}
-							and{" "}
-							<a
-								href="https://sdk.vercel.ai/docs/introduction"
-								target="_blank"
-								className="regular-link"
-								rel="noreferrer"
-							>
-								Vercel AI SDK
-							</a>{" "}
-							to allow you to chat with agents (RAG) that tailor the resume to
-							be more streamlined to your needs!
-						</>
-					}
-					todo
-				/>
-				<FeatureTag
-					title="PostgreSQL"
-					description={
-						<>
-							Taking advantage of{" "}
-							<pre className="inline font-bold">pgvector</pre> for storing
-							embeddings on the information available on the page, AI agents can
-							grasp the information that you want to know about "me". Ideally,
-							this will be done using the{" "}
-							<a
-								className="regular-link"
-								href="https://neon.tech/"
-								target="_blank"
-								rel="noreferrer"
-							>
-								Neon Serverless Postgres
-							</a>
-						</>
-					}
-					todo
-				/>
+				{/* Features */}
+				<h2 className="my-2 font-bold">Technical highlights</h2>
+				<p>
+					The features and technologies highlighted below offer a glimpse into
+					my skillset and experience. I'm eager to discuss how my expertise and
+					capabilities can contribute to your team! Some of them are still being
+					built, but expected to be done within March 2025!
+				</p>
+				<div className="my-3 flex w-fit flex-wrap items-center gap-3">
+					<FeatureTag
+						title="WCAG AA"
+						description={
+							<>
+								This page is fully WCAG AA compliant in accessibility. If you're
+								interested, checkout the{" "}
+								<a
+									href="https://www.deque.com/axe/devtools/"
+									target="_blank"
+									className="regular-link"
+									rel="noreferrer"
+								>
+									Axe DevTools
+								</a>{" "}
+								for a report of the accessibility of this page. Much of the
+								accessibility is ensured through the use of{" "}
+								<a
+									href="https://radix-ui.com"
+									target="_blank"
+									className="regular-link"
+									rel="noreferrer"
+								>
+									Radix UI
+								</a>
+								.
+							</>
+						}
+					/>
+					<FeatureTag
+						title="Responsive"
+						description="Developed to be responsive for both desktop and mobile."
+					/>
+					<FeatureTag
+						title="Framer Motion"
+						description={
+							<>
+								Animations are built with{" "}
+								<a
+									href="https://www.framer.com/motion/"
+									target="_blank"
+									className="regular-link"
+									rel="noreferrer"
+								>
+									Framer Motion
+								</a>
+							</>
+						}
+					/>
+					<FeatureTag
+						title="NextJS"
+						description={
+							<>
+								Built with{" "}
+								<a
+									href="https://nextjs.org/"
+									target="_blank"
+									className="regular-link"
+									rel="noreferrer"
+								>
+									NextJS
+								</a>{" "}
+								and deployed with{" "}
+								<a
+									href="https://vercel.com/"
+									target="_blank"
+									className="regular-link"
+									rel="noreferrer"
+								>
+									Vercel
+								</a>
+								.
+							</>
+						}
+					/>
+					<FeatureTag
+						title="Tailwind CSS"
+						description={
+							<>
+								Built with{" "}
+								<a
+									className="regular-link"
+									href="https://tailwindcss.com/"
+									target="_blank"
+									rel="noreferrer"
+								>
+									Tailwind CSS
+								</a>
+							</>
+						}
+					/>
+					<FeatureTag
+						title="Typescript"
+						description="Written with typesafe code in TypeScript."
+					/>
+					<FeatureTag
+						title="AI/RAG tailored resume"
+						description={
+							<>
+								You can tailor the resume to the job you're listing or what
+								you're interested in! I've developed a system using{" "}
+								<a
+									href="https://gemini.google.com/app"
+									target="_blank"
+									className="regular-link"
+									rel="noreferrer"
+								>
+									Gemini
+								</a>{" "}
+								and{" "}
+								<a
+									href="https://sdk.vercel.ai/docs/introduction"
+									target="_blank"
+									className="regular-link"
+									rel="noreferrer"
+								>
+									Vercel AI SDK
+								</a>{" "}
+								to allow you to chat with agents (RAG) that tailor the resume to
+								be more streamlined to your needs!
+							</>
+						}
+						todo
+					/>
+					<FeatureTag
+						title="PostgreSQL"
+						description={
+							<>
+								Taking advantage of{" "}
+								<pre className="inline font-bold">pgvector</pre> for storing
+								embeddings on the information available on the page, AI agents
+								can grasp the information that you want to know about "me".
+								Ideally, this will be done using the{" "}
+								<a
+									className="regular-link"
+									href="https://neon.tech/"
+									target="_blank"
+									rel="noreferrer"
+								>
+									Neon Serverless Postgres
+								</a>
+							</>
+						}
+						todo
+					/>
+				</div>
 			</div>
 		</>
 	);

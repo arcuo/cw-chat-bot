@@ -18,10 +18,26 @@ export const workExperience: TimelineEntries = {
 		subtitle: "Learning and Collaborating with Feature Development",
 		description: {
 			main: [
-				"Building and learning frontend development in React and Typescript. Collaborating with a team in feature development.",
-				"I developed an Automated Testing application for WISEflow using Selenium and Python.",
+				<>
+					<label htmlFor="student-frontend-dev" className="font-bold text-sm">
+						Responsibilities
+					</label>
+					<p id="student-frontend-dev">
+						Developed and maintained frontend solutions for the WISEflow digital
+						exam platform, primarily using React and TypeScript. Also
+						responsible for maintaining legacy systems built with AngularJS/TS,
+						PHP Rain templates, and jQuery.
+					</p>
+				</>,
 			],
-			learned: ["Collaboration and introductions to software development."],
+			learned: [
+				<>
+					Gained foundational experience in collaborative software development
+					practices, including team communication, version control, and agile
+					methodologies.
+				</>,
+				"Introductions to software development and feature development at scale.",
+			],
 			tags: [
 				"Github",
 				"React",
@@ -39,15 +55,36 @@ export const workExperience: TimelineEntries = {
 	2020: {
 		start: 2020,
 		end: 2021,
-		title: "Frontend Developer",
+		title: "Senior Frontend Developer",
 		subtitle: "Feature development and maintenance",
 		description: {
 			main: [
-				"I helped develop frontend solutions for the WISEflow digital exam platform with main focus on React in Typescript. Maintaining old parts of the system in AngularJS/TS, PHP Rain templates, and JQuery.",
-				"Self driven development and learning to quickly grasp the structure of a project. Being able to grasp other fields like Backend and DevOps to quickly handle bug fixing, development and planning.",
+				<>
+					<label htmlFor="frontend-dev" className="font-bold text-sm">
+						Frontend Development for WISEflow
+					</label>
+					<div id="frontend-dev">
+						Developed and maintained frontend solutions for the WISEflow digital
+						exam platform, primarily using React and TypeScript. Also
+						responsible for maintaining legacy systems built with AngularJS/TS,
+						PHP Rain templates, and jQuery.
+					</div>
+				</>,
+				<>
+					<label htmlFor="frontend-dev2" className="font-bold text-sm">
+						Full-Stack Aptitude
+					</label>
+					<div id="frontend-dev2">
+						Demonstrated self-driven learning and rapid adaptation to new
+						projects, enabling quick understanding of project structure.
+						Proactively expanded knowledge into Backend and DevOps domains to
+						efficiently handle bug fixes, development tasks, and project
+						planning.
+					</div>
+				</>,
 			],
 			learned: [
-				"Planning and spearheading development of Micro frontend projects. Large scale maintenance of frontend DevEx and scaling. Collaborating with a team.",
+				"Planning and development of micro frontend projects, gained experience in large-scale frontend developer experience (DevEx) maintenance and scaling, and honed collaboration skills in a team environment.",
 			],
 			tags: [
 				"Github",
@@ -71,13 +108,52 @@ export const workExperience: TimelineEntries = {
 		subtitle: "Leading the Frontend Community",
 		description: {
 			main: [
-				"I managed the frontend community, including holding regular meetups and pushing knowledge sharing and a passion for modern frontend.",
-				"Leading maintenance and upgrades in DevEx and modernising the frontend stack for the company. I helped with bug finding and issue handling and organised meetings and events for the frontend team.",
-				"I handled mentoring new frontend developers and planning tasks that allowed the developers to work outside of hard deadlines for the first part of their employment.",
-			],
-			learned: [
-				"Communication and leading collaboration between a team of frontenders. Researching and documenting tools and techniques to keep a frontend stack modern.",
-				"Planning and organising maintenance projects on the stack in collaboration with other departments.",
+				<>
+					<label htmlFor="frontend-community" className="font-bold text-sm">
+						Frontend Community & Technical Leadership
+					</label>
+					<div id="frontend-community">
+						Managed the frontend community, increasing engagement through
+						regular meetups, knowledge sharing initiatives, and a focus on
+						modern frontend practices.
+					</div>
+				</>,
+				<>
+					<label htmlFor="frontend-community2" className="font-bold text-sm">
+						Technical Advancement & Mentorship
+					</label>
+					<div id="frontend-community2">
+						improving developer experience (DevEx) and reducing technicaldebt
+						through strategic maintenance and upgrades. Provided mentorship to
+						junior developers, enhancing their skills in debugging and issue
+						resolution.
+					</div>
+				</>,
+				<>
+					<label htmlFor="frontend-community3" className="font-bold text-sm">
+						Key Achievements
+					</label>
+					<div
+						id="frontend-community3"
+						className="[&>p:not(:first-child)]:mt-2"
+					>
+						<p>
+							Improved team communication and collaboration, streamlined
+							frontend development processes through research and documentation
+							of modern technologies, and successfully planned and executed
+							cross-departmental maintenance projects.
+						</p>
+						<p>
+							Communication and leading collaboration between a team of
+							frontenders. Researching and documenting tools and techniques to
+							keep a frontend stack modern.
+						</p>
+						<p>
+							Planning and organising maintenance projects on the stack in
+							collaboration with other departments.
+						</p>
+					</div>
+				</>,
 			],
 			tags: ["Frontend Community", "Planning", "Leading", "Tech lead"],
 			projects: [projects.wiseflow, projects.markingTool, projects.flowUI],
@@ -92,8 +168,23 @@ export const workExperience: TimelineEntries = {
 		subtitle: "Part time during Masters Degree",
 		description: {
 			main: [
-				"In 2023 I went back to the University to continue my development and take a Masters degree in Computer science. This meant that I had to make major changes to my life and work life to accomodate this new role.",
-				"I worked part time as a Senior Software Engineer and given that I was the frontender with the most experience, I was able to take more of a consulting role, helping with the higher level design and debugging of the frontend.",
+				<>
+					<label htmlFor="partime" className="font-bold text-sm">
+						Continuation of my education
+					</label>
+					<p id="partime">
+						In 2023 I went back to the University to continue my development and
+						take a Masters degree in Computer science. This meant that I had to
+						make major changes to my life and work life to accomodate this new
+						role.
+					</p>
+				</>,
+				<p>
+					I worked part time as a Senior Software Engineer and given that I was
+					the frontender with the most experience, I was able to take more of a
+					consulting role, helping with the higher level design and debugging of
+					the frontend.
+				</p>,
 			],
 			tags: ["Consultancy", "Mentoring", "Senior Frontend Developer"],
 			projects: [projects.markingTool, projects.wiseflow, projects.flowUI],

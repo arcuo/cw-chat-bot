@@ -28,8 +28,8 @@ export type TimelineEntry = {
 	title: ReactNode;
 	subtitle: string;
 	description: {
-		main: string[];
-		learned?: string[];
+		main: ReactNode[];
+		learned?: ReactNode[];
 		courses?: string[];
 		projects?: Project[];
 		tags?: string[];
@@ -208,7 +208,7 @@ export const TimelineEntryDialog = forwardRef<
 			title={entry.title}
 			subtitle={entry.subtitle}
 			content={
-				<div className="flex flex-col gap-2 [&>label]:mt-2">
+				<div className="flex flex-col gap-2">
 					{/* Main description */}
 					{entry.description.main.map((m, i) => (
 						<p key={i}>{m}</p>
@@ -216,16 +216,16 @@ export const TimelineEntryDialog = forwardRef<
 
 					{/* What I learned */}
 					{entry.description.learned && (
-						<>
+						<p>
 							<label htmlFor="learned" className="font-bold text-sm">
-								What I learned
+								Key learnings
 							</label>
 							<div id="learned" className="flex flex-col gap-2">
 								{entry.description.learned?.map((l, i) => (
 									<p key={i}>{l}</p>
 								))}
 							</div>
-						</>
+						</p>
 					)}
 
 					<Accordion.Root className="mt-5">
