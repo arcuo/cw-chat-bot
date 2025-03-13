@@ -41,7 +41,7 @@ export const Popup = ({
 							{...contentProps}
 						>
 							<motion.div
-								className="w-fit max-w-100 rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm shadow-lg"
+								className="w-fit max-w-[min(400px,90vw)] rounded-md border border-neutral-300 bg-white p-2 shadow-md"
 								variants={variants}
 								initial="closed"
 								animate="open"
@@ -49,7 +49,7 @@ export const Popup = ({
 								transition={{ duration: 0.1 }}
 							>
 								{content}
-								<Popover.Arrow id="popover-arrow" className="-mb fill-white stroke-1 stroke-neutral-400" />
+								<Popover.Arrow id="popover-arrow" className="fill-neutral-300" />
 							</motion.div>
 						</Popover.Content>
 					</Popover.Portal>

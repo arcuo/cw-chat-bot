@@ -112,11 +112,11 @@ export const workExperience: TimelineEntries = {
 					<label htmlFor="frontend-community" className="font-bold text-sm">
 						Frontend Community & Technical Leadership
 					</label>
-					<div id="frontend-community">
+					<p id="frontend-community">
 						Managed the frontend community, increasing engagement through
 						regular meetups, knowledge sharing initiatives, and a focus on
 						modern frontend practices.
-					</div>
+					</p>
 				</>,
 				<>
 					<label htmlFor="frontend-community2" className="font-bold text-sm">
