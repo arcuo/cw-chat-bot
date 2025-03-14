@@ -1,7 +1,8 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, contrast } from "@/lib/utils";
 import { motion } from "motion/react";
+import Color from "color";
 import {
 	forwardRef,
 	useRef,
@@ -35,7 +36,6 @@ export type TimelineEntry = {
 		tags?: string[];
 	};
 	color: CSSProperties["backgroundColor"];
-	textColor?: CSSProperties["color"];
 	icon: ReactNode;
 };
 
@@ -178,7 +178,7 @@ const Entry = ({
 							style={{
 								width: `calc(${((entry.end - entry.start) / (max - min + 1)) * 100}% - 4px)`,
 								background: `hsl(from ${entry.color} h s l / .75)`,
-								color: entry.textColor,
+								color: contrast(entry.color ?? ""),
 							}}
 						>
 							<div
@@ -211,21 +211,21 @@ export const TimelineEntryDialog = forwardRef<
 				<div className="flex flex-col gap-2">
 					{/* Main description */}
 					{entry.description.main.map((m, i) => (
-						<p key={i}>{m}</p>
+						<div key={i}>{m}</div>
 					))}
 
 					{/* What I learned */}
 					{entry.description.learned && (
-						<p>
+						<div>
 							<label htmlFor="learned" className="font-bold text-sm">
 								Key learnings
 							</label>
 							<div id="learned" className="flex flex-col gap-2">
 								{entry.description.learned?.map((l, i) => (
-									<p key={i}>{l}</p>
+									<div key={i}>{l}</div>
 								))}
 							</div>
-						</p>
+						</div>
 					)}
 
 					<Accordion.Root className="mt-5">

@@ -38,6 +38,7 @@ export const Popup = ({
 							sideOffset={7}
 							side="top"
 							collisionPadding={15}
+							title="Popup"
 							{...contentProps}
 						>
 							<motion.div

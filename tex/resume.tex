@@ -1,0 +1,312 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Developer CV
+% LaTeX Template
+% Version 1.1 (February 24, 2025)
+%
+% This template originates from:
+% https://www.LaTeXTemplates.com
+%
+% Authors:
+% Jan Vorisek (jan@vorisek.me)
+% Based on a template by Jan Küster (info@jankuester.com)
+% Modified for LaTeX Templates by Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% The MIT License (see included LICENSE file)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[9pt]{developercv} % Default font size, values from 8-12pt are recommended
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE AND CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}[t]{0.60\textwidth} % Left column with your name and title, change the width as needed
+	\vspace{-\baselineskip} % Required for vertically aligning minipages
+
+	% If your name is very short: use just one of the lines below
+	% If your name is very long: reduce the font size or make the current column wider (and reduce the others proportionately)
+	\colorbox{orange}{{\HUGE\textcolor{white}{\textbf{\MakeUppercase{Benjamin}}}}} % First name
+
+	\colorbox{white}{{\HUGE\textcolor{orange}{\textbf{\MakeUppercase{Zachariae}}}}} % Last name
+
+	\vspace{6pt} % Vertical whitespace
+
+	{\huge Full Stack Developer | Frontend Specialist |\\ Cryptography Enthusiast} % Career or current job title
+\end{minipage}
+\hfill % Automatic horizontal whitespace
+\begin{minipage}[t]{0.30\textwidth} % Right column with the first column of icons
+	\vspace{-\baselineskip} % Required for vertically aligning minipages
+
+	% The first parameter is the FontAwesome icon name, the second is the box size and the third is the text
+	% Other icons can be found by referring to fontawesome5.pdf (supplied with the template) and using the word after \fa in the command for the icon you want
+	\icon{Globe}{12}{\href{https://zachariae.dev}{zachariae.dev}}\\
+	\icon{Github}{12}{\href{https://github.com/arcuo}{github.com/arcuo}}\\
+	\icon{Linkedin}{12}{\href{https://www.linkedin.com/in/benjamin-zachariae-17591a117/}{Benjamin Zachariae}}\\
+	\icon{Google}{12}{\href{mailto:benjamin.zachariae@gmail.com}{benjamin.zachariae@gmail.com}}\\
+\end{minipage}
+
+\vspace{0.5cm} % Vertical whitespace
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION, SKILLS AND TECHNOLOGIES
+%----------------------------------------------------------------------------------------
+
+
+\begin{minipage}[t]{0.4\textwidth} % Left column with the introduction text, change the width as needed
+	\vspace{-\baselineskip} % Required for vertically aligning minipages
+	\cvsect{Who Am I?}
+	
+	I’m a Software Developer with 8 years of experience in Frontend and Backend development, including 1.5 years leading a Frontend community. Driven by a passion for innovation and a commitment to lifelong learning, I'm constantly seeking opportunities to leverage cutting-edge technologies.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.15\textwidth} % Left column width
+	\vspace{-\baselineskip} % Required for vertically aligning minipages
+
+	\cvsect{Languages}
+
+	\textbf{English} - fluent\\
+	\textbf{Danish} - native
+\end{minipage}
+\hfill % Automatic horizontal whitespace
+\begin{minipage}[t]{0.30\textwidth} % Right column with the skills bar chart, change the width as needed
+	\vspace{-15px} % Required for vertically aligning minipages
+	\hspace{10px}
+	\includegraphics[width=125px]{portrait.jpg}
+
+	% \begin{barchart}{5.5} % The parameter to the barchart environment is the maximum width (in cm) of the longest bar
+	% 	\baritem{JavaScript}{60}
+	% 	\baritem{PHP}{100}
+	% 	\baritem{SASS/LESS}{70}
+	% 	\baritem{Bootstrap}{70}
+	% 	\baritem{Git}{40}
+	% 	\baritem{LaTeX}{60}
+	% \end{barchart}
+\end{minipage}
+
+
+\begin{minipage}[t]{0.4\textwidth} % Left column with the introduction text, change the width as needed
+	\vspace{-\baselineskip}
+
+	\cvsect{Language skills}
+
+	% \bubbles{6/TS\slash JS, 6/Git, 5/Rust, 3/Golang, 5/Python, 4/test}
+	\begin{barchart}{5} % The parameter to the barchart environment is the maximum width (in cm) of the longest bar
+		\baritem{TS \slash JS}{100}
+		\baritem{React}{100}
+		\baritem{Python}{90}
+		\baritem{Git}{90}
+		\baritem{Rust}{80}
+		\baritem{Golang}{60}
+		\baritem{Docker}{60}
+	\end{barchart}
+\end{minipage} %
+\hfill % Automatic horizontal whitespace
+\begin{minipage}[t]{0.53\textwidth} % Right column with the skills bar chart, change the width as needed
+	\vspace{-\baselineskip}
+
+	\cvsect{Meta skills}
+
+	\begin{barchart}{5} % The parameter to the barchart environment is the maximum width (in cm) of the longest bar
+		\baritem{Frontend}{100}
+		\baritem{Communication}{90}
+		\baritem{Cryptography}{80}
+		\baritem{Backend}{80}
+		\baritem{Design}{70}
+		\baritem{Leadership}{60}
+		\baritem{DevOps}{50}
+	\end{barchart}
+\end{minipage}
+
+\cvsect{Technical Expertise}
+
+\vspace{-5px}
+\texttt{Cryptography}\slashsep\texttt{Computer Science}\\
+
+\textit{Focuses} - Frontend, FullStack, Multi-Party Computation (MPC), Post-Quantum Secure Signature Protocols. I’ve developed projects  in several aspects of IT, Frontend, Backend, and Data analysis. Here are some notable projects
+
+\begin{itemize}
+	\item Major contributor to a large scale Assessment platform WISEflow.
+	\item Committed major updates to an internal UI library to conform with modern standards and Accessibility WCAG AA needs.
+	\item Implemented Threshold ECDSA and post-quantum cryptography solutions in Rust. Developed an MPC voting scheme leveraging Shamir Secret Sharing in Golang.
+	\item Currently completing a Master’s thesis in Post-Quantum Cryptology, working on a Post-Quantum Secure Digital Signature Algorithm (SDitH) in Rust with emphasis on low-level architecture and performance optimization.
+	\item Developed a Bayesian Meta-Analysis package for R, combining technical proficiency with data science insights.
+\end{itemize}
+
+\cvsect{Frontend Development}
+
+\vspace{-5px}
+\texttt{React}\slashsep\texttt{Typescript}\slashsep\texttt{Astro}\slashsep\texttt{Vite}\slashsep\texttt{NextJS}
+
+\begin{itemize}
+	\item Proficient in modern frontend technologies, with expertise in Vite, SolidJS, Astro, React 19, NextJS and TypeScript.
+	\item Advocated for type safety and automation by integrating TypeScript features like generics and type inference into workflows and introducing Linux-based CLI tools and GitHub workflows.
+	\item I have a large amount of experience with Accessibility in terms of WCAG AA and developing a platform that adheres to the practices of an accessible UI.
+	\item Experience with modern frontend unit testing in Vitest, Cypress and Playwright. I’ve developed both with and without such testing measures and know personally the positive functionality they provide.
+	\item A Typescript Wizard. I work to develop type safe frontend software and increase the developer experience by developing generic types that ensure safety and auto-completion.
+\end{itemize}
+
+
+\cvsect{A Developer at Heart and Software Development Enthusiast}
+
+\vspace{-5px}
+\textcolor{BurntOrange}{\textit{Curiosity and a will towards learning}}\\
+
+Whether at work or in my free time, I’m immersed in software development. I’m passionate about personalizing and upgrading developer experiences through automation and tooling. My dual background in Cognitive Science and Computer Science provides me with a unique perspective that bridges technical and human-centric problem-solving. Whenever I see a place that could be optimised through development I seek to explore it.\\
+
+Committed to continuous growth and innovation in software development, I actively explore modern frameworks and languages like Rust while maintaining a deep interest in cutting-edge frontend technologies such as Vite, Astro, and Bun. I regularly follow development news and industry outlets to stay informed about the latest trends in frontend, backend, quantum computing, and cryptography.
+
+\cvsect{Leadership \& Community Building}
+
+\vspace{-5px}
+\textcolor{BurntOrange}{\textit{Tech lead and socialite}}\\
+
+\textit{Tech Lead \& Community Builder}: As a Tech Lead in EdTech, I fostered collaboration and technical growth within the frontend community through mentorship and proactive maintenance planning. Beyond technical leadership, I'm passionate about building strong, inclusive, and innovative technical communities. I've managed and grown developer communities by promoting knowledge sharing and continuous learning, while also designing and implementing scalable solutions and mentoring team members on cutting-edge practices.\\
+
+My strong communication skills enable me to align technical goals with broader organizational visions, and I thrive in social environments, actively contributing to a positive and collaborative workplace culture.\\
+
+\textbf{Key Accomplishments}\\
+
+\begin{itemize}
+	\item Spearheaded frontend development initiatives that improved developer workflows and elevated team performance.
+	\item Implemented advanced cryptographic techniques in fast and low level languages.
+	\item Engineered Accessibility into a platform through an internal UI library.
+	\item Regular “go to” for knowledge on the frontend of the platform at a major EdTech company.
+	\item Balanced academic research with hands-on technical skills, excelling in both theoretical and practical domains.
+\end{itemize}
+
+
+
+% Output a series of bubbles showing your proficiency with environments and/or tools
+% \begin{center}
+% 	 % Each bubble must be in the format of '<size>/<label>' and you can specify as many bubbles as will fit on the page
+% \end{center}
+
+%----------------------------------------------------------------------------------------
+%	EXPERIENCE
+%----------------------------------------------------------------------------------------
+
+\cvsect{Experience}
+
+\begin{entrylist}
+	\entry
+		{2/2017 -- 9/2020}
+		{Student Software Developer}
+		{Uniwise}
+		{
+
+			\textit{Responsibilities}: Contributed to feature development on a collaborative team, building and enhancing frontend applications using React and TypeScript.
+
+			\textit{Key Learnings}: Gained foundational experience in collaborative software development practices, including team communication, version control, and agile methodologies.
+		}
+	\entry
+		{6/2020 -- 1/2025}
+		{Senior Frontend Developer}
+		{Uniwise}
+		{
+			\texttt{React}\slashsep\texttt{TypeScript}\slashsep\texttt{Docker}\slashsep\texttt{AngularJS}\slashsep\texttt{Github Actions}\slashsep\texttt{PHP}\\
+
+			\textit{Frontend Development for WISEflow}: Developed and maintained frontend solutions for the WISEflow digital exam platform, primarily using React and TypeScript. Also responsible for maintaining legacy systems built with AngularJS/TS, PHP Rain templates, and jQuery.\\
+
+			\textit{Full-Stack Aptitude}: Demonstrated self-driven learning and rapid adaptation to new projects, enabling quick understanding of project structure. Proactively expanded knowledge into Backend and DevOps domains to efficiently handle bug fixes, development tasks, and project planning.\\
+
+			\textit{Key Skills Gained}: Planning and development of micro frontend projects, gained experience in large-scale frontend developer experience (DevEx) maintenance and scaling, and honed collaboration skills in a team environment.
+		}
+	\entry
+		{2/2022 -- 9/2023}
+		{Frontend Tech Lead}
+		{Uniwise}
+		{
+			\texttt{Mentoring \slashsep Leadership \slashsep DevOps \slashsep Community Building}\\
+
+			\textit{Frontend Community \& Technical Leadership}: Managed the frontend community, increasing engagement through regular meetups, knowledge sharing initiatives, and a focus on modern frontend practices.\\
+
+			\textit{Technical Advancement \& Mentorship}: Led efforts to modernize the company's frontend stack, significantly improving developer experience (DevEx) and reducing technical debt through strategic maintenance and upgrades. Provided mentorship to junior developers, enhancing their skills in debugging and issue resolution.\\
+
+			\textit{Key Achievements}: Improved team communication and collaboration, streamlined frontend development processes through research and documentation of modern technologies, and successfully planned and executed cross-departmental maintenance projects.
+		}
+		\entry
+		{2/2022 -- 9/2023}
+		{Senior Frontend Developer (\footnotesize{Part time})}
+		{Uniwise}
+		{
+
+			\textit{Continuation of my education}: In 2023 I went back to the University to continue my development and take a Masters degree in Computer science. This meant that I had to make major changes to my life and work life to accomodate this new role.
+			I worked part time as a Senior Software Engineer and given that I was the frontender with the most experience, I was able to take more of a consulting role, helping with the higher level design and debugging of the frontend.
+		}
+\end{entrylist}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+
+\cvsect{Education}
+
+\begin{entrylist}
+	\entry
+		{2023 -- 2025}
+		{Computer Science (Msc)}
+		{Aarhus University}
+		{
+			\texttt{Cryptography \slashsep Security \slashsep Rust \slashsep Post-Quantum Cryptography \slashsep Deep Learning}\\
+
+			Research interests include \textbf{cryptography}, quantum information processing, and multi-party computation (MPC). Proven ability to develop and implement cryptographic solutions, including a Post-Quantum Signature Scheme (SDitH) in Rust (based on NIST's 2nd call round 2) and an ECDSA Threshold Signature Scheme. Student developer experience at Uniwise.
+		}
+	\entry
+		{2014}
+		{Computer Science (Bsc)}
+		{Aarhus University}
+		{
+			\texttt{Algorithms \slashsep Golang \slashsep MPC \slashsep Shamir Secret Sharing}\\
+
+			Developed a secure multi-party computation (MPC) voting scheme with Shamir Secret Sharing in Go (Golang). This final project demonstrated expertise in cryptographic protocols and secure distributed systems. Student developer experience at Uniwise.
+		}
+	\entry
+		{2007 -- 2013}
+		{Cognitive Science (Ba)}
+		{Aarhus University}
+		{
+			\texttt{Research \slashsep Statistics \slashsep R programming}\\
+
+			I was part of the first batch of students on the newly formed Cognitive Science course. I was introduced to the fundamental theories of cognition. I learned how to design and carry out my own investigations of the human mind, brain, and behavior. I developed a Bayesian Meta Analysis package in R for the final project.\\
+
+			Among other things, I learned about statistical data analysis and computer programming, which enabled me to carry out my own experimental studies and to critically assess previous research results.\\
+
+			I learned how to design and carry out social experiments with Python and how to perform statistical data analysis with the R programming language. The computational part of the course introduced me to programming which led to choosing Computer Science as my Elective course and later to complete my Computer Science degrees.\\
+
+			Part of the “Kognitionsvidenskabelig Forening" (Volunteer Association).
+		}
+\end{entrylist}
+
+%----------------------------------------------------------------------------------------
+%	ADDITIONAL INFORMATION
+%----------------------------------------------------------------------------------------
+
+% \begin{minipage}[t]{0.3\textwidth} % Center column width
+% 	\vspace{-\baselineskip} % Required for vertically aligning minipages
+
+% 	\cvsect{Hobbies}
+
+% 	I love... \lorem
+% \end{minipage}
+% \hfill % Automatic horizontal whitespace
+% \begin{minipage}[t]{0.3\textwidth} % Right column width
+% 	\vspace{-\baselineskip} % Required for vertically aligning minipages
+
+% 	\cvsect{Non profit}
+
+% 	I help... \lorem
+% \end{minipage}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}

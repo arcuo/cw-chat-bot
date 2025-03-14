@@ -74,7 +74,7 @@ const item: Variants = {
 export function Header() {
 	return (
 		<>
-			<motion.div
+			<motion.header
 				className="@container grid @max-[900px]:grid-cols-3 grid-cols-4 grid-cols-fr gap-4 px-8 py-5 shadow-xs max-sm:flex max-sm:justify-between max-sm:whitespace-nowrap max-sm:px-4 max-sm:py-4"
 				variants={container}
 				initial="hidden"
@@ -188,7 +188,7 @@ export function Header() {
 						</LinkButton>
 					</Tooltip>
 				</motion.div>
-			</motion.div>
+			</motion.header>
 
 			<motion.hr
 				className="-mt-[8px] text-amber-700/15"

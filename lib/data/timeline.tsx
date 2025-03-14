@@ -22,12 +22,12 @@ export const workExperience: TimelineEntries = {
 					<label htmlFor="student-frontend-dev" className="font-bold text-sm">
 						Responsibilities
 					</label>
-					<p id="student-frontend-dev">
+					<div id="student-frontend-dev">
 						Developed and maintained frontend solutions for the WISEflow digital
 						exam platform, primarily using React and TypeScript. Also
 						responsible for maintaining legacy systems built with AngularJS/TS,
 						PHP Rain templates, and jQuery.
-					</p>
+					</div>
 				</>,
 			],
 			learned: [
@@ -112,11 +112,11 @@ export const workExperience: TimelineEntries = {
 					<label htmlFor="frontend-community" className="font-bold text-sm">
 						Frontend Community & Technical Leadership
 					</label>
-					<p id="frontend-community">
+					<div id="frontend-community">
 						Managed the frontend community, increasing engagement through
 						regular meetups, knowledge sharing initiatives, and a focus on
 						modern frontend practices.
-					</p>
+					</div>
 				</>,
 				<>
 					<label htmlFor="frontend-community2" className="font-bold text-sm">
@@ -137,21 +137,21 @@ export const workExperience: TimelineEntries = {
 						id="frontend-community3"
 						className="[&>p:not(:first-child)]:mt-2"
 					>
-						<p>
+						<div>
 							Improved team communication and collaboration, streamlined
 							frontend development processes through research and documentation
 							of modern technologies, and successfully planned and executed
 							cross-departmental maintenance projects.
-						</p>
-						<p>
+						</div>
+						<div>
 							Communication and leading collaboration between a team of
 							frontenders. Researching and documenting tools and techniques to
 							keep a frontend stack modern.
-						</p>
-						<p>
+						</div>
+						<div>
 							Planning and organising maintenance projects on the stack in
 							collaboration with other departments.
-						</p>
+						</div>
 					</div>
 				</>,
 			],
@@ -172,19 +172,19 @@ export const workExperience: TimelineEntries = {
 					<label htmlFor="partime" className="font-bold text-sm">
 						Continuation of my education
 					</label>
-					<p id="partime">
+					<div id="partime">
 						In 2023 I went back to the University to continue my development and
 						take a Masters degree in Computer science. This meant that I had to
 						make major changes to my life and work life to accomodate this new
 						role.
-					</p>
+					</div>
 				</>,
-				<p>
+				<div>
 					I worked part time as a Senior Software Engineer and given that I was
 					the frontender with the most experience, I was able to take more of a
 					consulting role, helping with the higher level design and debugging of
 					the frontend.
-				</p>,
+				</div>,
 			],
 			tags: ["Consultancy", "Mentoring", "Senior Frontend Developer"],
 			projects: [projects.markingTool, projects.wiseflow, projects.flowUI],
@@ -227,7 +227,6 @@ export const education: TimelineEntries = {
 				"Social and cultural dynamics in cognition",
 			],
 		},
-		textColor: "#fff",
 		icon: <BookUser size={15} />,
 	},
 	2017: {
@@ -268,7 +267,6 @@ export const education: TimelineEntries = {
 			],
 		},
 		color: "rgb(225 118 118)",
-		textColor: "#000",
 		icon: <Computer size={15} />,
 	},
 	2023: {
@@ -299,7 +297,6 @@ export const education: TimelineEntries = {
 			tags: ["Computer Science", "Cryptography"],
 		},
 		color: "rgb(225 118 218)",
-		textColor: "#000",
 		icon: <GraduationCap size={15} />,
 	},
 };

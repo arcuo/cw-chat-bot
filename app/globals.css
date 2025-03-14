@@ -39,14 +39,14 @@ html.wf-loading {
 }
 
 a.regular-link {
-  color: var(--color-blue-500);
+  color: var(--color-blue-600);
 
   &:visited {
     color: var(--color-blue-900);
   }
 
   &:hover {
-    color: var(--color-blue-700);
+    color: var(--color-blue-800);
   }
 }
 

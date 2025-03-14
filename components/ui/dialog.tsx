@@ -57,7 +57,7 @@ export const Dialog = forwardRef<
 								initial={{ y: 10, opacity: 0 }}
 								animate={{ y: 0, opacity: 1 }}
 								exit={{ y: 10, opacity: 0 }}
-								className="-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 flex max-h-[80%] max-h-[90%] transform flex-col gap-2 rounded-lg bg-neutral-50 shadow-md *:p-5 max-lg:w-[90%]"
+								className="-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 flex max-h-[90%] transform flex-col gap-2 rounded-lg bg-neutral-50 shadow-md *:p-5 max-lg:w-[90%]"
 							>
 								<div className="grid grid-cols-2 gap-2 border-neutral-200 border-b">
 									<DialogPrimitive.Title className="text-xl">
@@ -67,7 +67,10 @@ export const Dialog = forwardRef<
 										{subtitle}
 									</DialogPrimitive.Description>
 									<div className="col-start-2 text-right">
-										<DialogPrimitive.Close className="cursor-pointer p-1 text-neutral-500 hover:text-neutral-900">
+										<DialogPrimitive.Close
+											className="cursor-pointer p-1 text-neutral-500 hover:text-neutral-900"
+											aria-label="Close dialog"
+										>
 											<Cross2Icon />
 										</DialogPrimitive.Close>
 									</div>
