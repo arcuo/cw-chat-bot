@@ -59,7 +59,7 @@ export async function createResume(req: { prompt: string }) {
 }
 
 const resumeTitleSchema = z.object({
-	title: z.string().describe("Catchy title"),
+	pageTitle: z.string().describe("Catchy title to put in the meta data"),
 	subtitle: z
 		.object({
 			prefix: z

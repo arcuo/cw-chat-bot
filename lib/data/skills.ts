@@ -26,7 +26,7 @@ export const skills = {
 		], // TODO Ruff python linter
 	},
 	frontender: {
-		title: "Frontend Developer",
+		title: "Frontend",
 		subtitle: "8 years of experience in frontend development",
 		content: [
 			"My expertise lies in frontend development, where I have cultivated a robust skillset through the creation of applications utilizing a spectrum of technologies, including React, AngularJS, and jQuery. I maintain a keen interest in the evolving landscape of frontend technologies, diligently tracking emerging frameworks and trends through continuous learning and experimentation.",
@@ -44,7 +44,7 @@ export const skills = {
 		projects: [projects.markingTool, projects.flowUI, projects.wiseflow], // TODO Resume
 	},
 	types: {
-		title: "TypeScript/Rust Developer",
+		title: "TypeScript/Rust",
 		subtitle: "Strong affinity for type safe development",
 		content: [
 			"As a software developer, I prioritize writing maintainable and robust code above all else. I am a strong proponent of type-safe development practices, as they significantly enhance code maintainability and reduce the likelihood of runtime errors. Type safety provides a safety net, ensuring that code behaves predictably and is easier to reason about, both for myself and for other developers who may work on the codebase in the future.",
@@ -54,7 +54,7 @@ export const skills = {
 		projects: [projects.sdith, projects.flowUI, projects.ecdsa], // TODO Threshold ECDSA signatures
 	},
 	react: {
-		title: "React Developer",
+		title: "React",
 		subtitle: "I've created React applications in all shapes and sizes",
 		content: [
 			"During my time developing frontend applications, I've encountered a diverse range of challenges, and I've consistently sought out effective solutions. React has been my primary tool for tackling these problems. I've worked extensively with React in both single-page applications and within frameworks like Next.js. This experience, combined with dedicated learning in my free time, has given me a strong intuition for React's inner workings.",
@@ -75,7 +75,7 @@ export const skills = {
 		projects: [projects.markingTool, projects.flowUI, projects.wiseflow],
 	},
 	git: {
-		title: "Git VC and Github Workflows",
+		title: "Git and Github Workflows",
 		subtitle: "I love git and version control!",
 		content: [
 			"I am a proficient user of Git for version control and routinely develop personal scripts and tools to streamline my daily tasks. Recognizing the complexities of managing multiple projects and micro-frontends, I have created numerous GitHub Actions to automate CI/CD pipelines and the publishing process. I am passionate about automating workflows and enhancing the developer experience, both for myself and my teammates, as I believe it significantly increases productivity and reduces the potential for errors.",
@@ -93,7 +93,7 @@ export const skills = {
 		projects: [projects.flowUI, projects.wiseflow],
 	},
 	fullstack: {
-		title: "Fullstack Developer",
+		title: "Fullstack",
 		subtitle: "I've worked with a variety of technologies",
 		content: [
 			"Being part of a smaller development team has given me exposure to a wide range of web development areas. I've gained experience in both frontend and backend development, allowing me to be versatile and contribute across the entire stack. I've debugged and developed REST APIs with Golang, worked with GraphQL, and even developed PHP templating and REST endpoints. This breadth of experience makes me a well-rounded developer who can quickly adapt to different challenges and technologies.",

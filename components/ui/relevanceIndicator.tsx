@@ -25,7 +25,7 @@ export const RelevanceIndicator = ({ score }: { score: RelevanceScore }) => {
 					})}
 				/>
 				<div
-					className={cn(dotClass, {
+					className={cn(dotClass, "max-md:hidden", {
 						[color]: score >= 2,
 					})}
 				/>
@@ -35,7 +35,7 @@ export const RelevanceIndicator = ({ score }: { score: RelevanceScore }) => {
 					})}
 				/>
 				<div
-					className={cn(dotClass, {
+					className={cn(dotClass, "max-md:hidden", {
 						[color]: score >= 4,
 					})}
 				/>
@@ -47,7 +47,7 @@ export const RelevanceIndicator = ({ score }: { score: RelevanceScore }) => {
 				/>
 
 				<div
-					className={cn(dotClass, {
+					className={cn(dotClass, "max-md:hidden", {
 						[color]: score >= 6,
 					})}
 				/>
@@ -59,7 +59,7 @@ export const RelevanceIndicator = ({ score }: { score: RelevanceScore }) => {
 				/>
 
 				<div
-					className={cn(dotClass, {
+					className={cn(dotClass, "max-md:hidden", {
 						[color]: score >= 8,
 					})}
 				/>

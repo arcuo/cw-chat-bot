@@ -75,7 +75,7 @@ export const DataCard = forwardRef<
 						</motion.span>
 
 						{/* Header */}
-						<Card.Title className="flex items-start justify-between gap-4 text-balance font-bold">
+						<Card.Title className="flex items-start justify-between gap-4 text-balance font-bold max-md:flex-col">
 							{title}
 							{/* Relevance score */}
 							{relevance !== undefined && (

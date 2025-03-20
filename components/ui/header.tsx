@@ -191,7 +191,7 @@ export function Header() {
 			</motion.header>
 
 			<motion.hr
-				className="-mt-[8px] text-amber-700/15"
+				className="text-amber-700/15"
 				key="underline"
 				animate={{
 					width: "100%",

@@ -24,11 +24,11 @@ export default function RootLayout({
 			<body
 				className={cn(
 					font.className,
-					"flex h-full w-full flex-col gap-2 overflow-auto overflow-x-hidden",
+					"flex h-full w-full flex-col overflow-auto overflow-x-hidden",
 				)}
 			>
 				<Header />
-				<main className="overflow-auto px-15 py-10 max-sm:overflow-x-hidden max-md:max-w-full max-lg:px-5">
+				<main className="overflow-auto px-15 py-10 max-sm:overflow-x-hidden max-md:max-w-full max-lg:px-5 print:overflow-visible">
 					{children}
 				</main>
 				<Toaster />

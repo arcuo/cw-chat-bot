@@ -11,6 +11,9 @@ import { Timeline } from "@/components/ui/timeline";
 import { education, workExperience } from "@/lib/data/timeline";
 import { FeatureTag } from "../ui/featureTag";
 import type { getResume } from "@/app/resume/resumeAction";
+import { NetworkIcon } from "lucide-react";
+import { Button } from "../ui/button";
+import { Popup } from "../ui/popup";
 
 export type ResumeViewProps = {
 	resume?: Awaited<ReturnType<typeof getResume>>;
@@ -85,6 +88,30 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 					</motion.p>
 				</LayoutGroup>
 			</h1>
+
+			{/* Prompt information */}
+			{resume && (
+				<p className="my-9 text-neutral-600 text-sm">
+					<NetworkIcon className="mr-2 inline size-4" />
+					<span>This resume was generated using AI and tailored to a</span>{" "}
+					<Popup
+						content={
+							<div>
+								<div className="font-bold">Prompt:</div>
+								<blockquote className="my-2 ml-3 text-md">“{resume.prompt}”</blockquote>
+							</div>
+						}
+					>
+						<button
+							type="button"
+							className="cursor-pointer underline hover:text-neutral-800 data-[state=open]:text-neutral-900"
+						>
+							prompt
+						</button>
+					</Popup>
+					.
+				</p>
+			)}
 
 			<div className="contents [&_h2]:mt-5 [&_h2]:text-xl [&_p]:max-w-[1000px]">
 				{/* Introduction or cover letter */}
