@@ -17,10 +17,11 @@ import { Link1Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import type { Project } from "@/lib/data/projects";
 import type { Dialog } from "../ui/dialog";
+import type { RelevanceScore } from "../ui/relevanceIndicator";
 
 interface SkillCardProps {
 	skill: Skill;
-	relevance?: number;
+	relevance?: RelevanceScore;
 }
 
 export const ProjectLink = ({
@@ -66,7 +67,10 @@ export const SkillCard = ({
 					<Card.EllipsisContent className="text-neutral-700">
 						{content}
 					</Card.EllipsisContent>
-					<Card.Content ref={ref} className="flex w-full flex-2 items-end overflow-clip">
+					<Card.Content
+						ref={ref}
+						className="flex w-full flex-2 items-end overflow-clip"
+					>
 						<TagsCarousel
 							tags={tags}
 							parentWidth={width}
@@ -84,7 +88,11 @@ export const SkillCard = ({
 					<label className="-mb-4 font-bold text-sm" htmlFor="content">
 						Overview
 					</label>
-					<div id="content">{content}</div>
+					<div id="content" className="flex flex-col gap-2">
+						{content.map((c, i) => (
+							<p key={`skill-content-${i}`}>{c}</p>
+						))}
+					</div>
 
 					{/* Project links */}
 					{projects && (

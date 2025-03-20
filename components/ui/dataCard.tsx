@@ -11,7 +11,10 @@ import {
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import { Dialog } from "../ui/dialog";
-import { RelevanceIndicator } from "../ui/relevanceIndicator";
+import {
+	RelevanceIndicator,
+	type RelevanceScore,
+} from "../ui/relevanceIndicator";
 import { useDragging } from "./horizontalView";
 
 interface DataCardProps {
@@ -19,7 +22,7 @@ interface DataCardProps {
 	subtitle: ReactNode;
 	cardContent: ReactNode;
 	dialogContent: ReactNode;
-	relevance?: number;
+	relevance?: RelevanceScore;
 }
 
 export const DataCard = forwardRef<
@@ -72,13 +75,11 @@ export const DataCard = forwardRef<
 						</motion.span>
 
 						{/* Header */}
-						<Card.Title className="flex items-center justify-between gap-2 font-bold">
+						<Card.Title className="flex items-start justify-between gap-4 text-balance font-bold">
 							{title}
 							{/* Relevance score */}
 							{relevance !== undefined && (
-								<RelevanceIndicator
-									score={(((relevance + 3) % 4) + 1) as 1 | 2 | 3 | 4}
-								/>
+								<RelevanceIndicator score={relevance} />
 							)}
 						</Card.Title>
 						<Card.Subtitle className="w-full overflow-hidden text-ellipsis whitespace-nowrap">

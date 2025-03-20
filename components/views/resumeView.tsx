@@ -1,23 +1,28 @@
 "use client";
-import { skills } from "@/lib/data/skills";
+import { skills as staticSkills, type Skill } from "@/lib/data/skills";
 import { SkillCard } from "./skill";
 import { LayoutGroup, motion } from "motion/react";
 import { HorizontalView } from "../ui/horizontalView";
 import { ScrollingWord } from "../ui/scrollingWord";
 import { useRef, type ComponentRef } from "react";
 import { ProjectCard } from "./project";
-import { projects } from "@/lib/data/projects";
-import { Timeline, TimelineEntryDialog } from "@/components/ui/timeline";
+import { projects as staticProjects, type Project } from "@/lib/data/projects";
+import { Timeline } from "@/components/ui/timeline";
 import { education, workExperience } from "@/lib/data/timeline";
 import { FeatureTag } from "../ui/featureTag";
-import { DataCard } from "../ui/dataCard";
+import type { getResume } from "@/app/resume/resumeAction";
 
-// biome-ignore lint/complexity/noBannedTypes: <explanation>
-export type ResumeViewProps = {};
+export type ResumeViewProps = {
+	resume?: Awaited<ReturnType<typeof getResume>>;
+};
 
-export const ResumeView = () => {
+export const ResumeView = ({ resume }: ResumeViewProps) => {
 	const scroll1Ref = useRef<ComponentRef<typeof ScrollingWord>>(null);
 	const scroll2Ref = useRef<ComponentRef<typeof ScrollingWord>>(null);
+
+	const skills = resume?.skills ?? (Object.values(staticSkills) as Skill[]);
+	const projects =
+		resume?.projects ?? (Object.values(staticProjects) as Project[]);
 
 	return (
 		<>
@@ -33,7 +38,15 @@ export const ResumeView = () => {
 						<ScrollingWord
 							ref={scroll1Ref}
 							active
-							words={["Software", "Frontend", "DevEx", "Senior", "Full Stack"]}
+							words={
+								resume?.title.words ?? [
+									"Software",
+									"Frontend",
+									"DevEx",
+									"Senior",
+									"Full Stack",
+								]
+							}
 						/>{" "}
 						<motion.span>Developer</motion.span>
 						<span className="absolute ml-2 text-neutral-500 text-sm italic">
@@ -41,6 +54,7 @@ export const ResumeView = () => {
 						</span>
 					</motion.p>
 				</LayoutGroup>
+
 				<LayoutGroup>
 					<motion.p
 						layout
@@ -48,20 +62,26 @@ export const ResumeView = () => {
 						role="button"
 						onClick={() => scroll2Ref.current?.scrollWord()}
 					>
-						<motion.span>Building</motion.span>{" "}
+						<motion.span>
+							{resume?.title.subtitle.prefix ?? "Building"}
+						</motion.span>{" "}
 						<ScrollingWord
 							color="text-sky-700"
 							ref={scroll2Ref}
 							active
-							words={[
-								"beautiful",
-								"WCAG accessible",
-								"responsive",
-								"performant",
-								"funky animated",
-							]}
+							words={
+								resume?.title.subtitle.words ?? [
+									"beautiful",
+									"WCAG accessible",
+									"responsive",
+									"performant",
+									"funky animated",
+								]
+							}
 						/>{" "}
-						<motion.span>software for the web</motion.span>
+						<motion.span>
+							{resume?.title.subtitle.suffix ?? "software for the web"}
+						</motion.span>
 					</motion.p>
 				</LayoutGroup>
 			</h1>
@@ -69,11 +89,8 @@ export const ResumeView = () => {
 			<div className="contents [&_h2]:mt-5 [&_h2]:text-xl [&_p]:max-w-[1000px]">
 				{/* Introduction or cover letter */}
 				<p className="my-9 text-xl">
-					Dynamic Software Developer with 8 years of experience in Frontend and
-					Backend development, including 1.5 years leading a Frontend community.
-					Driven by a passion for innovation and a commitment to lifelong
-					learning, I'm constantly seeking opportunities to leverage
-					cutting-edge technologies.
+					{resume?.cover ??
+						"Dynamic Software Developer with 8 years of experience in Frontend and Backend development, including 1.5 years leading a Frontend community. Driven by a passion for innovation and a commitment to lifelong learning, I'm constantly seeking opportunities to leverage cutting-edge technologies."}
 				</p>
 
 				{/* Skills */}
@@ -88,8 +105,12 @@ export const ResumeView = () => {
 				</p>
 
 				<HorizontalView active>
-					{Object.values(skills).map((skill) => (
-						<SkillCard key={skill.title} skill={skill} />
+					{skills.map((skill) => (
+						<SkillCard
+							key={skill.title}
+							skill={skill}
+							relevance={skill.relevance}
+						/>
 					))}
 				</HorizontalView>
 
@@ -148,7 +169,11 @@ export const ResumeView = () => {
 
 				<HorizontalView active>
 					{Object.values(projects).map((project) => (
-						<ProjectCard key={project.title} project={project} />
+						<ProjectCard
+							key={project.title}
+							project={project}
+							relevance={project.relevance}
+						/>
 					))}
 				</HorizontalView>
 

@@ -1,5 +1,5 @@
 import { PageTranstionWrapper } from "@/components/ui/pageTransitionWrapper";
-import { ResumeView } from "@/components/views/resume";
+import { ResumeView } from "@/components/views/resumeView";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

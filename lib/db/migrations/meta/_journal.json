@@ -15,6 +15,41 @@
       "when": 1740930748613,
       "tag": "0001_sleepy_mastermind",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1742208176738,
+      "tag": "0002_complex_mikhail_rasputin",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1742412510330,
+      "tag": "0003_confused_the_executioner",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1742413251232,
+      "tag": "0004_silky_risque",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1742413388297,
+      "tag": "0005_confused_albert_cleary",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1742415055026,
+      "tag": "0006_burly_zaladane",
+      "breakpoints": true
     }
   ]
 }

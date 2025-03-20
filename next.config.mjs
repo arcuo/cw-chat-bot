@@ -3,7 +3,6 @@ const nextConfig = {
 	experimental: {
 		reactCompiler: true,
 	},
-
 	eslint: {
 		// Warning: This allows production builds to successfully complete even if
 		// your project has ESLint errors.
@@ -11,7 +10,7 @@ const nextConfig = {
 	},
 	typescript: {
 		ignoreBuildErrors: true, // TODO: remove
-	}
+	},
 };
 
 export default nextConfig;

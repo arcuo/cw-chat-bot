@@ -22,6 +22,7 @@
 }
 
 /* Handle on hover */
+/* biome-ignore lint/nursery/noUnknownPseudoClass: <explanation> */
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.3);
 }
@@ -59,6 +60,7 @@ body {
   --outer: hsla(0, 0%, 100%, 1);
   --inner: rgb(252, 241, 224);
   background: var(--outer);
+  /* biome-ignore lint/nursery/noDuplicateProperties: <explanation> */
   background: linear-gradient(var(--degrees), var(--outer) 0%, var(--inner) 50%, var(--outer) 98%);
   background: -moz-linear-gradient(var(--degrees), var(--outer) 0%, var(--inner) 50%, var(--outer) 98%);
   background: -webkit-linear-gradient(var(--degrees), var(--outer) 0%, var(--inner) 50%, var(--outer) 98%);
@@ -69,6 +71,7 @@ body {
   --outer: hsla(0, 0%, 100%, 1);
   --inner: rgb(253, 242, 216);
   background: var(--outer);
+  /* biome-ignore lint/nursery/noDuplicateProperties: <explanation> */
   background: linear-gradient(var(--degrees), var(--inner) 24%, var(--outer) 79%);
   background: -moz-linear-gradient(var(--degrees), var(--inner) 24%, var(--outer) 79%);
   background: -webkit-linear-gradient(var(--degrees), var(--inner) 24%, var(--outer) 79%);

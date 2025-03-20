@@ -14,7 +14,7 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:check": "drizzle-kit check",
-    "db:embed_resume": "bun scripts/embeddings/generateEmbeddings.ts"
+    "db:embed": "bun scripts/embeddings/generateEmbeddings.ts"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.1.17",
