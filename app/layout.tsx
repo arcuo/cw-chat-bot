@@ -4,6 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/ui/header";
 import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 const font = Outfit({ subsets: ["latin"], weight: ["300"] });
 
@@ -31,6 +33,8 @@ export default function RootLayout({
 				</main>
 				<Toaster />
 			</body>
+			<SpeedInsights />
+			<Analytics />
 		</html>
 	);
 }
