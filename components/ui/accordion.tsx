@@ -116,6 +116,10 @@ const variants: Variants = {
 	hidden: {
 		height: 0,
 		maskImage: "linear-gradient(white 20px, transparent 100%)",
+
+		transition: {
+			ease: "easeInOut",
+		},
 	},
 	shown: {
 		height: "auto",

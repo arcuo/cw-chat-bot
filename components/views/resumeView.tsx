@@ -4,7 +4,7 @@ import { skills as staticSkills, type Skill } from "@/lib/data/skills";
 import { SkillCard } from "./skill";
 import { LayoutGroup, motion } from "motion/react";
 import { ScrollingWord } from "../ui/scrollingWord";
-import { useRef, type ComponentRef } from "react";
+import { useLayoutEffect, useRef, useState, type ComponentRef } from "react";
 import { ProjectCard } from "./project";
 import { projects as staticProjects, type Project } from "@/lib/data/projects";
 import { Timeline } from "@/components/ui/timeline";
@@ -30,15 +30,15 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 	return (
 		<main
 			id="resume-view-container"
-			className="relative overflow-auto py-10 pr-100 pl-15 max-sm:overflow-x-hidden max-md:max-w-full max-lg:px-5 print:overflow-visible"
+			className="@container relative overflow-auto py-10 pr-100 pl-15 max-sm:overflow-x-hidden max-md:max-w-full max-lg:px-5 print:overflow-visible"
 		>
 			<TOC />
 
-			<h1 className="col-span-2 w-[70%] select-none text-balance font-bold text-6xl leading-18 max-sm:w-full max-sm:text-4xl max-sm:leading-10">
+			<h1 className="col-span-2 w-[70%] select-none text-balance font-bold text-5xl leading-18 max-sm:w-full max-sm:text-4xl max-sm:leading-10">
 				<LayoutGroup>
 					<motion.p
 						layout
-						className="relative w-fit cursor-pointer max-sm:whitespace-pre-wrap"
+						className="relative w-fit cursor-pointer whitespace-nowrap max-sm:whitespace-pre-wrap"
 						role="button"
 						onClick={() => scroll1Ref.current?.scrollWord()}
 					>
@@ -57,8 +57,8 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 							}
 						/>{" "}
 						<motion.span>Developer</motion.span>
-						<span className="absolute ml-2 text-neutral-500 text-sm italic">
-							Click me!
+						<span className="absolute right-1 ml-2 text-neutral-500 text-sm italic">
+							Click us!
 						</span>
 					</motion.p>
 				</LayoutGroup>
@@ -66,7 +66,7 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 				<LayoutGroup>
 					<motion.p
 						layout
-						className="w-fit cursor-pointer"
+						className="w-fit cursor-pointer whitespace-nowrap text-[max(20px,_min(3vw,_40px))]"
 						role="button"
 						onClick={() => scroll2Ref.current?.scrollWord()}
 					>
@@ -161,6 +161,7 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 					</p>
 
 					<CardAccordion
+						max={2}
 						elements={Object.values(projects)}
 						renderCard={(project) => (
 							<ProjectCard
@@ -223,24 +224,59 @@ const elements = [
 ];
 
 function CardAccordion<T>(props: {
+	max?: number;
 	elements: T[];
 	renderCard: (element: T) => JSX.Element;
 }) {
+	const { max = 3, elements, renderCard } = props;
+	const [n, setN] = useState<number>(max);
+
+	useLayoutEffect(() => {
+		const controller = new AbortController();
+		let main = document.getElementById("resume-view-container");
+		window.addEventListener(
+			"resize",
+			() => {
+				if (!main) main = document.getElementById("resume-view-container");
+				if (!main) return;
+				if (main.clientWidth < 768) {
+					setN(1);
+				} else if (main.clientWidth < 1280) {
+					setN(2);
+				} else {
+					setN(max);
+				}
+			},
+			{ signal: controller.signal },
+		);
+		return () => controller.abort();
+	});
+
 	return (
 		<Accordion.Root className="border-0 shadow-none">
 			<Accordion.Item value="skills">
-				<div className="my-8 grid grid-cols-3 items-center gap-6 max-md:grid-cols-1 max-xl:grid-cols-2">
-					{props.elements.slice(0, 3).map(props.renderCard)}
+				<div
+					className="mt-8 grid items-center gap-6"
+					style={{
+						gridTemplateColumns: `repeat(${n}, minmax(0, 1fr))`,
+					}}
+				>
+					{elements.slice(0, n).map(renderCard)}
 				</div>
-				<Accordion.Trigger className="flex w-fit items-center gap-2 rounded-md border border-neutral-100 px-3 py-1 shadow-md transition-transform duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.95]">
-					{/* @ts-ignore */}
-					{({ open }) => (open ? "See less" : "See more")}
-				</Accordion.Trigger>
-				<Accordion.Content className="p-0">
-					<div className="my-8 grid grid-cols-3 items-center gap-6 max-md:grid-cols-1 max-xl:grid-cols-2">
-						{props.elements.slice(3).map(props.renderCard)}
+				<Accordion.Content className="mt-6 p-0">
+					<div
+						className="mb-6 grid items-center gap-6"
+						style={{
+							gridTemplateColumns: `repeat(${n}, minmax(0, 1fr))`,
+						}}
+					>
+						{elements.slice(n).map(renderCard)}
 					</div>
 				</Accordion.Content>
+				<Accordion.Trigger className="mt-5 flex w-fit items-center gap-2 rounded-md border border-neutral-100 px-3 py-1 shadow-md transition-transform duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.95]">
+					{/* @ts-ignore */}
+					{({ open }) => (open ? "Less" : "More")}
+				</Accordion.Trigger>
 			</Accordion.Item>
 		</Accordion.Root>
 	);
@@ -249,6 +285,7 @@ function CardAccordion<T>(props: {
 const TOC = () => {
 	return (
 		<nav className="fixed top-45 right-25 w-fit max-lg:hidden">
+			<h3 className="mb-3 text-neutral-600 text-sm">Table of contents</h3>
 			<ul className="">
 				{elements.map(({ id, title }) => {
 					return (

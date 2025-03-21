@@ -76,7 +76,7 @@ const resumeTitleSchema = z.object({
 				.string()
 				.describe("Suffix of the subtitle which should come after the 'words'"),
 		})
-		.describe("Catchy subtitle"),
+		.describe("Catchy subtitle of max 40 characters"),
 	words: z
 		.array(z.string())
 		.describe('4 words to input into the title "Hi! I\'m a [blank] Developer"'),
@@ -109,7 +109,7 @@ Cover letter:`.trim(),
 	const titlePromise = generateObject({
 		model: google("gemini-2.0-flash-exp"),
 		prompt:
-			`Generate 4 words to input into the title "Hi! I'm a [blank] Developer". Furthermore, generate a catching subtitle sentence split into a prefix, 4 interchangable words, and a suffix. 
+			`Generate 4 words to input into the title "Hi! I'm a [blank] Developer". Furthermore, generate a catching subtitle sentence of max 40 characters split into a prefix, 4 interchangable words, and a suffix. 
 
 Base the content on the following skills, projects and the users prompt.
 Skills: ${skills.map((s) => `"${s.content}"`).join(", ")}
