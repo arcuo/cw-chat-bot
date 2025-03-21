@@ -1,8 +1,20 @@
+CREATE EXTENSION IF NOT EXISTS vector;
+
 CREATE TABLE IF NOT EXISTS "projects" (
 	"uuid" varchar(191) PRIMARY KEY NOT NULL,
 	"key" text NOT NULL,
 	"content" text NOT NULL,
 	"embedding" vector(768) NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "resumes" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"createdAt" timestamp DEFAULT now() NOT NULL,
+	"title" jsonb NOT NULL,
+	"prompt" text NOT NULL,
+	"cover" text NOT NULL,
+	"skillSimilarities" jsonb NOT NULL,
+	"projectSimilarities" jsonb NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "skills" (
