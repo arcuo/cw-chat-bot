@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import type { ComponentProps, HTMLAttributes } from "react";
+import type { ComponentProps, PropsWithChildren } from "react";
 import { LinkButton } from "./button";
 import {
 	DownloadIcon,
@@ -49,10 +49,8 @@ const NavLink = ({ children, href, ...rest }: ComponentProps<typeof Link>) => {
 };
 
 const container: Variants = {
-	hidden: { x: -100, opacity: 0 },
+	hidden: {},
 	show: {
-		x: 0,
-		opacity: 1,
 		transition: {
 			duration: 1,
 			staggerChildren: 0.2,
@@ -61,12 +59,14 @@ const container: Variants = {
 };
 
 const item: Variants = {
-	hidden: { x: -100, opacity: 0 },
+	hidden: { y: -100, opacity: 0 },
 	show: {
 		opacity: 1,
-		x: 0,
+		y: 0,
 		transition: {
-			type: "tween",
+			type: "spring",
+			duration: 0.6,
+			ease: "easeOut",
 		},
 	},
 };
@@ -75,37 +75,44 @@ export function Header() {
 	return (
 		<>
 			<motion.header
-				className="@container grid @max-[900px]:grid-cols-3 grid-cols-4 grid-cols-fr gap-4 px-8 py-5 shadow-xs max-sm:flex max-sm:justify-between max-sm:whitespace-nowrap max-sm:px-4 max-sm:py-4"
+				className="@container grid @max-[900px]:grid-cols-3 grid-cols-4 grid-cols-fr gap-4 bg-white px-8 py-5 shadow-xs max-sm:flex max-sm:justify-between max-sm:whitespace-nowrap max-sm:px-4 max-sm:py-4"
 				variants={container}
 				initial="hidden"
 				animate="show"
 			>
-				<motion.div key="name" className="relative w-fit">
-					<Item title="Name">
-						<span>Hugh Benjamin Zachariae</span>
-						<span className="text-neutral-700 text-xs">
-							Aarhus, Denmark GMT+1
-						</span>
-					</Item>
-				</motion.div>
+				<Item
+					title="Name"
+					key="name"
+					className="relative w-fit"
+					variants={item}
+				>
+					<span>Hugh Benjamin Zachariae</span>
+					<span className="text-neutral-700 text-xs">
+						Aarhus, Denmark GMT+1
+					</span>
+				</Item>
 
-				<Item title="Contact" className="max-sm:hidden">
+				<Item
+					title="Contact"
+					key="contacts"
+					className="max-sm:hidden"
+					variants={item}
+				>
 					<address className="flex flex-col text-left not-italic">
 						<a href="tel:+4521181058">+45 21 18 10 58</a>
 						<EmailCopy />
 					</address>
 				</Item>
 
-				<motion.div
+				<Item
+					title="Situation"
 					variants={item}
 					key="situation"
 					className="@max-[900px]:hidden"
 				>
-					<Item title="Situation">
-						<span>Exploring AI, RAG and more</span>
-						<span>Looking for new opportunities</span>
-					</Item>
-				</motion.div>
+					<span>Exploring AI, RAG and more</span>
+					<span>Looking for new opportunities</span>
+				</Item>
 
 				{/* Navigation */}
 				{/* <motion.nav
@@ -125,23 +132,6 @@ export function Header() {
 					variants={item}
 					className="col-start-4 flex @max-[850px]:flex-wrap items-center justify-end gap-2"
 				>
-					{/* <Popup
-						className="focus:outline-none"
-						content={
-							<div className="flex items-center gap-2 text-sm">
-								The page is currently under construction.
-							</div>
-						}
-						defaultOpen
-					>
-						<Button
-							icon
-							className="size-9 rounded-full bg-orange-300 p-2 text-orange-950"
-							aria-label="Under construction"
-						>
-							<Construction size={20} />
-						</Button>
-					</Popup> */}
 					<Tooltip content="The page a bit much? Click here to download the resume!">
 						<LinkButton
 							className="size-9 rounded-full p-2"
@@ -188,22 +178,21 @@ export function Header() {
 						</LinkButton>
 					</Tooltip>
 				</motion.div>
+				<motion.hr
+					className="absolute right-0 bottom-0 left-0 text-amber-700/15"
+					key="underline"
+					animate={{
+						width: "100%",
+					}}
+					initial={{
+						width: 0,
+					}}
+					transition={{
+						duration: 2,
+						ease: "easeOut",
+					}}
+				/>
 			</motion.header>
-
-			<motion.hr
-				className="text-amber-700/15"
-				key="underline"
-				animate={{
-					width: "100%",
-				}}
-				initial={{
-					width: 0,
-				}}
-				transition={{
-					duration: 2,
-					ease: "easeOut",
-				}}
-			/>
 		</>
 	);
 }
@@ -213,12 +202,13 @@ const Item = ({
 	children,
 	className,
 	...rest
-}: HTMLAttributes<HTMLDivElement> & { title: string }) => {
+}: ComponentProps<typeof motion.div> &
+	PropsWithChildren<{ title: string }>) => {
 	return (
-		<div className={cn("flex flex-col", className)} {...rest}>
+		<motion.div className={cn("flex flex-col", className)} {...rest}>
 			{/* Title */}
 			<div className="mb-1 text-neutral-600 text-sm">{title}</div>
 			<div className="contents uppercase">{children}</div>
-		</div>
+		</motion.div>
 	);
 };

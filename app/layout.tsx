@@ -20,17 +20,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className="overflow-x-hidden">
-			<body
-				className={cn(
-					font.className,
-					"flex h-full w-full flex-col overflow-auto overflow-x-hidden",
-				)}
-			>
+		<html lang="en">
+			<body className={cn(font.className, "flex h-full w-full flex-col")}>
 				<Header />
-				<main className="overflow-auto px-15 py-10 max-sm:overflow-x-hidden max-md:max-w-full max-lg:px-5 print:overflow-visible">
-					{children}
-				</main>
+				{children}
 				<Toaster />
 			</body>
 			<SpeedInsights />

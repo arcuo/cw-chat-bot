@@ -57,7 +57,7 @@ export const DataCard = forwardRef<
 				trigger={
 					<Card.Root
 						className={cn(
-							"relative max-w-110 max-sm:max-w-50 max-md:max-w-75 md:min-w-100",
+							// "relative max-w-110 max-sm:max-w-50 max-md:max-w-75 md:min-w-100",
 							className,
 						)}
 						{...props}
