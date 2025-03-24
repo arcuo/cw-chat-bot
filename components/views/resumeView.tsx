@@ -2,26 +2,94 @@
 
 import { skills as staticSkills, type Skill } from "@/lib/data/skills";
 import { SkillCard } from "./skill";
-import { LayoutGroup, motion } from "motion/react";
+import {
+	LayoutGroup,
+	motion,
+	useInView,
+	type UseInViewOptions,
+} from "motion/react";
 import { ScrollingWord } from "../ui/scrollingWord";
-import { useLayoutEffect, useRef, useState, type ComponentRef } from "react";
+import {
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+	type ComponentRef,
+	type RefObject,
+} from "react";
 import { ProjectCard } from "./project";
 import { projects as staticProjects, type Project } from "@/lib/data/projects";
 import { Timeline } from "@/components/ui/timeline";
 import { education, workExperience } from "@/lib/data/timeline";
 import { FeatureTag } from "../ui/featureTag";
 import type { getResume } from "@/app/resume/resumeAction";
-import { NetworkIcon } from "lucide-react";
+import {
+	AwardIcon,
+	CpuIcon,
+	FolderKanbanIcon,
+	NetworkIcon,
+	TimerIcon,
+} from "lucide-react";
 import { Popup } from "../ui/popup";
 import { Accordion } from "../ui/accordion";
+import { cn } from "@/lib/utils";
+import { atom, useAtom, useSetAtom } from "jotai";
 
 export type ResumeViewProps = {
 	resume?: Awaited<ReturnType<typeof getResume>>;
 };
 
+function useSectionsInView() {
+	const setSelectedElementId = useSetAtom(selectedElementEd);
+
+	const options: UseInViewOptions = {
+		amount: 1,
+		// top right bottom left
+		// margin: "500px 0px -100px 0px",
+	};
+
+	// Refs
+	const root = useRef<HTMLDivElement>(null);
+	const skillsRef = useRef<HTMLParagraphElement>(null);
+	const projectsRef = useRef<HTMLParagraphElement>(null);
+	const timelineRef = useRef<HTMLParagraphElement>(null);
+	const featuresRef = useRef<HTMLParagraphElement>(null);
+
+	const skillsInView = useInView(skillsRef, { root, ...options });
+	const projectsInView = useInView(projectsRef, { root, ...options });
+	const timelineInView = useInView(timelineRef, { root, ...options });
+	const featuresInView = useInView(featuresRef, { root, ...options });
+
+	useEffect(() => {
+		skillsInView && setSelectedElementId(elements[0].id);
+	}, [skillsInView]);
+
+	useEffect(() => {
+		projectsInView && setSelectedElementId(elements[1].id);
+	}, [projectsInView]);
+
+	useEffect(() => {
+		timelineInView && setSelectedElementId(elements[2].id);
+	}, [timelineInView]);
+
+	useEffect(() => {
+		featuresInView && setSelectedElementId(elements[3].id);
+	}, [featuresInView]);
+
+	return { root, skillsRef, projectsRef, timelineRef, featuresRef };
+}
+
 export const ResumeView = ({ resume }: ResumeViewProps) => {
 	const scroll1Ref = useRef<ComponentRef<typeof ScrollingWord>>(null);
 	const scroll2Ref = useRef<ComponentRef<typeof ScrollingWord>>(null);
+
+	const {
+		root: main,
+		skillsRef,
+		projectsRef,
+		timelineRef,
+		featuresRef,
+	} = useSectionsInView();
 
 	const skills = resume?.skills ?? (Object.values(staticSkills) as Skill[]);
 	const projects =
@@ -29,6 +97,7 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 
 	return (
 		<main
+			ref={main}
 			id="resume-view-container"
 			className="@container relative overflow-auto py-10 pr-100 pl-15 max-sm:overflow-x-hidden max-md:max-w-full max-lg:px-5 print:overflow-visible"
 		>
@@ -128,7 +197,7 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 				</p>
 
 				{/* Skills */}
-				<div className="contents" id={elements[0].id}>
+				<div ref={skillsRef} id={elements[0].id}>
 					<h2 className="my-2 font-bold">{elements[0].title}</h2>
 					<p>
 						I'm a versatile Developer with experience across the full software
@@ -152,7 +221,7 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 				</div>
 
 				{/* Projects */}
-				<div className="contents" id={elements[1].id}>
+				<div ref={projectsRef} id={elements[1].id}>
 					<h2 className="my-2 font-bold">{elements[1].title}</h2>
 					<p>
 						In my professional and personal life, I've worked on a variety of
@@ -173,7 +242,7 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 					/>
 				</div>
 
-				<div className="contents max-md:hidden" id={elements[2].id}>
+				<div ref={timelineRef} className="max-md:hidden" id={elements[2].id}>
 					{/* Timeline non-mobile */}
 					<h2 className="my-2 font-bold">{elements[2].title}</h2>
 					<p>
@@ -199,7 +268,7 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 				</div>
 
 				{/* Features */}
-				<div className="contents" id={elements[3].id}>
+				<div ref={featuresRef} id={elements[3].id}>
 					<h2 className="my-2 font-bold">{elements[3].title}</h2>
 					<p>
 						The features and technologies highlighted below offer a glimpse into
@@ -217,10 +286,10 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 };
 
 const elements = [
-	{ title: "Technical skills", id: "skills" },
-	{ title: "Notable Projects", id: "projects" },
-	{ title: "Experiences and Education", id: "timeline" },
-	{ title: "Technical features of the page", id: "features" },
+	{ title: "Technical skills", id: "skills", icon: CpuIcon },
+	{ title: "Notable Projects", id: "projects", icon: FolderKanbanIcon },
+	{ title: "Experiences and Education", id: "timeline", icon: TimerIcon },
+	{ title: "Technical features", id: "features", icon: AwardIcon },
 ];
 
 function CardAccordion<T>(props: {
@@ -282,14 +351,44 @@ function CardAccordion<T>(props: {
 	);
 }
 
+const selectedElementEd = atom(elements[0].id);
+
 const TOC = () => {
+	const [selectedElementId, setSelectedElementId] = useAtom(selectedElementEd);
+
 	return (
-		<nav className="fixed top-45 right-25 w-fit max-lg:hidden">
-			<h3 className="mb-3 text-neutral-600 text-sm">Table of contents</h3>
-			<ul className="">
-				{elements.map(({ id, title }) => {
+		<nav className="fixed top-45 right-15 w-fit rounded-xl border border-neutral-200 bg-white shadow-md max-lg:hidden">
+			{/* <h3 className="mb-3 text-neutral-600 text-sm">Table of contents</h3> */}
+			<ul>
+				{elements.map(({ id, title, icon: Icon }) => {
+					const isSelected = id === selectedElementId;
 					return (
-						<li key={id}>
+						<li
+							key={id}
+							className={cn(
+								"relative flex items-center gap-3 border-neutral-300 border-b px-4 py-2 transition-all last:border-none",
+								{ "font-bold": isSelected },
+							)}
+						>
+							{isSelected && (
+								<motion.div
+									layoutId="toc-dot"
+									className="-left-[5px] absolute"
+									transition={{ ease: "easeInOut", duration: 0.6 }}
+								>
+									{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
+									<svg
+										className="size-[22px] border-none fill-neutral-300"
+										viewBox="0 0 322.39 557.21"
+									>
+										<path
+											className="shadow-2xl"
+											d="M0,0v557.21c0-55.06,27.62-103.65,69.75-132.74,54.1-26,91.45-81.32,91.45-145.37,0-56.68-29.25-106.52-73.49-135.26-1.01-.66-2.03-1.31-3.06-1.95-2.75-1.48-5.45-3.05-8.1-4.68C30.61,108.8,0,57.98,0,0Z"
+										/>
+									</svg>
+								</motion.div>
+							)}
+							<Icon className={cn("z-10 size-4 transition-colors")} />
 							<a
 								href={`#${id}`}
 								className="whitespace-nowrap"
@@ -300,6 +399,7 @@ const TOC = () => {
 										top: element?.offsetTop,
 										behavior: "smooth",
 									});
+									setSelectedElementId(id);
 								}}
 							>
 								{title}
@@ -454,6 +554,23 @@ const Features = () => {
 						>
 							Neon Serverless Postgres
 						</a>
+					</>
+				}
+			/>
+			<FeatureTag
+				title="Page transitions"
+				description={
+					<>
+						Neat Page transitions are handled with{" "}
+						<a
+							href="https://www.framer.com/motion/"
+							target="_blank"
+							className="regular-link"
+							rel="noreferrer"
+						>
+							Framer Motion
+						</a>
+						.
 					</>
 				}
 				todo
