@@ -12,21 +12,21 @@ export function CardAccordion<T>(props: {
 	useLayoutEffect(() => {
 		const controller = new AbortController();
 		let main = document.getElementById("resume-view-container");
-		window.addEventListener(
-			"resize",
-			() => {
-				if (!main) main = document.getElementById("resume-view-container");
-				if (!main) return;
-				if (main.clientWidth < 768) {
-					setN(1);
-				} else if (main.clientWidth < 1280) {
-					setN(2);
-				} else {
-					setN(max);
-				}
-			},
-			{ signal: controller.signal },
-		);
+
+		const handleElementAmount = () => {
+			if (!main) main = document.getElementById("resume-view-container");
+			if (!main) return;
+			if (main.clientWidth < 768) {
+				setN(1);
+			} else if (main.clientWidth < 1280) {
+				setN(2);
+			} else {
+				setN(max);
+			}
+		};
+
+        handleElementAmount();
+		window.addEventListener("resize", handleElementAmount, { signal: controller.signal });
 		return () => controller.abort();
 	});
 

@@ -15,7 +15,7 @@ export const Tooltip = ({
 	const id = useId();
 
 	return (
-		<RadixTooltip.Provider delayDuration={400} {...rest}>
+		<RadixTooltip.Provider delayDuration={100} {...rest}>
 			<RadixTooltip.Root
 				open={open}
 				onOpenChange={(v) => {

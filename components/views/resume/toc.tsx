@@ -8,7 +8,7 @@ export const TOC = () => {
 	const [selectedElementId, setSelectedElementId] = useAtom(selectedElementEd);
 
 	return (
-		<nav className="fixed top-45 right-15 w-fit rounded-xl border border-neutral-200 bg-white shadow-md max-lg:hidden">
+		<nav className="w-fit rounded-xl border border-neutral-200 bg-white shadow-md">
 			<ul>
 				{elements.map(({ id, title, icon: Icon }) => {
 					const isSelected = id === selectedElementId;

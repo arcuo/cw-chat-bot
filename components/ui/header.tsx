@@ -75,7 +75,7 @@ export function Header() {
 	return (
 		<>
 			<motion.header
-				className="@container grid @max-[900px]:grid-cols-3 grid-cols-4 grid-cols-fr gap-4 bg-white px-8 py-5 shadow-xs max-sm:flex max-sm:justify-between max-sm:whitespace-nowrap max-sm:px-4 max-sm:py-4"
+				className="@container relative grid @max-[900px]:grid-cols-3 grid-cols-4 grid-cols-fr gap-4 bg-white px-8 py-5 shadow-xs max-sm:flex max-sm:justify-between max-sm:whitespace-nowrap max-sm:px-4 max-sm:py-4"
 				variants={container}
 				initial="hidden"
 				animate="show"
