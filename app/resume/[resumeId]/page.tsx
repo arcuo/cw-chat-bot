@@ -1,6 +1,6 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { getResume } from "../resumeAction";
-import { ResumeView } from "@/components/views/resumeView";
+import { ResumeView } from "@/components/views/resume/resumeView";
 
 type Props = {
 	params: Promise<{ resumeId: string }>;

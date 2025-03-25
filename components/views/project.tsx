@@ -2,16 +2,17 @@
 
 import type { Project } from "@/lib/data/projects";
 import { Card } from "../ui/card";
-import type { ComponentProps, ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef } from "react";
 import { Tag, TagsCarousel } from "../ui/tag";
 import useMeasure from "react-use-measure";
 import { DataCard } from "../ui/dataCard";
 import { cn } from "@/lib/utils";
-import { Link2Icon, LinkNone2Icon } from "@radix-ui/react-icons";
+import { Link2Icon } from "@radix-ui/react-icons";
+import type { RelevanceScore } from "../ui/relevanceIndicator";
 
 interface ProjectCardProps {
 	project: Project;
-	relevance?: number;
+	relevance?: RelevanceScore;
 }
 
 export const ProjectCard = ({
@@ -36,7 +37,11 @@ export const ProjectCard = ({
 						ref={ref}
 						className="flex w-full flex-2 items-end overflow-clip"
 					>
-						<TagsCarousel tags={tags} parentWidth={width} tagProps={{ className: "bg-cyan-300/20" }} />
+						<TagsCarousel
+							tags={tags}
+							parentWidth={width}
+							tagProps={{ className: "bg-cyan-300/20" }}
+						/>
 					</Card.Content>
 				</>
 			}

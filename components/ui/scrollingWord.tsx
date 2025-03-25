@@ -59,7 +59,6 @@ export const ScrollingWord = forwardRef<
 		<motion.span
 			className="relative inline-block cursor-pointer overflow-hidden text-justify align-bottom"
 			layout
-			onClick={() => scrollWord()}
 		>
 			<AnimatePresence mode="popLayout" initial={false}>
 				{sortedWords.map((w, i) => {

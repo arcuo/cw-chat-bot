@@ -51,7 +51,7 @@ export async function createResume(req: { prompt: string }) {
 		const [_resume] = await db
 			.insert(resumes)
 			.values(resume)
-			.returning({ id: resumes.id });
+			.returning();
 		return { id: _resume.id };
 	} catch (e) {
 		throw new Error("Failed to save resume");

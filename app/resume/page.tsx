@@ -1,4 +1,4 @@
-import { ResumeView } from "@/components/views/resumeView";
+import { ResumeView } from "@/components/views/resume/resumeView";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
