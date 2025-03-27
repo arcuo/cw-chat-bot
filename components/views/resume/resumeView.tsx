@@ -10,64 +10,45 @@ import { projects as staticProjects, type Project } from "@/lib/data/projects";
 import { Timeline } from "@/components/ui/timeline";
 import { education, workExperience } from "@/lib/data/timeline";
 import type { getResume } from "@/app/resume/resumeAction";
-import {
-	ArrowBigRight,
-	ArrowRight,
-	ArrowUpRightFromSquareIcon,
-	AwardIcon,
-	CpuIcon,
-	FolderKanbanIcon,
-	NetworkIcon,
-	TimerIcon,
-} from "lucide-react";
+import { ArrowRight, NetworkIcon } from "lucide-react";
 import { Popup } from "../../ui/popup";
-import { atom } from "jotai";
 import { useSectionsInView } from "./useSectionsInView";
 import { Features } from "./features";
 import { CardAccordion } from "@/components/ui/cardAccordion";
 import { TOC } from "./toc";
 import { RelevanceIndicator } from "@/components/ui/relevanceIndicator";
+import { elements } from "./elements";
+import { cn } from "@/lib/utils";
+import { comforta } from "@/components/utils/fonts";
+import { Main } from "../main";
 
 export type ResumeViewProps = {
 	resume?: Awaited<ReturnType<typeof getResume>>;
 };
 
-export const elements = [
-	{ title: "Technical skills", id: "skills", icon: CpuIcon },
-	{ title: "Notable Projects", id: "projects", icon: FolderKanbanIcon },
-	{ title: "Experiences and Education", id: "timeline", icon: TimerIcon },
-	{ title: "Technical features", id: "features", icon: AwardIcon },
-];
-
-export const selectedElementEd = atom(elements[0].id);
-
 export const ResumeView = ({ resume }: ResumeViewProps) => {
 	const scroll1Ref = useRef<ComponentRef<typeof ScrollingWord>>(null);
 	const scroll2Ref = useRef<ComponentRef<typeof ScrollingWord>>(null);
 
-	const {
-		root: main,
-		skillsRef,
-		projectsRef,
-		timelineRef,
-		featuresRef,
-	} = useSectionsInView();
+	const { skillsRef, projectsRef, timelineRef, featuresRef } =
+		useSectionsInView();
 
 	const skills = resume?.skills ?? (Object.values(staticSkills) as Skill[]);
 	const projects =
 		resume?.projects ?? (Object.values(staticProjects) as Project[]);
 
 	return (
-		<div className="grid grid-cols-[auto_300px] gap-10 overflow-hidden max-lg:grid-cols-1">
+		<div className="grid grid-cols-[auto_300px] gap-10 max-lg:grid-cols-1">
 			<div className="col-start-2 pt-15 max-lg:hidden">
-				<TOC />
+				<TOC className="sticky top-15" />
 			</div>
-			<main
-				ref={main}
-				id="resume-view-container"
-				className="lg:scrollbar-hidden @container relative col-start-1 row-start-1 overflow-auto px-15 py-10 max-sm:overflow-x-hidden max-md:max-w-full max-lg:px-5 print:overflow-visible"
-			>
-				<h1 className="col-span-2 w-[70%] select-none text-balance font-bold text-5xl leading-18 max-sm:w-full max-sm:text-4xl max-sm:leading-10">
+			<Main className="relative col-start-1 row-start-1">
+				<h1
+					className={cn(
+						comforta.className,
+						"col-span-2 w-[70%] select-none text-balance font-bold text-5xl leading-18 max-sm:w-full max-sm:text-4xl max-sm:leading-10",
+					)}
+				>
 					<LayoutGroup>
 						<motion.p
 							layout
@@ -90,7 +71,7 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 								}
 							/>{" "}
 							<motion.span>Developer</motion.span>
-							<span className="absolute right-1 ml-2 text-neutral-500 text-sm italic">
+							<span className="-top-5 -left-2 absolute ml-2 text-neutral-500 text-sm italic">
 								Click us!
 							</span>
 						</motion.p>
@@ -99,7 +80,7 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 					<LayoutGroup>
 						<motion.p
 							layout
-							className="w-fit cursor-pointer whitespace-nowrap text-[max(20px,_min(3vw,_40px))]"
+							className="w-fit cursor-pointer whitespace-nowrap text-[max(11px,_min(3vw,_40px))]"
 							role="button"
 							onClick={() => scroll2Ref.current?.scrollWord()}
 						>
@@ -166,8 +147,8 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 					</p>
 
 					{/* Skills */}
-					<div ref={skillsRef} id={elements[0].id}>
-						<h2 className="my-2 font-bold">{elements[0].title}</h2>
+					<div ref={skillsRef} id={elements.skills.id}>
+						<h2 className="my-2 font-bold">{elements.skills.title}</h2>
 						<p>
 							I'm a versatile Developer with experience across the full software
 							spectrum, from crafting Single-Page Applications and paginated
@@ -190,8 +171,8 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 					</div>
 
 					{/* Projects */}
-					<div ref={projectsRef} id={elements[1].id}>
-						<h2 className="my-2 font-bold">{elements[1].title}</h2>
+					<div ref={projectsRef} id={elements.projects.id}>
+						<h2 className="my-2 font-bold">{elements.projects.title}</h2>
 						<p>
 							In my professional and personal life, I've worked on a variety of
 							projects. They vary much in their technical scope, Backend,
@@ -211,9 +192,13 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 						/>
 					</div>
 
-					<div ref={timelineRef} className="max-md:hidden" id={elements[2].id}>
+					<div
+						ref={timelineRef}
+						className="max-md:hidden"
+						id={elements.timeline.id}
+					>
 						{/* Timeline non-mobile */}
-						<h2 className="my-2 font-bold">{elements[2].title}</h2>
+						<h2 className="my-2 font-bold">{elements.timeline.title}</h2>
 						<p>
 							My background combines the analytical rigor of Computer Science
 							with the human-centered insights of Cognitive Science, as detailed
@@ -238,8 +223,8 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 					</div>
 
 					{/* Features */}
-					<div ref={featuresRef} id={elements[3].id}>
-						<h2 className="my-2 font-bold">{elements[3].title}</h2>
+					<div ref={featuresRef} id={elements.features.id}>
+						<h2 className="my-2 font-bold">{elements.features.title}</h2>
 						<p>
 							The features and technologies highlighted below offer a glimpse
 							into my skillset and experience. I'm eager to discuss how my
@@ -252,7 +237,7 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 						</div>
 					</div>
 				</div>
-			</main>
+			</Main>
 		</div>
 	);
 };

@@ -124,7 +124,6 @@ export const Features = () => {
 						more streamlined to your needs!
 					</>
 				}
-				todo
 			/>
 			<FeatureTag
 				title="PostgreSQL"

@@ -1,52 +1,10 @@
 "use client";
-import Link from "next/link";
 import type { ComponentProps, PropsWithChildren } from "react";
-import { LinkButton } from "./button";
-import {
-	DownloadIcon,
-	EnvelopeClosedIcon,
-	GitHubLogoIcon,
-	LinkedInLogoIcon,
-} from "@radix-ui/react-icons";
 import { motion, type Variants } from "motion/react";
-import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { EmailCopy } from "./emailCopy";
-import { Tooltip } from "./tooltip";
-
-const NavLink = ({ children, href, ...rest }: ComponentProps<typeof Link>) => {
-	const pathname = usePathname();
-	const selected = pathname === href;
-	return (
-		<motion.div
-			whileHover="hover"
-			initial="initial"
-			whileTap={{ opacity: 0.7, transition: { duration: 0.1 } }}
-		>
-			<Link
-				href={href}
-				{...rest}
-				className={cn("transition-colors", {
-					"pointer-events-none text-amber-700": selected,
-				})}
-			>
-				{children}
-			</Link>
-			<motion.hr
-				className="text-amber-700"
-				key="underline"
-				variants={{
-					hover: {
-						width: "100%",
-					},
-					initial: {
-						width: 0,
-					},
-				}}
-			/>
-		</motion.div>
-	);
-};
+import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const container: Variants = {
 	hidden: {},
@@ -59,141 +17,77 @@ const container: Variants = {
 };
 
 const item: Variants = {
-	hidden: { y: -100, opacity: 0 },
+	hidden: { x: -100, opacity: 0 },
 	show: {
 		opacity: 1,
-		y: 0,
+		x: 0,
 		transition: {
 			type: "spring",
 			duration: 0.6,
-			ease: "easeOut",
+			staggerChildren: 0.2,
 		},
 	},
 };
 
+const NavLink = ({
+	href,
+	children,
+	className,
+}: PropsWithChildren<{ href: string; className?: string }>) => {
+	const pathname = usePathname();
+	const isSelected = pathname.includes(href);
+
+	return (
+		<Link href={href} className={cn("relative", className)} prefetch>
+			{children}
+			{isSelected && (
+				<motion.hr
+					layoutId="nav-link-line"
+					className="absolute bottom-0 left-0 w-full text-neutral-400"
+				/>
+			)}
+		</Link>
+	);
+};
+
 export function Header() {
 	return (
-		<>
-			<motion.header
-				className="@container relative grid @max-[900px]:grid-cols-3 grid-cols-4 grid-cols-fr gap-4 bg-white px-8 py-5 shadow-xs max-sm:flex max-sm:justify-between max-sm:whitespace-nowrap max-sm:px-4 max-sm:py-4"
-				variants={container}
-				initial="hidden"
-				animate="show"
-			>
-				<Item
-					title="Name"
-					key="name"
-					className="relative w-fit"
-					variants={item}
-				>
-					<span>Hugh Benjamin Zachariae</span>
-					<span className="text-neutral-700 text-xs">
-						Aarhus, Denmark GMT+1
-					</span>
-				</Item>
+		<motion.header
+			id="header"
+			className="@container relative grid grid-cols-2 items-center bg-white px-15 py-8 max-sm:flex max-sm:justify-between max-sm:whitespace-nowrap max-sm:px-5 max-sm:py-5"
+			variants={container}
+			initial="hidden"
+			animate="show"
+		>
+			<Item title="" key="name" className="relative justify-self-start">
+				<motion.span variants={item} className="text-lg">
+					Benjamin Zachariae
+				</motion.span>
+				<motion.span variants={item} className="text-neutral-700 text-xs">
+					Aarhus, Denmark GMT+1
+				</motion.span>
+			</Item>
 
-				<Item
-					title="Contact"
-					key="contacts"
-					className="max-sm:hidden"
-					variants={item}
+			<motion.div className="flex gap-4 justify-self-end " variants={item}>
+				<NavLink href="/home">Home</NavLink>
+				<NavLink href="/resume" className="mr-10">
+					Resume
+				</NavLink>
+				<a href="https://github.com/arcuo" target="_blank" rel="noreferrer">
+					<GitHubLogoIcon aria-label="Github/arcuo" className="size-6" />
+				</a>
+				<a
+					href="https://www.linkedin.com/in/benjamin-zachariae-17591a117"
+					target="_blank"
+					rel="noreferrer"
 				>
-					<address className="flex flex-col text-left not-italic">
-						<a href="tel:+4521181058">+45 21 18 10 58</a>
-						<EmailCopy />
-					</address>
-				</Item>
-
-				<Item
-					title="Situation"
-					variants={item}
-					key="situation"
-					className="@max-[900px]:hidden"
-				>
-					<span>Exploring AI, RAG and more</span>
-					<span>Looking for new opportunities</span>
-				</Item>
-
-				{/* Navigation */}
-				{/* <motion.nav
-					key="nav"
-					variants={item}
-					className="flex @max-[1650px]:flex-col @max-[1650px]:items-end items-center justify-center @max-[1650px]:gap-2 gap-10 @max-[1650px]:text-sm"
-				>
-					<NavLink href={"/"}>Home</NavLink>
-					<NavLink href={"/resume"}>Resume</NavLink>
-					<NavLink href={"/experience"}>Experience</NavLink>
-				</motion.nav> */}
-
-				{/* Links */}
-
-				<motion.div
-					key="links"
-					variants={item}
-					className="col-start-4 flex @max-[850px]:flex-wrap items-center justify-end gap-2"
-				>
-					<Tooltip content="The page a bit much? Click here to download the resume!">
-						<LinkButton
-							className="size-9 rounded-full p-2"
-							aria-label="Download PDF"
-							href="/files/Resume_Benjamin_Zachariae_March-2025.pdf"
-							target="_blank"
-							rel="noopener noreferrer"
-							icon
-						>
-							<DownloadIcon />
-						</LinkButton>
-					</Tooltip>
-					<Tooltip content="Send me an email!">
-						<LinkButton
-							className="size-9 rounded-full p-2"
-							aria-label="Email"
-							href="mailto:benjamin.zachariae@gmail.com"
-							target="_blank"
-							icon
-						>
-							<EnvelopeClosedIcon />
-						</LinkButton>
-					</Tooltip>
-					<Tooltip content="Connect with me on LinkedIn!">
-						<LinkButton
-							className="size-9 rounded-full p-2"
-							aria-label="LinkedIn"
-							href="https://www.linkedin.com/in/benjamin-zachariae-17591a107/"
-							target="_blank"
-							icon
-						>
-							<LinkedInLogoIcon />
-						</LinkButton>
-					</Tooltip>
-					<Tooltip content="Check out my Github!">
-						<LinkButton
-							className="size-9 rounded-full p-2"
-							aria-label="Github"
-							href="https://github.com/arcuo/"
-							target="_blank"
-							icon
-						>
-							<GitHubLogoIcon />
-						</LinkButton>
-					</Tooltip>
-				</motion.div>
-				<motion.hr
-					className="absolute right-0 bottom-0 left-0 text-amber-700/15"
-					key="underline"
-					animate={{
-						width: "100%",
-					}}
-					initial={{
-						width: 0,
-					}}
-					transition={{
-						duration: 2,
-						ease: "easeOut",
-					}}
-				/>
-			</motion.header>
-		</>
+					<LinkedInLogoIcon
+						aria-label="LinkedIn/Benjamin Zachariae"
+						className="size-6"
+					/>
+				</a>
+			</motion.div>
+		</motion.header>
 	);
 }
 
@@ -207,8 +101,8 @@ const Item = ({
 	return (
 		<motion.div className={cn("flex flex-col", className)} {...rest}>
 			{/* Title */}
-			<div className="mb-1 text-neutral-600 text-sm">{title}</div>
-			<div className="contents uppercase">{children}</div>
+			<div className="text-neutral-600">{title}</div>
+			{children}
 		</motion.div>
 	);
 };

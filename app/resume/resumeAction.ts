@@ -84,6 +84,8 @@ const resumeTitleSchema = z.object({
 
 export type ResumeTitle = z.infer<typeof resumeTitleSchema>;
 
+// TODO: Make prompt to check if prompt is serious or not
+
 async function generateCoverLetter(
 	prompt: string,
 	similarity: Awaited<ReturnType<typeof projectAndSkillSimilarity>>,

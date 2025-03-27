@@ -1,7 +1,9 @@
 "use client";
 
+import { redirect } from "next/navigation";
+
 export default function ErrorPage() {
-	return <div>Resume not found</div>;
+	redirect("/home");
 }
 
 // TODO: make prettier

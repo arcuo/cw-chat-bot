@@ -6,8 +6,10 @@ import { Header } from "@/components/ui/header";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Footer } from "@/components/ui/Footer";
+import { outfit } from "@/components/utils/fonts";
 
-const font = Outfit({ subsets: ["latin"], weight: ["300"] });
+const font = outfit;
 
 export const metadata: Metadata = {
 	title: { default: "Benjamin Zachariae", template: "%s - Benjamin Zachariae" },
@@ -25,6 +27,7 @@ export default function RootLayout({
 				<Header />
 				{children}
 				<Toaster />
+				<Footer />
 			</body>
 			<SpeedInsights />
 			<Analytics />

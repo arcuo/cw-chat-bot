@@ -11,10 +11,10 @@ export function CardAccordion<T>(props: {
 
 	useLayoutEffect(() => {
 		const controller = new AbortController();
-		let main = document.getElementById("resume-view-container");
+		let main = document.getElementById("main-container");
 
 		const handleElementAmount = () => {
-			if (!main) main = document.getElementById("resume-view-container");
+			if (!main) main = document.getElementById("main-container");
 			if (!main) return;
 			if (main.clientWidth < 768) {
 				setN(1);

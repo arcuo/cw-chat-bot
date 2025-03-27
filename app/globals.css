@@ -28,11 +28,16 @@
   background: rgba(0, 0, 0, 0.3);
 }
 
-html,
-body {
+html {
   height: 100%;
   width: 100%;
+  overflow: auto;
   scroll-behavior: smooth !important;
+  font-size: var(--text-md);
+}
+
+body {
+  scrollbar-gutter: stable;
 }
 
 html.wf-loading {

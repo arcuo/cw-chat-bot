@@ -2,7 +2,11 @@
 import { useSetAtom } from "jotai";
 import { type UseInViewOptions, useInView } from "motion/react";
 import { useRef, useEffect } from "react";
-import { selectedElementEd, elements } from "./resumeView";
+import { selectedElementEd } from "./elements";
+
+export const sectionViewStore = {
+	disabled: false,
+};
 
 export function useSectionsInView() {
 	const setSelectedElementId = useSetAtom(selectedElementEd);
@@ -12,32 +16,39 @@ export function useSectionsInView() {
 	};
 
 	// Refs
-	const root = useRef<HTMLDivElement>(null);
 	const skillsRef = useRef<HTMLParagraphElement>(null);
 	const projectsRef = useRef<HTMLParagraphElement>(null);
 	const timelineRef = useRef<HTMLParagraphElement>(null);
 	const featuresRef = useRef<HTMLParagraphElement>(null);
 
-	const skillsInView = useInView(skillsRef, { root, ...options });
-	const projectsInView = useInView(projectsRef, { root, ...options });
-	const timelineInView = useInView(timelineRef, { root, ...options });
-	const featuresInView = useInView(featuresRef, { root, ...options });
+	const skillsInView = useInView(skillsRef, { ...options });
+	const projectsInView = useInView(projectsRef, { ...options });
+	const timelineInView = useInView(timelineRef, { ...options });
+	const featuresInView = useInView(featuresRef, { ...options });
 
 	useEffect(() => {
-		skillsInView && setSelectedElementId(elements[0].id);
+		skillsInView &&
+			!sectionViewStore.disabled &&
+			setSelectedElementId("skills");
 	}, [skillsInView]);
 
 	useEffect(() => {
-		projectsInView && setSelectedElementId(elements[1].id);
+		projectsInView &&
+			!sectionViewStore.disabled &&
+			setSelectedElementId("projects");
 	}, [projectsInView]);
 
 	useEffect(() => {
-		timelineInView && setSelectedElementId(elements[2].id);
+		timelineInView &&
+			!sectionViewStore.disabled &&
+			setSelectedElementId("timeline");
 	}, [timelineInView]);
 
 	useEffect(() => {
-		featuresInView && setSelectedElementId(elements[3].id);
+		featuresInView &&
+			!sectionViewStore.disabled &&
+			setSelectedElementId("features");
 	}, [featuresInView]);
 
-	return { root, skillsRef, projectsRef, timelineRef, featuresRef };
+	return { skillsRef, projectsRef, timelineRef, featuresRef };
 }
