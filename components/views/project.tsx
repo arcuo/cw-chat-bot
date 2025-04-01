@@ -47,46 +47,52 @@ export const ProjectCard = ({
 			}
 			title={title}
 			subtitle={subtitle}
-			dialogContent={
-				<div className="flex flex-col gap-5">
-					{/* Product Description */}
-					<label
-						className="-mb-4 font-bold text-sm"
-						htmlFor="productDescription"
-					>
-						Product Description
-					</label>
-					<div id="productDescription">{productDescription}</div>
-
-					{/* Overview */}
-					<label className="-mb-4 font-bold text-sm" htmlFor="content">
-						Overview
-					</label>
-					<div id="content">{content}</div>
-
-					{/* Link */}
-					{link && (
-						<a
-							className="flex w-fit items-center gap-2 hover:fill-blue-600 hover:text-blue-600"
-							target="_blank"
-							rel="noopener noreferrer"
-							href={link?.href}
-						>
-							<Link2Icon />
-							{link?.text}
-						</a>
-					)}
-
-					{/* Tags */}
-					<div className="flex flex-wrap items-end gap-2">
-						{tags.map((t) => (
-							<Tag key={t}>{t}</Tag>
-						))}
-					</div>
-				</div>
-			}
+			dialogContent={<ProjectDialogBody project={project} />}
 			className={cn("box-border border-cyan-600 border-b-5", className)}
 			{...props}
 		/>
 	);
 };
+
+export function ProjectDialogBody({ project }: { project: Project }) {
+	const { title, subtitle, productDescription, content, tags, link } = project;
+	return (
+		<div className="flex flex-col gap-5">
+			{/* Product Description */}
+			<label className="-mb-4 font-bold text-sm" htmlFor="productDescription">
+				Product Description
+			</label>
+			<div id="productDescription">{productDescription}</div>
+
+			{/* Overview */}
+			<label className="-mb-4 font-bold text-sm" htmlFor="content">
+				Overview
+			</label>
+			<div id="content" className="flex flex-col gap-2">
+				{content.map((c, i) => (
+					<p key={i}>{c}</p>
+				))}
+			</div>
+
+			{/* Link */}
+			{link && (
+				<a
+					className="flex w-fit items-center gap-2 hover:fill-blue-600 hover:text-blue-600"
+					target="_blank"
+					rel="noopener noreferrer"
+					href={link?.href}
+				>
+					<Link2Icon />
+					{link?.text}
+				</a>
+			)}
+
+			{/* Tags */}
+			<div className="flex flex-wrap items-end gap-2">
+				{tags.map((t, i) => (
+					<Tag key={i}>{t}</Tag>
+				))}
+			</div>
+		</div>
+	);
+}

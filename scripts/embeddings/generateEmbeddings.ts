@@ -7,7 +7,9 @@ import { projectsSchema } from "@/lib/db/schema/projects";
 import { skillsSchema } from "@/lib/db/schema/skills";
 import { generateEmbeddings } from "@/lib/db/utils/embedding";
 
-async function skillEmbeddings(clear = true) {
+export async function skillEmbeddings(
+	{ clear }: { clear?: boolean } = { clear: true },
+) {
 	const contents = Object.entries(skills).map(([key, skill]) => ({
 		content: generateSkillContent(skill),
 		key,
@@ -38,11 +40,11 @@ async function skillEmbeddings(clear = true) {
 			);
 		process.exit(1);
 	}
-
-	console.log("Done!");
 }
 
-async function projectEmbeddings(clear = true) {
+export async function projectEmbeddings(
+	{ clear }: { clear?: boolean } = { clear: true },
+) {
 	const contents = Object.entries(projects).map(([key, project]) => ({
 		content: generateProjectContent(project),
 		key,
@@ -73,16 +75,4 @@ async function projectEmbeddings(clear = true) {
 			);
 		process.exit(1);
 	}
-
-	console.log("Done!");
 }
-
-function main() {
-	console.log("Generating embeddings from skills");
-	skillEmbeddings();
-
-	console.log("Generating embeddings from projects");
-	projectEmbeddings();
-}
-
-main();

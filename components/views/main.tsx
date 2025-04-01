@@ -26,7 +26,7 @@ export function Main({
 			animate="navShown"
 			variants={navVariants}
 			className={cn(
-				"@container px-15 py-10 max-md:max-w-full max-lg:px-5",
+				"@container overflow-auto px-15 py-10 max-md:max-w-full max-lg:px-5",
 				className,
 			)}
 		>

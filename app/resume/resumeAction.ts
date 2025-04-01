@@ -7,9 +7,10 @@ import {
 } from "@/lib/data/similarity";
 import { skills } from "@/lib/data/skills";
 import { db } from "@/lib/db";
-import { resumes } from "@/lib/db/schema/resumes";
+import { baseResumes, resumes } from "@/lib/db/schema/resumes";
 import { google } from "@ai-sdk/google";
 import { generateObject, generateText } from "ai";
+import { MD5 } from "crypto-js";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
@@ -32,6 +33,8 @@ export async function createResume(req: { prompt: string }) {
 		{ skillSimilarity, projectSimilarity },
 	);
 
+	const hash = MD5(`${Date.now()}-resume`).toString();
+
 	// Save resume to db
 	const resume = {
 		title: title.object,
@@ -45,14 +48,12 @@ export async function createResume(req: { prompt: string }) {
 			key,
 			similarity,
 		})),
+		hash,
 	};
 
 	try {
-		const [_resume] = await db
-			.insert(resumes)
-			.values(resume)
-			.returning();
-		return { id: _resume.id };
+		const [_resume] = await db.insert(resumes).values(resume).returning();
+		return { id: _resume.id, hash: _resume.hash };
 	} catch (e) {
 		throw new Error("Failed to save resume");
 	}
@@ -131,9 +132,9 @@ Prompt: ${prompt}`.trim(),
 	};
 }
 
-export const getResume = async (id: string) => {
+export const getResume = async (hash: string) => {
 	const resume = await db.query.resumes.findFirst({
-		where: eq(resumes.id, Number(id)),
+		where: eq(resumes.hash, hash),
 	});
 
 	if (!resume) {
@@ -157,4 +158,15 @@ export const getResume = async (id: string) => {
 	);
 
 	return { ...resume, skills: ratedSkills, projects: ratedProjects };
+};
+
+export const getBaseResumes = async () => {
+	return await db
+		.select({
+			hash: baseResumes.hash,
+			title: baseResumes.title,
+			prompt: resumes.prompt,
+		})
+		.from(baseResumes)
+		.leftJoin(resumes, eq(resumes.hash, baseResumes.hash));
 };

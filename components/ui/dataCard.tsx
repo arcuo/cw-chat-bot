@@ -15,7 +15,6 @@ import {
 	RelevanceIndicator,
 	type RelevanceScore,
 } from "../ui/relevanceIndicator";
-import { useDragging } from "./horizontalView";
 
 interface DataCardProps {
 	title: ReactNode;
@@ -41,7 +40,6 @@ export const DataCard = forwardRef<
 		},
 		ref,
 	) => {
-		const isDragging = useDragging();
 		const [open, setOpen] = useState(false);
 
 		useImperativeHandle(ref, () => ({
@@ -51,9 +49,8 @@ export const DataCard = forwardRef<
 		return (
 			<Dialog
 				ref={ref}
-				disabled={isDragging}
 				open={open}
-				onOpenChange={isDragging ? undefined : setOpen}
+				onOpenChange={setOpen}
 				trigger={
 					<Card.Root
 						className={cn(
@@ -75,13 +72,14 @@ export const DataCard = forwardRef<
 						</motion.span>
 
 						{/* Header */}
-						<Card.Title className="flex items-start justify-between gap-4 text-balance font-bold max-md:flex-col">
+						<Card.Title className=" w-full overflow-hidden text-ellipsis text-nowrap font-bold max-md:flex-col">
 							{title}
-							{/* Relevance score */}
-							{relevance !== undefined && (
-								<RelevanceIndicator score={relevance} />
-							)}
 						</Card.Title>
+
+						{/* Relevance score */}
+						{relevance !== undefined && (
+							<RelevanceIndicator score={relevance} />
+						)}
 						<Card.Subtitle className="w-full overflow-hidden text-ellipsis whitespace-nowrap">
 							{subtitle}
 						</Card.Subtitle>

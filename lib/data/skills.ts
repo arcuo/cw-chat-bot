@@ -43,6 +43,16 @@ export const skills = {
 		],
 		projects: [projects.markingTool, projects.flowUI, projects.wiseflow], // TODO Resume
 	},
+	leadership: {
+		title: "Tech lead",
+		subtitle: "I lead a frontend community across multiple feature teams",
+		content: [
+			"As a Frontend Tech Lead I had to ensure that the frontend community developed its skills and worked towards a common knowledge base, conventions and best practices. I was responsible for holding regular frontend architecture discussions and workshops to discuss the latest trends and help the community collectively decide on the best architecture for our stack.",
+			"I took part in regular meetings with other teams leaders and tech leads to discuss maintenance drives and organise the direction of the development team at UNIwise.",
+		],
+		tags: ["Leadership", "Frontend", "Architecture", "Planning"],
+		projects: [projects.techlead],
+	},
 	types: {
 		title: "TypeScript/Rust",
 		subtitle: "Strong affinity for type safe development",

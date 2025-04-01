@@ -23,11 +23,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={cn(font.className, "flex h-full w-full flex-col")}>
-				<Header />
-				{children}
-				<Toaster />
-				<Footer />
+			<body className={cn(font.className, "h-full w-full")}>
+				<div id="content" className="flex h-full w-full flex-col overflow-auto">
+					<Header />
+					{children}
+					<Toaster />
+					<Footer />
+				</div>
 			</body>
 			<SpeedInsights />
 			<Analytics />

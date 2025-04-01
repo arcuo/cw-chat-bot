@@ -1,6 +1,7 @@
 import { index, pgTable, text, varchar, vector } from "drizzle-orm/pg-core";
 import type { Base } from "../types/base";
 import { nanoid } from "nanoid";
+import { Fragment } from "react";
 
 export type Project = Base & {
 	id: string;
@@ -141,6 +142,19 @@ export const projects = {
 			text: "GitHub",
 		},
 		tags: ["MPC", "Computer Science", "Golang"],
+	},
+	techlead: {
+		id: "techlead",
+		title: "Frontend Tech Lead",
+		subtitle: "Frontend Architecture and Community Leader",
+		productDescription:
+			"Leading a frontend community across multiple feature teams. Mentoring and guiding junior developers, holding workshops and architecture discussions as a community.",
+		content: [
+			"Technical Leadership - Led frontend architecture discussions and workshops, fostering a common knowledge base, conventions, and best practices within the frontend community.",
+			"Strategic Alignment - Collaborated with other team leads and tech leads in regular meetings to align on maintenance initiatives and guide the overall direction of the development team.",
+			"Mentoring and Onboarding - Mentored new developers, identifying suitable projects to facilitate their integration into the stack and skill development in accordance with company standards.",
+		],
+		tags: ["Leadership", "Frontend", "Architecture", "Planning"],
 	},
 } satisfies Record<string, Project>;
 

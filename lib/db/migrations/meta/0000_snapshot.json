@@ -1,5 +1,5 @@
 {
-  "id": "54bc1c1d-737a-4168-b85b-a879d1f2fa0f",
+  "id": "604ebb00-8d2b-4328-b1a9-fc12cebebadc",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -70,6 +70,48 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
+    "public.base_resumes": {
+      "name": "base_resumes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "hash": {
+          "name": "hash",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "base_resumes_hash_resumes_hash_fk": {
+          "name": "base_resumes_hash_resumes_hash_fk",
+          "tableFrom": "base_resumes",
+          "tableTo": "resumes",
+          "columnsFrom": [
+            "hash"
+          ],
+          "columnsTo": [
+            "hash"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "public.resumes": {
       "name": "resumes",
       "schema": "",
@@ -78,6 +120,12 @@
           "name": "id",
           "type": "serial",
           "primaryKey": true,
+          "notNull": true
+        },
+        "hash": {
+          "name": "hash",
+          "type": "varchar(32)",
+          "primaryKey": false,
           "notNull": true
         },
         "createdAt": {
@@ -121,7 +169,15 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "resumes_hash_unique": {
+          "name": "resumes_hash_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "hash"
+          ]
+        }
+      }
     },
     "public.skills": {
       "name": "skills",

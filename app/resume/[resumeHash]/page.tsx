@@ -3,7 +3,7 @@ import { getResume } from "../resumeAction";
 import { ResumeView } from "@/components/views/resume/resumeView";
 
 type Props = {
-	params: Promise<{ resumeId: string }>;
+	params: Promise<{ resumeHash: string }>;
 	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
@@ -12,8 +12,8 @@ export async function generateMetadata(
 	parent: ResolvingMetadata,
 ): Promise<Metadata> {
 	// read route params
-	const { resumeId } = await params;
-	const resume = await getResume(resumeId);
+	const { resumeHash } = await params;
+	const resume = await getResume(resumeHash);
 
 	return {
 		title: resume.title.pageTitle ?? "Tailored resume",
@@ -22,9 +22,9 @@ export async function generateMetadata(
 }
 
 export default async function TailoredResumePage({ params }: Props) {
-	const { resumeId } = await params;
+	const { resumeHash } = await params;
 
-	const resume = await getResume(resumeId);
+	const resume = await getResume(resumeHash);
 
 	return <ResumeView resume={resume} />;
 }

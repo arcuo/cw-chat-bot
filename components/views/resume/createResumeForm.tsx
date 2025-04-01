@@ -20,8 +20,8 @@ export function CreateResumeForm() {
 		},
 		onSubmit: async ({ value }) => {
 			if (form.state.isSubmitted) return;
-			const { id } = await createResume(value);
-			router.push(`/resume/${id}`);
+			const { hash } = await createResume(value);
+			router.push(`/resume/${hash}`);
 		},
 	});
 

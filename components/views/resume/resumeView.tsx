@@ -180,7 +180,7 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 						</p>
 
 						<CardAccordion
-							max={2}
+							max={3}
 							elements={Object.values(projects)}
 							renderCard={(project) => (
 								<ProjectCard
