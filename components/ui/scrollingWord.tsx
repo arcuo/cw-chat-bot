@@ -25,7 +25,7 @@ export const ScrollingWord = forwardRef<
 		active?: boolean;
 		delay?: number;
 	}>
->(({ words, color = "text-amber-700", active, delay, children }, ref) => { 
+>(({ words, color = "text-amber-700", active, delay, children }, ref) => {
 	const [index, setIndex] = useState(0);
 	const innerref = useRef<HTMLSpanElement>(null);
 

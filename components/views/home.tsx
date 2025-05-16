@@ -4,15 +4,13 @@ import { cn } from "@/lib/utils";
 import { LayoutGroup, motion } from "motion/react";
 import { useRef, type ComponentRef } from "react";
 import { LinkButton } from "../ui/button";
-import { Popup } from "../ui/popup";
 import { ScrollingWord } from "../ui/scrollingWord";
 import { comforta } from "../utils/fonts";
 import { CreateResumeForm } from "./resume/createResumeForm";
 import type { getBaseResumes } from "@/app/resume/resumeAction";
 import { Main } from "./main";
-import Link from "next/link";
 import { Tooltip } from "../ui/tooltip";
-import { ArrowRightIcon, DoorOpenIcon, NewspaperIcon } from "lucide-react";
+import { NewspaperIcon } from "lucide-react";
 
 export const Home = ({
 	premadeResumes,

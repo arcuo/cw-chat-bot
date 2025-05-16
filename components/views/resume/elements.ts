@@ -9,27 +9,27 @@ import {
 
 export const elements = {
 	skills: {
-        id: "skills",
+		id: "skills",
 		title: "Technical skills",
 		icon: CpuIcon,
 	},
 	projects: {
-        id: "projects",
+		id: "projects",
 		title: "Notable Projects",
 		icon: FolderKanbanIcon,
 	},
 	timeline: {
-        id: "timeline",
+		id: "timeline",
 		title: "Experiences and Education",
 		icon: TimerIcon,
 	},
 	features: {
-        id: "features",
+		id: "features",
 		title: "Technical features",
 		icon: AwardIcon,
 	},
 	footer: {
-        id: "footer",
+		id: "footer",
 		title: "Contacts",
 		icon: MailboxIcon,
 	},

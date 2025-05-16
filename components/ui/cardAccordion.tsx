@@ -25,8 +25,10 @@ export function CardAccordion<T>(props: {
 			}
 		};
 
-        handleElementAmount();
-		window.addEventListener("resize", handleElementAmount, { signal: controller.signal });
+		handleElementAmount();
+		window.addEventListener("resize", handleElementAmount, {
+			signal: controller.signal,
+		});
 		return () => controller.abort();
 	});
 

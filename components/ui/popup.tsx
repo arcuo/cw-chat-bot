@@ -50,7 +50,10 @@ export const Popup = ({
 								transition={{ duration: 0.1 }}
 							>
 								{content}
-								<Popover.Arrow id="popover-arrow" className="fill-neutral-300" />
+								<Popover.Arrow
+									id="popover-arrow"
+									className="fill-neutral-300"
+								/>
 							</motion.div>
 						</Popover.Content>
 					</Popover.Portal>

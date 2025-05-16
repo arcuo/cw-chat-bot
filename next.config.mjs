@@ -9,7 +9,7 @@ const nextConfig = {
 		ignoreDuringBuilds: true,
 	},
 	typescript: {
-		ignoreBuildErrors: true, // TODO: remove
+		// ignoreBuildErrors: true, // TODO: remove
 	},
 };
 

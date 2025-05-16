@@ -7,12 +7,9 @@ import {
 	useImperativeHandle,
 	useState,
 	type ComponentPropsWithoutRef,
-	type ComponentRef,
-	type RefObject,
 } from "react";
 import { Tag, TagsCarousel } from "../ui/tag";
 import { cn } from "@/lib/utils";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { Link1Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import type { Project } from "@/lib/data/projects";
@@ -156,12 +153,11 @@ export const SkillCard = forwardRef<
 									</label>
 									<div id="projects" className="flex flex-wrap gap-2">
 										{projects.map((p) => (
-											<DialogClose key={p.id} asChild>
-												<ProjectLink
-													project={p}
-													setShowProject={setShowProject}
-												/>
-											</DialogClose>
+											<ProjectLink
+												key={p.id}
+												project={p}
+												setShowProject={setShowProject}
+											/>
 										))}
 									</div>
 								</>

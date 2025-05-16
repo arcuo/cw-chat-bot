@@ -15,6 +15,13 @@ export async function generateMetadata(
 	const { resumeHash } = await params;
 	const resume = await getResume(resumeHash);
 
+	if (!resume) {
+		return {
+			title: "Resume not found",
+			description: "Resume not found",
+		};
+	}
+
 	return {
 		title: resume.title.pageTitle ?? "Tailored resume",
 		description: "Tailored resume",
@@ -25,6 +32,10 @@ export default async function TailoredResumePage({ params }: Props) {
 	const { resumeHash } = await params;
 
 	const resume = await getResume(resumeHash);
+
+	if (!resume) {
+		return <div>Resume not found</div>;
+	}
 
 	return <ResumeView resume={resume} />;
 }

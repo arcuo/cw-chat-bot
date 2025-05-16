@@ -41,11 +41,7 @@
 				"useExhaustiveDependencies": "off"
 			}
 		},
-		"ignore": [
-			".next",
-			"node_modules",
-			"lib/data/timeline.tsx"
-		]
+		"ignore": [".next", "node_modules", "lib/data/timeline.tsx"]
 	},
 	"javascript": {
 		"formatter": {

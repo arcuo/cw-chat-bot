@@ -50,9 +50,11 @@ const runMigrate = async () => {
 		}),
 	);
 
-	await db.insert(baseResumes).values(rs.map(({ hash, title }) => ({ hash, title })));
+	await db
+		.insert(baseResumes)
+		.values(rs.map(({ hash, title }) => ({ hash, title })));
 
-  console.log("✅ Base resumes added to the database");
+	console.log("✅ Base resumes added to the database");
 
 	process.exit(0);
 };

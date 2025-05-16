@@ -10,7 +10,7 @@ import { db } from "@/lib/db";
 import { baseResumes, resumes } from "@/lib/db/schema/resumes";
 import { google } from "@ai-sdk/google";
 import { generateObject, generateText } from "ai";
-import { MD5 } from "crypto-js";
+import crypto from "node:crypto";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
@@ -33,7 +33,10 @@ export async function createResume(req: { prompt: string }) {
 		{ skillSimilarity, projectSimilarity },
 	);
 
-	const hash = MD5(`${Date.now()}-resume`).toString();
+	const hash = crypto
+		.createHash("md5")
+		.update(`${Date.now()}-resume`)
+		.digest("hex");
 
 	// Save resume to db
 	const resume = {
