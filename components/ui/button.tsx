@@ -40,7 +40,7 @@ const ButtonStyle = ({
 	return (
 		<Slot.Root
 			className={cn(
-				"cursor-pointer rounded-md border border-neutral-300 bg-neutral-50/20 p-2 shadow-md",
+				"cursor-pointer rounded-md border border-neutral-300 bg-neutral-50/20 px-3 py-1 shadow-md",
 				{
 					"pointer-events-none opacity-50": disabled,
 					"flex size-8 items-center justify-center p-[5px] *:size-full": icon,
@@ -48,9 +48,9 @@ const ButtonStyle = ({
 				className,
 			)}
 			// @ts-ignore
-			whileHover={{ scale: 1.05 }}
+			whileHover={{ scale: 1.02 }}
 			whileTap={{
-				scale: 0.95,
+				scale: 0.98,
 				backgroundColor:
 					"color-mix(in oklab, var(--color-neutral-50) 10%, transparent)",
 			}}

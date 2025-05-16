@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { motion, type Variants } from "motion/react";
-import { forwardRef } from "react";
+import { forwardRef, type PropsWithChildren } from "react";
 
 const RootVariants: Variants = {
 	hover: { y: -6 },
@@ -10,7 +10,7 @@ const RootVariants: Variants = {
 
 const Root = forwardRef<
 	HTMLButtonElement,
-	React.ComponentProps<typeof motion.button>
+	PropsWithChildren<React.ComponentProps<typeof motion.button>>
 >((props, ref) => {
 	const { children, className, ...rest } = props;
 
@@ -22,10 +22,20 @@ const Root = forwardRef<
 				className,
 			)}
 			whileHover="hover"
-			whileTap={{scale: 0.99}}
+			whileTap={{ scale: 0.99 }}
 			variants={RootVariants}
 			{...rest}
 		>
+			<motion.span
+				variants={{
+					hover: { opacity: 1, y: 5 },
+				}}
+				className="-bottom-6 absolute right-1/2 translate-x-1/2 text-neutral-500 text-sm"
+				initial={{ opacity: 0, y: 0 }}
+			>
+				Click for more details
+			</motion.span>
+
 			{children}
 		</motion.button>
 	);

@@ -1,14 +1,235 @@
 {
-  "id": "8e66a32f-d13f-4593-8437-6a6c57898d2c",
-  "prevId": "00000000-0000-0000-0000-000000000000",
-  "version": "7",
-  "dialect": "postgresql",
-  "tables": {},
-  "enums": {},
-  "schemas": {},
-  "_meta": {
-    "columns": {},
-    "schemas": {},
-    "tables": {}
-  }
+	"id": "604ebb00-8d2b-4328-b1a9-fc12cebebadc",
+	"prevId": "00000000-0000-0000-0000-000000000000",
+	"version": "7",
+	"dialect": "postgresql",
+	"tables": {
+		"public.projects": {
+			"name": "projects",
+			"schema": "",
+			"columns": {
+				"uuid": {
+					"name": "uuid",
+					"type": "varchar(191)",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"key": {
+					"name": "key",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"content": {
+					"name": "content",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"embedding": {
+					"name": "embedding",
+					"type": "vector(768)",
+					"primaryKey": false,
+					"notNull": true
+				}
+			},
+			"indexes": {
+				"projects.embedding.index": {
+					"name": "projects.embedding.index",
+					"columns": [
+						{
+							"expression": "embedding",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last",
+							"opclass": "vector_cosine_ops"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "hnsw",
+					"with": {}
+				},
+				"projects.id": {
+					"name": "projects.id",
+					"columns": [
+						{
+							"expression": "key",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				}
+			},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {}
+		},
+		"public.base_resumes": {
+			"name": "base_resumes",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"hash": {
+					"name": "hash",
+					"type": "varchar(32)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"title": {
+					"name": "title",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {
+				"base_resumes_hash_resumes_hash_fk": {
+					"name": "base_resumes_hash_resumes_hash_fk",
+					"tableFrom": "base_resumes",
+					"tableTo": "resumes",
+					"columnsFrom": ["hash"],
+					"columnsTo": ["hash"],
+					"onDelete": "no action",
+					"onUpdate": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {}
+		},
+		"public.resumes": {
+			"name": "resumes",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"hash": {
+					"name": "hash",
+					"type": "varchar(32)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"createdAt": {
+					"name": "createdAt",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"title": {
+					"name": "title",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"prompt": {
+					"name": "prompt",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"cover": {
+					"name": "cover",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"skillSimilarities": {
+					"name": "skillSimilarities",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"projectSimilarities": {
+					"name": "projectSimilarities",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": true
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {
+				"resumes_hash_unique": {
+					"name": "resumes_hash_unique",
+					"nullsNotDistinct": false,
+					"columns": ["hash"]
+				}
+			}
+		},
+		"public.skills": {
+			"name": "skills",
+			"schema": "",
+			"columns": {
+				"uuid": {
+					"name": "uuid",
+					"type": "varchar(191)",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"key": {
+					"name": "key",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"content": {
+					"name": "content",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"embedding": {
+					"name": "embedding",
+					"type": "vector(768)",
+					"primaryKey": false,
+					"notNull": true
+				}
+			},
+			"indexes": {
+				"skills.embedding.index": {
+					"name": "skills.embedding.index",
+					"columns": [
+						{
+							"expression": "embedding",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last",
+							"opclass": "vector_cosine_ops"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "hnsw",
+					"with": {}
+				}
+			},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {}
+		}
+	},
+	"enums": {},
+	"schemas": {},
+	"_meta": {
+		"columns": {},
+		"schemas": {},
+		"tables": {}
+	}
 }

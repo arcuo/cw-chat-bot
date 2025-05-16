@@ -11,15 +11,17 @@ import {
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import { Dialog } from "../ui/dialog";
-import { RelevanceIndicator } from "../ui/relevanceIndicator";
-import { useDragging } from "./horizontalView";
+import {
+	RelevanceIndicator,
+	type RelevanceScore,
+} from "../ui/relevanceIndicator";
 
 interface DataCardProps {
 	title: ReactNode;
 	subtitle: ReactNode;
 	cardContent: ReactNode;
 	dialogContent: ReactNode;
-	relevance?: number;
+	relevance?: RelevanceScore;
 }
 
 export const DataCard = forwardRef<
@@ -38,7 +40,6 @@ export const DataCard = forwardRef<
 		},
 		ref,
 	) => {
-		const isDragging = useDragging();
 		const [open, setOpen] = useState(false);
 
 		useImperativeHandle(ref, () => ({
@@ -48,13 +49,12 @@ export const DataCard = forwardRef<
 		return (
 			<Dialog
 				ref={ref}
-				disabled={isDragging}
 				open={open}
-				onOpenChange={isDragging ? undefined : setOpen}
+				onOpenChange={setOpen}
 				trigger={
 					<Card.Root
 						className={cn(
-							"relative max-w-110 max-sm:max-w-50 max-md:max-w-75 md:min-w-100",
+							// "relative max-w-110 max-sm:max-w-50 max-md:max-w-75 md:min-w-100",
 							className,
 						)}
 						{...props}
@@ -72,15 +72,14 @@ export const DataCard = forwardRef<
 						</motion.span>
 
 						{/* Header */}
-						<Card.Title className="flex items-center justify-between gap-2 font-bold">
+						<Card.Title className=" w-full overflow-hidden text-ellipsis text-nowrap font-bold max-md:flex-col">
 							{title}
-							{/* Relevance score */}
-							{relevance !== undefined && (
-								<RelevanceIndicator
-									score={(((relevance + 3) % 4) + 1) as 1 | 2 | 3 | 4}
-								/>
-							)}
 						</Card.Title>
+
+						{/* Relevance score */}
+						{relevance !== undefined && (
+							<RelevanceIndicator score={relevance} />
+						)}
 						<Card.Subtitle className="w-full overflow-hidden text-ellipsis whitespace-nowrap">
 							{subtitle}
 						</Card.Subtitle>

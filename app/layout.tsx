@@ -6,8 +6,10 @@ import { Header } from "@/components/ui/header";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Footer } from "@/components/ui/Footer";
+import { outfit } from "@/components/utils/fonts";
 
-const font = Outfit({ subsets: ["latin"], weight: ["300"] });
+const font = outfit;
 
 export const metadata: Metadata = {
 	title: { default: "Benjamin Zachariae", template: "%s - Benjamin Zachariae" },
@@ -20,18 +22,14 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className="overflow-x-hidden">
-			<body
-				className={cn(
-					font.className,
-					"flex h-full w-full flex-col gap-2 overflow-auto overflow-x-hidden",
-				)}
-			>
-				<Header />
-				<main className="overflow-auto px-15 py-10 max-sm:overflow-x-hidden max-md:max-w-full max-lg:px-5">
+		<html lang="en">
+			<body className={cn(font.className, "h-full w-full")}>
+				<div id="content" className="flex h-full w-full flex-col overflow-auto">
+					<Header />
 					{children}
-				</main>
-				<Toaster />
+					<Toaster />
+					<Footer />
+				</div>
 			</body>
 			<SpeedInsights />
 			<Analytics />

@@ -1,21 +1,23 @@
 import { useId, useState, type PropsWithChildren, type ReactNode } from "react";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { AnimatePresence, motion } from "motion/react";
+import { cn } from "@/lib/utils";
 
 export const Tooltip = ({
 	children,
 	content,
+	className,
 	contentProps,
 	...rest
 }: PropsWithChildren & {
 	content: ReactNode;
+	className?: string;
 	contentProps?: RadixTooltip.TooltipContentProps;
 } & RadixTooltip.TooltipProps) => {
 	const [open, setOpen] = useState(false);
 	const id = useId();
-
 	return (
-		<RadixTooltip.Provider delayDuration={400} {...rest}>
+		<RadixTooltip.Provider delayDuration={100} {...rest}>
 			<RadixTooltip.Root
 				open={open}
 				onOpenChange={(v) => {
@@ -33,7 +35,10 @@ export const Tooltip = ({
 								{...contentProps}
 							>
 								<motion.div
-									className="w-fit max-w-2xs rounded-md border border-neutral-300 bg-white px-2 py-[1px] text-center shadow-md"
+									className={cn(
+										"w-fit max-w-2xs rounded-md border border-neutral-300 bg-white px-2 py-[1px] text-center shadow-md",
+										className,
+									)}
 									exit={{
 										opacity: 0,
 										y: 5,

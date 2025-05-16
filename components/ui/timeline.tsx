@@ -1,22 +1,23 @@
 "use client";
 
 import { cn, contrast } from "@/lib/utils";
-import { motion } from "motion/react";
-import Color from "color";
+import { AnimatePresence, motion } from "motion/react";
 import {
 	forwardRef,
 	useRef,
+	useState,
 	type ComponentRef,
 	type CSSProperties,
 	type HTMLAttributes,
 	type ReactNode,
-	type RefObject,
 } from "react";
 import type { Project } from "@/lib/data/projects";
 import { Dialog } from "./dialog";
 import { Accordion } from "@/components/ui/accordion";
 import { ProjectLink } from "../views/skill";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { ProjectDialogBody } from "../views/project";
+import { Button } from "./button";
 
 export type TimelineEntries = Record<
 	number, // Start year
@@ -201,6 +202,7 @@ export const TimelineEntryDialog = forwardRef<
 	ComponentRef<typeof Dialog>,
 	{ trigger: ReactNode; entry: TimelineEntry }
 >(({ trigger, entry }, ref) => {
+	const [showProject, setShowProject] = useState<Project | null>(null);
 	return (
 		<Dialog
 			ref={ref}
@@ -208,65 +210,96 @@ export const TimelineEntryDialog = forwardRef<
 			title={entry.title}
 			subtitle={entry.subtitle}
 			content={
-				<div className="flex flex-col gap-2">
-					{/* Main description */}
-					{entry.description.main.map((m, i) => (
-						<div key={i}>{m}</div>
-					))}
-
-					{/* What I learned */}
-					{entry.description.learned && (
-						<div>
-							<label htmlFor="learned" className="font-bold text-sm">
-								Key learnings
-							</label>
-							<div id="learned" className="flex flex-col gap-2">
-								{entry.description.learned?.map((l, i) => (
-									<div key={i}>{l}</div>
-								))}
+				<AnimatePresence initial={false} mode="wait">
+					{showProject ? (
+						<motion.div
+							key={showProject.id}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							className="flex flex-col gap-5"
+						>
+							<div className="grid grid-cols-2 items-center">
+								<h3 className="font-bold">{showProject.title}</h3>
+								<h4 className="row-start-2 text-neutral-700 text-sm">
+									{showProject.subtitle}
+								</h4>
+								<Button
+									className="col-start-2 row-span-2 justify-self-end"
+									onClick={() => setShowProject(null)}
+								>
+									Back
+								</Button>
 							</div>
-						</div>
+
+							<div>
+								<ProjectDialogBody project={showProject} />
+							</div>
+						</motion.div>
+					) : (
+						<motion.div
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							className="flex flex-col gap-2"
+						>
+							{/* Main description */}
+							{entry.description.main.map((m, i) => (
+								<div key={i}>{m}</div>
+							))}
+
+							{/* What I learned */}
+							{entry.description.learned && (
+								<div>
+									<label htmlFor="learned" className="font-bold text-sm">
+										Key learnings
+									</label>
+									<div id="learned" className="flex flex-col gap-2">
+										{entry.description.learned?.map((l, i) => (
+											<div key={i}>{l}</div>
+										))}
+									</div>
+								</div>
+							)}
+
+							<Accordion.Root className="mt-5">
+								{/* Projects */}
+								{entry.description.projects && (
+									<Accordion.Item value="projects">
+										<Accordion.Trigger>
+											<div className="font-bold text-sm">Related projects</div>
+										</Accordion.Trigger>
+										<Accordion.Content key={"projects"}>
+											<div className="flex flex-wrap gap-2 pb-2">
+												{entry.description.projects.map((project) => (
+													<ProjectLink
+														key={project.id}
+														project={project}
+														setShowProject={setShowProject}
+													/>
+												))}
+											</div>
+										</Accordion.Content>
+									</Accordion.Item>
+								)}
+
+								{/* Courses */}
+								{entry.description.courses && (
+									<Accordion.Item value="courses">
+										<Accordion.Trigger>
+											<div className="font-bold text-sm">Included courses</div>
+										</Accordion.Trigger>
+										<Accordion.Content className="flex flex-wrap gap-2">
+											<div className="flex flex-col text-sm">
+												{entry.description.courses.map((course) => (
+													<div key={course}>{course}</div>
+												))}
+											</div>
+										</Accordion.Content>
+									</Accordion.Item>
+								)}
+							</Accordion.Root>
+						</motion.div>
 					)}
-
-					<Accordion.Root className="mt-5">
-						{/* Projects */}
-						{entry.description.projects && (
-							<Accordion.Item value="projects">
-								<Accordion.Trigger>
-									<div className="font-bold text-sm">Related projects</div>
-								</Accordion.Trigger>
-								<Accordion.Content key={"projects"}>
-									<div className="flex flex-wrap gap-2 pb-2">
-										{entry.description.projects.map((project) => (
-											<DialogClose asChild key={project.id}>
-												<ProjectLink
-													project={project}
-													dialog={ref as RefObject<ComponentRef<typeof Dialog>>}
-												/>
-											</DialogClose>
-										))}
-									</div>
-								</Accordion.Content>
-							</Accordion.Item>
-						)}
-
-						{/* Courses */}
-						{entry.description.courses && (
-							<Accordion.Item value="courses">
-								<Accordion.Trigger>
-									<div className="font-bold text-sm">Included courses</div>
-								</Accordion.Trigger>
-								<Accordion.Content className="flex flex-wrap gap-2">
-									<div className="flex flex-col text-sm">
-										{entry.description.courses.map((course) => (
-											<div key={course}>{course}</div>
-										))}
-									</div>
-								</Accordion.Content>
-							</Accordion.Item>
-						)}
-					</Accordion.Root>
-				</div>
+				</AnimatePresence>
 			}
 		/>
 	);

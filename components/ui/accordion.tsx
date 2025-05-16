@@ -90,7 +90,10 @@ const AccordionTrigger = ({
 	children,
 	className,
 	...props
-}: ComponentProps<typeof RadixAccordion.Trigger>) => {
+}: ComponentProps<typeof RadixAccordion.Trigger> & {
+	children: ReactNode | ((props: { open: boolean }) => ReactNode);
+}) => {
+	const isOpen = useItemOpen();
 	return (
 		<RadixAccordion.Header>
 			<RadixAccordion.Trigger
@@ -100,7 +103,7 @@ const AccordionTrigger = ({
 				)}
 				{...props}
 			>
-				{children}
+				{typeof children === "function" ? children({ open: isOpen }) : children}
 				<ChevronUpIcon className="transition-transform duration-500 ease-in-out will-change-transform" />
 			</RadixAccordion.Trigger>
 		</RadixAccordion.Header>
@@ -113,10 +116,17 @@ const variants: Variants = {
 	hidden: {
 		height: 0,
 		maskImage: "linear-gradient(white 20px, transparent 100%)",
+
+		transition: {
+			ease: "easeInOut",
+		},
 	},
 	shown: {
 		height: "auto",
 		maskImage: "linear-gradient(white 100%, transparent 100%)",
+		transition: {
+			ease: "easeInOut",
+		},
 	},
 };
 
@@ -124,7 +134,9 @@ const AccordionContent = ({
 	children,
 	className,
 	...props
-}: ComponentProps<typeof MotionAccordionContent> & { children: ReactNode }) => {
+}: ComponentProps<typeof MotionAccordionContent> & {
+	children: ReactNode | ((props: { open: boolean }) => ReactNode);
+}) => {
 	const isOpen = useItemOpen();
 	return (
 		<AnimatePresence>
@@ -140,8 +152,10 @@ const AccordionContent = ({
 					transition={{ duration: 0.3 }}
 					{...props}
 				>
-					<div className={cn(className, "px-3 pt-3 leading-tight")}>
-						{children}
+					<div className={cn("px-3 pt-3 leading-tight", className)}>
+						{typeof children === "function"
+							? children({ open: isOpen })
+							: children}
 					</div>
 				</MotionAccordionContent>
 			) : null}

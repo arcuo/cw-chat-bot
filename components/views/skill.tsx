@@ -3,43 +3,38 @@
 import type { Skill } from "@/lib/data/skills";
 import { Card } from "../ui/card";
 import {
-	useRef,
+	forwardRef,
+	useImperativeHandle,
+	useState,
 	type ComponentPropsWithoutRef,
-	type ComponentRef,
-	type RefObject,
 } from "react";
 import { Tag, TagsCarousel } from "../ui/tag";
-import useMeasure from "react-use-measure";
-import { DataCard } from "../ui/dataCard";
 import { cn } from "@/lib/utils";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { Link1Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import type { Project } from "@/lib/data/projects";
-import type { Dialog } from "../ui/dialog";
+import { Dialog } from "../ui/dialog";
+import {
+	RelevanceIndicator,
+	type RelevanceScore,
+} from "../ui/relevanceIndicator";
+import { ProjectDialogBody } from "./project";
+import { AnimatePresence, motion } from "motion/react";
+import useMeasure from "react-use-measure";
 
 interface SkillCardProps {
 	skill: Skill;
-	relevance?: number;
+	relevance?: RelevanceScore;
 }
 
 export const ProjectLink = ({
 	project: p,
-	dialog,
-}: { project: Project; dialog: RefObject<ComponentRef<typeof Dialog>> }) => (
+	setShowProject,
+}: { project: Project; setShowProject: (project: Project | null) => void }) => (
 	<Button
 		role="link"
 		className="flex items-center gap-2 px-2 py-1 text-sm"
-		onClick={() => {
-			dialog.current?.close();
-			const ele = document.getElementById(`project-${p.id}-card`);
-
-			ele?.scrollIntoView({
-				behavior: "smooth",
-			});
-
-			ele?.click();
-		}}
+		onClick={() => setShowProject(p)}
 		key={p.id}
 	>
 		<Link1Icon />
@@ -47,71 +42,139 @@ export const ProjectLink = ({
 	</Button>
 );
 
-export const SkillCard = ({
-	skill,
-	relevance,
-	className,
-	...props
-}: SkillCardProps & ComponentPropsWithoutRef<typeof Card.Root>) => {
+export const SkillCard = forwardRef<
+	{ close: () => void },
+	SkillCardProps & ComponentPropsWithoutRef<typeof Card.Root>
+>(({ skill, relevance, className, ...props }, ref) => {
 	const { title, subtitle, content, tags, projects } = skill;
-	const [ref, { width }] = useMeasure();
-	const dialog = useRef<ComponentRef<typeof DataCard>>(null);
+
+	const [showProject, setShowProject] = useState<Project | null>(null);
+	const [open, setOpen] = useState(false);
+	const [measureRef, { width }] = useMeasure();
+
+	function onOpenChange(open: boolean) {
+		setShowProject(null);
+		setOpen(open);
+	}
+
+	useImperativeHandle(ref, () => ({
+		close: () => setOpen(false),
+	}));
 
 	return (
-		<DataCard
-			ref={dialog}
-			relevance={relevance}
-			cardContent={
-				<>
-					<Card.EllipsisContent className="text-neutral-700">
-						{content}
-					</Card.EllipsisContent>
-					<Card.Content ref={ref} className="flex w-full flex-2 items-end overflow-clip">
+		<Dialog
+			open={open}
+			onOpenChange={onOpenChange}
+			trigger={
+				<Card.Root
+					{...props}
+					className={cn("box-border border-amber-400 border-b-5", className)}
+					whileHover="hover"
+					whileFocus="hover"
+				>
+					{/* Header */}
+					<Card.Title className=" w-full overflow-hidden text-ellipsis text-nowrap font-bold max-md:flex-col">
+						{title}
+					</Card.Title>
+
+					{/* Relevance score */}
+					{relevance !== undefined && <RelevanceIndicator score={relevance} />}
+					<Card.Subtitle className="w-full overflow-hidden text-ellipsis whitespace-nowrap">
+						{subtitle}
+					</Card.Subtitle>
+
+					{/* Content */}
+					<Card.EllipsisContent>{content}</Card.EllipsisContent>
+					{/* <span className="flex items-end justify-center text-neutral-500 text-sm sm:hidden">
+						Click for more details
+					</span> */}
+
+					{/* Tags */}
+					<Card.Content
+						ref={measureRef}
+						className="flex w-full flex-2 items-end overflow-clip"
+					>
 						<TagsCarousel
 							tags={tags}
 							parentWidth={width}
 							tagProps={{ className: "bg-amber-500/20" }}
 						/>
 					</Card.Content>
-				</>
+				</Card.Root>
 			}
-			// TODO: Add icon and "Skill" text to indivate that it is a skill modal
-			title={title}
-			subtitle={subtitle}
-			dialogContent={
-				<div className="flex flex-col gap-5">
-					{/* Content */}
-					<label className="-mb-4 font-bold text-sm" htmlFor="content">
-						Overview
-					</label>
-					<div id="content">{content}</div>
+			content={
+				<AnimatePresence initial={false} mode="wait">
+					{showProject ? (
+						<motion.div
+							key={showProject.id}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							className="flex flex-col gap-5"
+						>
+							<div className="grid grid-cols-2 items-center">
+								<h3 className="font-bold">{showProject.title}</h3>
+								<h4 className="row-start-2 text-neutral-700 text-sm">
+									{showProject.subtitle}
+								</h4>
+								<Button
+									className="col-start-2 row-span-2 justify-self-end"
+									onClick={() => setShowProject(null)}
+								>
+									Back
+								</Button>
+							</div>
 
-					{/* Project links */}
-					{projects && (
-						<>
-							<label className="-mb-4 font-bold text-sm" htmlFor="projects">
-								Related projects
+							<div>
+								<ProjectDialogBody project={showProject} />
+							</div>
+						</motion.div>
+					) : (
+						<motion.div
+							className="flex flex-col gap-5"
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+						>
+							{/* Content */}
+							<label className="-mb-4 font-bold text-sm" htmlFor="content">
+								Overview
 							</label>
-							<div id="projects" className="flex flex-wrap gap-2">
-								{projects.map((p) => (
-									<DialogClose key={p.id} asChild>
-										<ProjectLink project={p} dialog={dialog} />
-									</DialogClose>
+							<div id="content" className="flex flex-col gap-2">
+								{content.map((c, i) => (
+									<p key={`skill-content-${i}`}>{c}</p>
 								))}
 							</div>
-						</>
-					)}
 
-					{/* Tags */}
-					<div className="flex flex-2 flex-wrap items-end gap-2">
-						{tags.map((t) => (
-							<Tag key={t}>{t}</Tag>
-						))}
-					</div>
-				</div>
+							{/* Project links */}
+							{projects && (
+								<>
+									<label className="-mb-4 font-bold text-sm" htmlFor="projects">
+										Related projects
+									</label>
+									<div id="projects" className="flex flex-wrap gap-2">
+										{projects.map((p) => (
+											<ProjectLink
+												key={p.id}
+												project={p}
+												setShowProject={setShowProject}
+											/>
+										))}
+									</div>
+								</>
+							)}
+
+							{/* Tags */}
+							<div className="flex flex-2 flex-wrap items-end gap-2">
+								{tags.map((t) => (
+									<Tag key={t}>{t}</Tag>
+								))}
+							</div>
+						</motion.div>
+					)}
+				</AnimatePresence>
 			}
-			className={cn("box-border border-amber-400 border-b-5", className)}
-			{...props}
+			title={title}
+			subtitle={subtitle}
 		/>
 	);
-};
+});
