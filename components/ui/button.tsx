@@ -51,8 +51,8 @@ const ButtonStyle = ({
 			whileHover={{ scale: 1.02 }}
 			whileTap={{
 				scale: 0.98,
-				backgroundColor:
-					"color-mix(in oklab, var(--color-neutral-50) 10%, transparent)",
+				// backgroundColor:
+				// 	"color-mix(in oklab, var(--color-neutral-50) 10%, transparent)",
 			}}
 		>
 			{children}

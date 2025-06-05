@@ -28,7 +28,6 @@ html body[data-scroll-locked] {
 }
 
 /* Handle on hover */
-/* biome-ignore lint/nursery/noUnknownPseudoClass: <explanation> */
 ::-webkit-scrollbar-thumb:hover {
 	background: rgba(0, 0, 0, 0.3);
 }
@@ -73,7 +72,6 @@ body {
 	--outer: hsla(0, 0%, 100%, 1);
 	--inner: rgb(252, 241, 224);
 	background: var(--outer);
-	/* biome-ignore lint/nursery/noDuplicateProperties: <explanation> */
 	background: linear-gradient(
 		var(--degrees),
 		var(--outer) 0%,
@@ -99,7 +97,6 @@ body {
 	--outer: hsla(0, 0%, 100%, 1);
 	--inner: rgb(253, 242, 216);
 	background: var(--outer);
-	/* biome-ignore lint/nursery/noDuplicateProperties: <explanation> */
 	background: linear-gradient(
 		var(--degrees),
 		var(--inner) 24%,
