@@ -1,5 +1,5 @@
 import { Accordion } from "./accordion";
-import { useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, type JSX } from "react";
 
 export function CardAccordion<T>(props: {
 	max?: number;
