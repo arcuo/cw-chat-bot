@@ -5,10 +5,6 @@ import { cn } from "@/lib/utils";
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "./button";
-import { FileImage, Home, House, LogOut, Settings, User } from "lucide-react";
-import * as Dropdown from "@radix-ui/react-dropdown-menu";
-import FloatingActionMenu from "./floatingMenu";
 
 const container: Variants = {
 	hidden: {},
@@ -74,13 +70,6 @@ export function Header() {
 			</Item>
 
 			<motion.div className="flex gap-4 justify-self-end" variants={item}>
-				<div className="hidden sm:contents">
-					<NavLink href="/home">Home</NavLink>
-					<NavLink href="/resume" className="mr-10">
-						Resume
-					</NavLink>
-				</div>
-
 				<a href="https://github.com/arcuo" target="_blank" rel="noreferrer">
 					<GitHubLogoIcon aria-label="Github/arcuo" className="size-6" />
 				</a>
@@ -94,24 +83,6 @@ export function Header() {
 						className="size-6"
 					/>
 				</a>
-				<div className="contents sm:hidden">
-					<FloatingActionMenu
-						selected={pathname === "/home" ? "Home" : pathname.includes("/resume") ? "Resume" : "Account"}
-						className="relative"
-						options={[
-							{
-								label: "Home",
-								Icon: <House className="size-4" />,
-								href: "/home",
-							},
-							{
-								label: "Resume",
-								Icon: <Settings className="size-4" />,
-								href: "/resume",
-							},
-						]}
-					/>
-				</div>
 			</motion.div>
 		</motion.header>
 	);
