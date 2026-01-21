@@ -4,6 +4,7 @@ import { motion, type Variants } from "motion/react";
 import { cn } from "@/lib/utils";
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const container: Variants = {
@@ -55,18 +56,30 @@ export function Header() {
 	return (
 		<motion.header
 			id="header"
-			className="@container relative grid grid-cols-2 items-center bg-white px-15 py-8 max-sm:flex max-sm:justify-between max-sm:whitespace-nowrap max-sm:px-5 max-sm:py-5"
+			className="@container relative mb-2 grid grid-cols-2 items-center bg-white px-15 py-8 max-sm:flex max-sm:justify-between max-sm:whitespace-nowrap max-sm:px-5 max-sm:py-5 max-lg:px-5"
 			variants={container}
 			initial="hidden"
 			animate="show"
 		>
-			<Item title="" key="name" className="relative justify-self-start">
-				<motion.span variants={item} className="text-lg">
-					Benjamin Zachariae
-				</motion.span>
-				<motion.span variants={item} className="text-neutral-700 text-xs">
-					Aarhus, Denmark GMT+1
-				</motion.span>
+			<Item key="name" className="flex flex-row items-center gap-2 sm:gap-6">
+				<motion.div variants={item} whileHover={{scale: 1.1}} className="z-10" >
+					<Image
+						src="/avatar.png"
+						alt="Avatar of Benjamin Zachariae"
+						width={70}
+						height={70}
+						className="rounded-full"
+						loading="eager"
+					/>
+				</motion.div>
+				<div className="flex flex-col">
+					<motion.span variants={item} className="text-lg">
+						Benjamin Zachariae
+					</motion.span>
+					<motion.span variants={item} className="text-neutral-700 text-xs">
+						Aarhus, Denmark GMT+1
+					</motion.span>
+				</div>
 			</Item>
 
 			<motion.div className="flex gap-4 justify-self-end" variants={item}>
@@ -94,11 +107,11 @@ const Item = ({
 	className,
 	...rest
 }: ComponentProps<typeof motion.div> &
-	PropsWithChildren<{ title: string }>) => {
+	PropsWithChildren<{ title?: string }>) => {
 	return (
 		<motion.div className={cn("flex flex-col", className)} {...rest}>
 			{/* Title */}
-			<div className="text-neutral-600">{title}</div>
+			{title && <div className="text-neutral-600">{title}</div>}
 			{children}
 		</motion.div>
 	);
