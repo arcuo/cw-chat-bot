@@ -7,6 +7,7 @@ import {
 	useImperativeHandle,
 	useState,
 	type ComponentPropsWithoutRef,
+	type CSSProperties,
 } from "react";
 import { Tag, TagsCarousel } from "../ui/tag";
 import { cn } from "@/lib/utils";
@@ -33,12 +34,12 @@ export const ProjectLink = ({
 }: { project: Project; setShowProject: (project: Project | null) => void }) => (
 	<Button
 		role="link"
-		className="flex items-center gap-2 px-2 py-1 text-sm"
+		className="grid max-w-full grid-cols-[min-content_auto] items-center gap-2 overflow-hidden whitespace-nowrap px-2 py-1 text-sm"
 		onClick={() => setShowProject(p)}
 		key={p.id}
 	>
 		<Link1Icon />
-		{p.title}
+		<span className="truncate">{p.title}</span>
 	</Button>
 );
 
@@ -73,7 +74,7 @@ export const SkillCard = forwardRef<
 					whileFocus="hover"
 				>
 					{/* Header */}
-					<Card.Title className=" w-full overflow-hidden text-ellipsis text-nowrap font-bold max-md:flex-col">
+					<Card.Title className="w-full overflow-hidden text-ellipsis text-nowrap font-bold max-md:flex-col">
 						{title}
 					</Card.Title>
 
@@ -85,9 +86,6 @@ export const SkillCard = forwardRef<
 
 					{/* Content */}
 					<Card.EllipsisContent>{content}</Card.EllipsisContent>
-					{/* <span className="flex items-end justify-center text-neutral-500 text-sm sm:hidden">
-						Click for more details
-					</span> */}
 
 					{/* Tags */}
 					<Card.Content
@@ -100,6 +98,10 @@ export const SkillCard = forwardRef<
 							tagProps={{ className: "bg-amber-500/20" }}
 						/>
 					</Card.Content>
+
+					<span className="flex items-end justify-center text-neutral-500 text-sm sm:hidden">
+						Click for more details
+					</span>
 				</Card.Root>
 			}
 			content={
@@ -130,25 +132,27 @@ export const SkillCard = forwardRef<
 						</motion.div>
 					) : (
 						<motion.div
-							className="flex flex-col gap-5"
+							className="flex flex-col space-y-6"
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
 						>
 							{/* Content */}
-							<label className="-mb-4 font-bold text-sm" htmlFor="content">
-								Overview
-							</label>
-							<div id="content" className="flex flex-col gap-2">
-								{content.map((c, i) => (
-									<p key={`skill-content-${i}`}>{c}</p>
-								))}
+							<div className="grid gap-2">
+								<label className="font-bold text-sm" htmlFor="content">
+									Overview
+								</label>
+								<div id="content" className="flex flex-col gap-2">
+									{content.map((c, i) => (
+										<p key={`skill-content-${i}`}>{c}</p>
+									))}
+								</div>
 							</div>
 
 							{/* Project links */}
 							{projects && (
-								<>
-									<label className="-mb-4 font-bold text-sm" htmlFor="projects">
+								<div className="grid gap-2">
+									<label className="font-bold text-sm" htmlFor="projects">
 										Related projects
 									</label>
 									<div id="projects" className="flex flex-wrap gap-2">
@@ -160,7 +164,7 @@ export const SkillCard = forwardRef<
 											/>
 										))}
 									</div>
-								</>
+								</div>
 							)}
 
 							{/* Tags */}

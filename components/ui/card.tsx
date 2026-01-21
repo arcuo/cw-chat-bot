@@ -26,15 +26,6 @@ const Root = forwardRef<
 			variants={RootVariants}
 			{...rest}
 		>
-			<motion.span
-				variants={{
-					hover: { opacity: 1, y: 5 },
-				}}
-				className="-bottom-6 absolute right-1/2 translate-x-1/2 text-neutral-500 text-sm"
-				initial={{ opacity: 0, y: 0 }}
-			>
-				Click for more details
-			</motion.span>
 
 			{children}
 		</motion.button>

@@ -54,25 +54,14 @@ export const DataCard = forwardRef<
 				trigger={
 					<Card.Root
 						className={cn(
-							// "relative max-w-110 max-sm:max-w-50 max-md:max-w-75 md:min-w-100",
 							className,
 						)}
 						{...props}
 						whileHover="hover"
 						whileFocus="hover"
 					>
-						<motion.span
-							variants={{
-								hover: { opacity: 1, y: 5 },
-							}}
-							className="-bottom-6 absolute right-1/2 translate-x-1/2 text-neutral-500 text-sm"
-							initial={{ opacity: 0, y: 0 }}
-						>
-							Click for more details
-						</motion.span>
-
 						{/* Header */}
-						<Card.Title className=" w-full overflow-hidden text-ellipsis text-nowrap font-bold max-md:flex-col">
+						<Card.Title className="w-full overflow-hidden text-ellipsis text-nowrap font-bold max-md:flex-col">
 							{title}
 						</Card.Title>
 
@@ -86,6 +75,7 @@ export const DataCard = forwardRef<
 
 						{/* Content */}
 						{cardContent}
+						
 						<span className="flex items-end justify-center text-neutral-500 text-sm sm:hidden">
 							Click for more details
 						</span>

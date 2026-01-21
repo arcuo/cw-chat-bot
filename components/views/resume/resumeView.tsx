@@ -160,11 +160,12 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 
 						<CardAccordion
 							elements={skills as Skill[]}
-							renderCard={(skill) => (
+							renderCard={(skill, className) => (
 								<SkillCard
 									key={skill.title}
 									skill={skill}
 									relevance={skill.relevance}
+									className={className}
 								/>
 							)}
 						/>
@@ -182,11 +183,12 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 						<CardAccordion
 							max={3}
 							elements={Object.values(projects)}
-							renderCard={(project) => (
+							renderCard={(project, className) => (
 								<ProjectCard
 									key={project.title}
 									project={project}
 									relevance={project.relevance}
+									className={className}
 								/>
 							)}
 						/>
@@ -223,8 +225,8 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 					</div>
 
 					{/* Features */}
-					<div ref={featuresRef} id={elements.features.id}>
-						<h2 className="my-2 font-bold">{elements.features.title}</h2>
+					<div className="grid gap-5" ref={featuresRef} id={elements.features.id}>
+						<h2 className="font-bold">{elements.features.title}</h2>
 						<p>
 							The features and technologies highlighted below offer a glimpse
 							into my skillset and experience. I'm eager to discuss how my
@@ -232,7 +234,7 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
 							them are still being built, but expected to be done within March
 							2025!
 						</p>
-						<div className="my-3 flex w-fit flex-wrap items-center gap-3">
+						<div className="flex w-fit flex-wrap items-center gap-3">
 							<Features />
 						</div>
 					</div>

@@ -12,7 +12,7 @@ import { Tooltip } from "./tooltip";
 export function Footer() {
 	return (
 		<motion.footer
-			className="flex flex-2 items-end justify-center gap-3 py-10"
+			className="flex flex-2 items-end justify-center gap-3 py-5"
 			id="footer"
 		>
 			<Tooltip content="The page a bit much? Click here to download the resume!">
